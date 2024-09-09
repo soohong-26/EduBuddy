@@ -15,25 +15,25 @@
             <!-- Title -->
             <h2>Register</h2>
             <!-- Input form -->
-            <form>
+            <form id="registerForm">
                 <!-- Email -->
                 <div class="input-group">
-                    <input type="email" placeholder="Email" required>
+                    <input type="email" id="registerEmail" placeholder="Email" required>
                     <span class="icon"><img src="icons/mail_white.png" alt="Email Icon"></span>
                 </div>
                 <!-- Username -->
                 <div class="input-group">
-                    <input type="text" placeholder="Username" required>
+                    <input type="text" id="registerUsername" placeholder="Username" required>
                     <span class="icon"><img src="icons/user_white.png" alt="Password Icon"></span>
                 </div>
                 <!-- Password -->
                 <div class="input-group">
-                    <input type="password" placeholder="Password" required>
+                    <input type="password" id="registerPassword" placeholder="Password" required>
                     <span class="icon"><img src="icons/lock_white.png" alt="Password Icon"></span>
                 </div>
                 <!-- Double Confirm Password -->
                 <div class="input-group">
-                    <input type="password" placeholder="Reenter Password" required>
+                    <input type="password" id="confirmPassword" placeholder="Reenter Password" required>
                     <span class="icon"><img src="icons/lock_white.png" alt="Password Icon"></span>
                 </div>
                 <!-- Submit Button -->
@@ -44,5 +44,7 @@
             </p>
         </div>
     </div>
+
+    <link rel="stylesheet" href="js/login-register.js">
 </body>
 </html>
