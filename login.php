@@ -1,3 +1,11 @@
+<!-- PHP -->
+<?php 
+// Calling required files
+require 'config.php';
+
+?>
+
+<!-- HTML -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,10 +36,11 @@
                 <button type="submit" class="login-btn">Login</button>
             </form>
             <p class="register-text">Don't have an account?
-                <a href="register.html"> Register Now</a>
+                <a href="register.php"> Register Now</a>
             </p>
         </div>
     </div>
-    
+    <!-- JavaScript -->
+    <script src="js/login-register.js"></script>
 </body>
 </html>

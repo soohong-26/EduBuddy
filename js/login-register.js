@@ -30,7 +30,7 @@ if (registerForm) {
 
         localStorage.setItem('user', JSON.stringify(user));
         alert("Registration successful! Redirecting to login page.");
-        window.location.href = "login.html"; // Redirect to login page
+        window.location.href = "login.php"; // Redirect to login paage
     });
 }
 
@@ -56,7 +56,7 @@ if (loginForm) {
         if (storedUser && storedUser.email === email && storedUser.password === password) {
             alert("Login successful! Redirecting to dashboard.");
             // Redirect to a new page or dashboard
-            window.location.href = "dashboard.html"; // You can create this page
+            window.location.href = "home.php"; // Home Page, after logging in successfully
         } else {
             alert("Invalid credentials. Please try again.");
         }
