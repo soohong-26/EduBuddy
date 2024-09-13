@@ -6,7 +6,7 @@ require 'config.php';
 ?>
 
 <!-- HTML -->
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -27,27 +27,30 @@ require 'config.php';
                 <!-- Email -->
                 <div class="input-group">
                     <input type="email" id="registerEmail" placeholder="Email" required>
-                    <span class="icon"><img src="icons/mail_white.png" alt="Email Icon"></span>
+                    <span class="icon">
+                        <img src="icons/mail_white.png" alt="Email Icon">
+                    </span>
                 </div>
                 <!-- Username -->
                 <div class="input-group">
                     <input type="text" id="registerUsername" placeholder="Username" required>
-                    <span class="icon"><img src="icons/user_white.png" alt="Password Icon"></span>
+                    <span class="icon">
+                        <img src="icons/user_white.png" alt="Password Icon">
+                    </span>
                 </div>
                 <!-- Password -->
                 <div class="input-group">
                     <input type="password" id="registerPassword" placeholder="Password" required>
-                    <span class="icon"><img src="icons/lock_white.png" alt="Password Icon"></span>
+                    <span class="icon toggle-password">
+                        <img src="icons/lock.png" alt="Password Icon" id="registerPasswordIcon" class="password-icon">
+                    </span>
                 </div>
                 <!-- Double Confirm Password -->
                 <div class="input-group">
                     <input type="password" id="confirmPassword" placeholder="Reenter Password" required>
-                    <span class="icon"><img src="icons/lock_white.png" alt="Password Icon"></span>
-                </div>
-                <!-- Roles -->
-                <div class="input-group">
-                    <input type="dropdown" id="roleSelection" placeholder="Select Your Role" required>
-                    <span class="icon"><img src="icons/lock_white.png" alt="Password Icon"></span>
+                    <span class="icon">
+                        <img src="icons/lock.png" alt="Password Icon" id="confirmPasswordIcon" class="password-icon">
+                    </span>
                 </div>
                 <!-- Submit Button -->
                 <button type="submit" class="login-btn">Register</button>

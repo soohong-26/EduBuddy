@@ -62,3 +62,41 @@ if (loginForm) {
         }
     });
 }
+
+// Function to toggle password visibility
+function togglePasswordVisibility(passwordFieldId, iconId) {
+    const passwordField = document.getElementById(passwordFieldId);
+    const icon = document.getElementById(iconId);
+    
+    // Check current type of the password field
+    if (passwordField.type === "password") {
+        passwordField.type = "text"; // Show the password
+        icon.src = "icons/unlock.png"; // Change to unlock icon
+    } else {
+        passwordField.type = "password"; // Hide the password
+        icon.src = "icons/lock.png"; // Change to lock icon
+    }
+}
+
+// Add event listeners for each password field's icon
+const registerPasswordIcon = document.getElementById('registerPasswordIcon');
+const confirmPasswordIcon = document.getElementById('confirmPasswordIcon');
+const loginPasswordIcon = document.getElementById('loginPasswordIcon');
+
+if (registerPasswordIcon) {
+    registerPasswordIcon.addEventListener('click', function() {
+        togglePasswordVisibility('registerPassword', 'registerPasswordIcon');
+    });
+}
+
+if (confirmPasswordIcon) {
+    confirmPasswordIcon.addEventListener('click', function() {
+        togglePasswordVisibility('confirmPassword', 'confirmPasswordIcon');
+    });
+}
+
+if (loginPasswordIcon) {
+    loginPasswordIcon.addEventListener('click', function() {
+        togglePasswordVisibility('loginPassword', 'loginPasswordIcon');
+    });
+}

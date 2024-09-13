@@ -3,6 +3,7 @@
 // Calling required files
 require 'config.php';
 
+
 ?>
 
 <!-- HTML -->
@@ -26,11 +27,15 @@ require 'config.php';
             <form id="loginForm">
                 <div class="input-group">
                     <input type="email" id="loginEmail"  placeholder="Email" required>
-                    <span class="icon"><img src="icons/mail_white.png" alt="Email Icon"></span>
+                    <span class="icon">
+                        <img src="icons/mail_white.png" alt="Email Icon">
+                    </span>
                 </div>
                 <div class="input-group">
                     <input type="password" id="loginPassword"  placeholder="Password" required>
-                    <span class="icon"><img src="icons/lock_white.png" alt="Password Icon"></span>
+                    <span class="icon">
+                        <img src="icons/lock_white.png" alt="Password Icon" id="loginPasswordIcon" class="password-icon">
+                    </span>
                 </div>
                 <!-- Submit Button -->
                 <button type="submit" class="login-btn">Login</button>
