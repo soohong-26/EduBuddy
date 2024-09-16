@@ -3,10 +3,10 @@
 
     // Database connection parameters
     $host = 'localhost';
-    $db = 'edubuddy';
     $user = 'root';
     $pass = '';
-
+    $db = 'edubuddy';
+ 
     // Create connection
     $conn = new mysqli($host, $user, $pass, $db);
 

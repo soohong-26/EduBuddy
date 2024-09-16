@@ -11,8 +11,31 @@
     --button: #54687B;
 }
 
+* {
+    font-family: inherit;
+}
+
+/* General body styling */
 body {
-    background-color: var(--background);
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    /* Set the background image */
+    background-image: url('/images/wallpaper.png');
+    /* Ensure the image covers the entire background */
+    background-size: cover;
+    /* Center the image */
+    background-position: center;
+    /* Prevent the image from repeating */
+    background-repeat: no-repeat;
+    /* Optional: Fix the background image so it doesn't scroll with the content */
+    background-attachment: fixed;
+    /* Background colour */
+    background-color: #212121;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* All of Headers */
