@@ -3,8 +3,8 @@
 // Include database connection file
 require 'database.php';
 
-?>
 
+?>
 
 <!-- HTML -->
 <!DOCTYPE html>
@@ -20,7 +20,7 @@ require 'database.php';
     <div class="login-container"></div>
         <!-- Floating box -->
         <div class="login-box">
-            
+
             <!-- Logo -->
             <img src="images/red_logo_cropped.png" alt="EduBuddy Logo" class="logo">
 
@@ -34,7 +34,7 @@ require 'database.php';
                 <div class="input-group">
                     <input type="email" id="loginEmail"  placeholder="Email" required>
                     <span class="icon">
-                        <img src="icons/mail_white.png" alt="Email Icon">
+                        <img src="icons/mail.png" alt="Email Icon">
                     </span>
                 </div>
 
@@ -42,7 +42,7 @@ require 'database.php';
                 <div class="input-group">
                     <input type="password" id="loginPassword"  placeholder="Password" required>
                     <span class="icon">
-                        <img src="icons/lock_white.png" alt="Password Icon" id="loginPasswordIcon" class="password-icon">
+                        <img src="icons/lock.png" alt="Password Icon" id="loginPasswordIcon" class="password-icon">
                     </span>
                 </div>
 

@@ -3,6 +3,44 @@
 // Include database connection file
 require 'database.php';
 
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get form input data
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Hash the password before saving it to the database
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+    // Prepare the SQL insert statement
+    $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+
+    if ($stmt = $conn->prepare($sql)) {
+        // Bind parameters (s for string, the order matters)
+        $stmt->bind_param("sss", $username, $email, $hashed_password);
+
+        // Execute the prepared statement
+        if ($stmt->execute()) {
+            // Registration successful, show success message in a pop-up
+            echo "<script>
+                    alert('Registration successful! You will now be redirected to the login page.');
+                    window.location.href = 'login.php'; // Redirect to login page
+                  </script>";
+        } else {
+            // Registration failed, show error message in a pop-up
+            echo "<script>
+                    alert('Error: " . $stmt->error . "');
+                  </script>";
+        }
+
+        // Close the statement
+        $stmt->close();
+    }
+
+    // Close the database connection
+    $conn->close();
+}
 ?>
 
 <!-- HTML -->
@@ -19,7 +57,7 @@ require 'database.php';
     <div class="login-container">
         <!-- Floating box -->
         <div class="login-box">
-            
+
             <!-- Logo -->
             <img src="images/red_logo_cropped.png" alt="EduBuddy Logo" class="logo">
 
@@ -33,7 +71,7 @@ require 'database.php';
                 <div class="input-group">
                     <input type="email" id="registerEmail" placeholder="Email" name="email" required>
                     <span class="icon">
-                        <img src="icons/mail_white.png" alt="Email Icon">
+                        <img src="icons/mail.png" alt="Email Icon">
                     </span>
                 </div>
 
@@ -41,7 +79,7 @@ require 'database.php';
                 <div class="input-group">
                     <input type="text" id="registerUsername" placeholder="Username" name="username" required>
                     <span class="icon">
-                        <img src="icons/user_white.png" alt="Password Icon">
+                        <img src="icons/user.png" alt="Password Icon">
                     </span>
                 </div>
 
