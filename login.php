@@ -3,7 +3,50 @@
 // Include database connection file
 require 'database.php';
 
+// Check if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get email and password from POST request
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
+    // Prepare and bind statement to prevent SQL injection
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    
+    // Execute the statement
+    $stmt->execute();
+    
+    // Get the result
+    $result = $stmt->get_result();
+
+    // Check if email exists
+    if ($result->num_rows > 0) {
+        // Fetch user data
+        $user = $result->fetch_assoc();
+        
+        // Verify password (assuming passwords are hashed)
+        if (password_verify($password, $user['password'])) {
+            // Set session variables and redirect to homepage
+            $_SESSION['user_id'] = $user['id'];
+            header("Location: home_buddies.php");
+            exit();
+        } else {
+            echo "<script>
+                    alert('Invalid Password!');
+                  </script>";
+        }
+    } else {
+        echo "<script>
+                    alert('Email does not exist in the database!');
+                  </script>";
+    }
+
+    // Close statement
+    $stmt->close();
+}
+
+// Close connection
+$conn->close();
 ?>
 
 <!-- HTML -->
@@ -28,11 +71,11 @@ require 'database.php';
             <h2>Login</h2>
 
             <!-- Input form -->
-            <form id="loginForm">
+            <form id="loginForm" action="login.php" method="post">
 
                 <!-- Email -->
                 <div class="input-group">
-                    <input type="email" id="loginEmail"  placeholder="Email" required>
+                    <input type="email" id="loginEmail" placeholder="Email" name="email" required>
                     <span class="icon">
                         <img src="icons/mail.png" alt="Email Icon">
                     </span>
@@ -40,14 +83,14 @@ require 'database.php';
 
                 <!-- Password -->
                 <div class="input-group">
-                    <input type="password" id="loginPassword"  placeholder="Password" required>
+                    <input type="password" id="loginPassword" placeholder="Password" name="password" required>
                     <span class="icon">
-                        <img src="icons/lock.png" alt="Password Icon" id="loginPasswordIcon" class="password-icon">
+                        <img src="icons/lock2.png" alt="Password Icon" id="loginPasswordIcon" class="password-icon">
                     </span>
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" class="login-btn">Login</button>
+                <button type="submit" class="login-btn" name="submit">Login</button>
             </form>
             <p class="register-text">Don't have an account?
                 <a href="register.php"> Register Now</a>
@@ -68,7 +111,7 @@ require 'database.php';
                 icon.src = "icons/unlock.png"; // Change to unlock icon
             } else {
                 passwordField.type = "password"; // Hide the password
-                icon.src = "icons/lock.png"; // Change to lock icon
+                icon.src = "icons/lock2.png"; // Change to lock icon
             }
         }
 

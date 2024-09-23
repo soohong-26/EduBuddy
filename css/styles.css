@@ -32,16 +32,12 @@ body {
     background-attachment: fixed;
     /* Background colour */
     background-color: #212121;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 /* All of Headers */
 h1, h2, h3 {
     color: var(--text);
-    font-family: "Noto Sans", sans-serif;
+    font-family: "Poppins", sans-serif;
     font-style: normal;
     font-weight: 500;
 }
@@ -49,6 +45,6 @@ h1, h2, h3 {
 /* Normal Texts */
 p {
     color: var(--text);
-    font-family: "Noto Sans", sans-serif;
+    font-family: "Poppins", sans-serif;
     font-style: normal;
 }

@@ -13,12 +13,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Hash the password before saving it to the database
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-    // Prepare the SQL insert statement
-    $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+    // Define the default role for new users
+    $default_role = 'student';
+
+    // Prepare the SQL insert statement including the roles column
+    $sql = "INSERT INTO users (username, email, password, roles) VALUES (?, ?, ?, ?)";
 
     if ($stmt = $conn->prepare($sql)) {
         // Bind parameters (s for string, the order matters)
-        $stmt->bind_param("sss", $username, $email, $hashed_password);
+        $stmt->bind_param("ssss", $username, $email, $hashed_password, $default_role);
 
         // Execute the prepared statement
         if ($stmt->execute()) {
@@ -49,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduBuddy Register</title>
+    <title>EduBuddy - Register</title>
     <!-- CSS -->
     <link rel="stylesheet" href="css/login-register.css">
 </head>
@@ -87,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="input-group">
                     <input type="password" id="registerPassword" placeholder="Password" name="password" required>
                     <span class="icon toggle-password">
-                        <img src="icons/lock.png" alt="Password Icon" id="registerPasswordIcon" class="password-icon">
+                        <img src="icons/lock2.png" alt="Password Icon" id="registerPasswordIcon" class="password-icon">
                     </span>
                 </div>
 
@@ -95,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="input-group">
                     <input type="password" id="confirmPassword" placeholder="Reenter Password" name="check_password" required>
                     <span class="icon">
-                        <img src="icons/lock.png" alt="Password Icon" id="confirmPasswordIcon" class="password-icon">
+                        <img src="icons/lock2.png" alt="Password Icon" id="confirmPasswordIcon" class="password-icon">
                     </span>
                 </div>
 
@@ -154,7 +157,7 @@ function togglePasswordVisibility(passwordFieldId, iconId) {
         icon.src = "icons/unlock.png"; // Change to unlock icon
     } else {
         passwordField.type = "password"; // Hide the password
-        icon.src = "icons/lock.png"; // Change to lock icon
+        icon.src = "icons/lock2.png"; // Change to lock icon
     }
 }
 
