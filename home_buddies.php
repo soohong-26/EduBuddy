@@ -6,6 +6,9 @@
     <title>EduBuddy - Home Page</title>
     <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        
+    </style>
 </head>
 <body>
     <?php

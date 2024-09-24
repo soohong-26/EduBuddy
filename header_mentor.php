@@ -77,11 +77,9 @@
         <!-- Navigation Panel -->
         <nav>
             <ul class="nav_links">
-                <li><a href="#">Buddies</a></li>
-                <li><a href="#">Achievements</a></li>
+                <li><a href="#">Students</a></li>
                 <li><a href="#">Community</a></li>
                 <li><a href="#">Chats</a></li>
-                <li><a href="#">Mentors</a></li>
             </ul>
         </nav>
         <!-- Extra Button -->

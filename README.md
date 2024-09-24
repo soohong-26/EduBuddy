@@ -4,11 +4,18 @@ The EduBuddy Website is a website that allows students to work together and stud
 
 By doing so it allows a mutual support among each other.
 
-## Log Book
-### 22/8/2024
-- Added a root with some minor adjustments to the headers and texts.
-- Also figured out the issues with the link for stylesheets.
+# File Structure
+## Login & Register
+- login.php
+- register.php
+- login-register.php
 
-### 28/8/2024
-- Finalise the structure of the Edubuddy website
-- Confirmed the files
+## Home Page
+- home_admin.php
+- home_buddies.php
+- home_mentors.php
+
+## Utility
+- database.php
+- header.php
+- header_mentor.php

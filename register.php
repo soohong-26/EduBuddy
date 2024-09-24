@@ -118,6 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Registration Validation
         // Add an event listener for form submission
         document.getElementById('registerForm').addEventListener('submit', function(event) {
+
         // Get form inputs
         const email = document.getElementById('registerEmail').value;
         const password = document.getElementById('registerPassword').value;
@@ -147,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     });
 
     // Toggle Password Visibility Function 
-function togglePasswordVisibility(passwordFieldId, iconId) {
+    function togglePasswordVisibility(passwordFieldId, iconId) {
     const passwordField = document.getElementById(passwordFieldId);
     const icon = document.getElementById(iconId);
     
