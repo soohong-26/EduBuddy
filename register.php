@@ -10,40 +10,70 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Hash the password before saving it to the database
-    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+    // Check if the username already exists
+    $check_username_sql = "SELECT user_id FROM users WHERE username = ?";
+    if ($stmt = $conn->prepare($check_username_sql)) {
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->store_result();
 
-    // Define the default role for new users
-    $default_role = 'student';
-
-    // Prepare the SQL insert statement including the roles column
-    $sql = "INSERT INTO users (username, email, password, roles) VALUES (?, ?, ?, ?)";
-
-    if ($stmt = $conn->prepare($sql)) {
-        // Bind parameters (s for string, the order matters)
-        $stmt->bind_param("ssss", $username, $email, $hashed_password, $default_role);
-
-        // Execute the prepared statement
-        if ($stmt->execute()) {
-            // Registration successful, show success message in a pop-up
-            echo "<script>
-                    alert('Registration successful! You will now be redirected to the login page.');
-                    window.location.href = 'login.php'; // Redirect to login page
-                  </script>";
+        if ($stmt->num_rows > 0) {
+            // Username already exists, prompt user
+            echo "<script>alert('Username already taken. Please choose another username.'); window.history.back();</script>";
         } else {
-            // Registration failed, show error message in a pop-up
-            echo "<script>
-                    alert('Error: " . $stmt->error . "');
-                  </script>";
+            // Check if the email already exists
+            $check_email_sql = "SELECT user_id FROM users WHERE email = ?";
+            if ($stmt = $conn->prepare($check_email_sql)) {
+                $stmt->bind_param("s", $email);
+                $stmt->execute();
+                $stmt->store_result();
+
+                if ($stmt->num_rows > 0) {
+                    // Email already exists, prompt user
+                    echo "<script>alert('Email already taken. Please use another email.'); window.history.back();</script>";
+                } else {
+                    // Username and email do not exist, proceed with registration
+                    
+                    // Hash the password before saving it to the database
+                    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+                    // Define the default role for new users
+                    $default_role = 'student';
+
+                    // Prepare the SQL insert statement including the roles column
+                    $sql = "INSERT INTO users (username, email, password, roles) VALUES (?, ?, ?, ?)";
+
+                    if ($stmt = $conn->prepare($sql)) {
+                        // Bind parameters (s for string, the order matters)
+                        $stmt->bind_param("ssss", $username, $email, $hashed_password, $default_role);
+
+                        // Execute the prepared statement
+                        if ($stmt->execute()) {
+                            // Registration successful, show success message
+                            echo "<script>alert('Registration successful!'); window.location.href = 'login.php';</script>";
+                        } else {
+                            // If the SQL execution fails, show error message
+                            echo "<script>alert('Something went wrong. Please try again later.');</script>";
+                        }
+                    } else {
+                        // If the statement couldn't be prepared, show an error message
+                        echo "<script>alert('Something went wrong. Please try again later.');</script>";
+                    }
+                }
+            } else {
+                // If the statement couldn't be prepared, show an error message
+                echo "<script>alert('Something went wrong. Please try again later.');</script>";
+            }
         }
-
-        // Close the statement
-        $stmt->close();
+    } else {
+        // If the statement couldn't be prepared, show an error message
+        echo "<script>alert('Something went wrong. Please try again later.');</script>";
     }
-
-    // Close the database connection
-    $conn->close();
+    // Closing the statement
+    $stmt->close();
 }
+// Closing the database connection
+$conn->close();
 ?>
 
 <!-- HTML -->
