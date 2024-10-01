@@ -26,8 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Verify password (assuming passwords are hashed)
         if (password_verify($password, $user['password'])) {
-            // Set session variables and redirect to homepage
+            // Set session variables
             $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['logged_in'] = true;
+
+            // Redirect to user's personalized homepage
             header("Location: home_buddies.php");
             exit();
         } else {

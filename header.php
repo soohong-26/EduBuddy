@@ -1,3 +1,9 @@
+<!-- PHP -->
+<?php
+
+?>
+
+<!-- HTML -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +53,7 @@
         }
 
         .nav_links li a {
-            transition: all 0,3s ease 0s;
+            transition: all 0.3s ease;
         }
 
         .nav_links li a:hover {
@@ -61,7 +67,7 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0,3s ease 0s;
+            transition: all 0.3s ease;
         }
 
         button:hover {
@@ -73,7 +79,7 @@
 <body>
     <header>
         <!-- Logo -->
-        <h2>EduBuddy: Connecting Peers, Tutors and Mentors</h2>
+        <h2>EduBuddy: Connecting Peers, Tutors, and Mentors</h2>
         <!-- Navigation Panel -->
         <nav>
             <ul class="nav_links">
@@ -84,13 +90,17 @@
                 <li><a href="#">Mentors</a></li>
             </ul>
         </nav>
-        <!-- Extra Button -->
-        <!-- <a href="#" class="cta"><button>Contacts</button></a> -->
+
+        <!-- Display username or guest -->
+        <div>
+            <?php
+            if (isset($_SESSION['username'])) {
+                echo "<p>Welcome, " . htmlspecialchars($_SESSION['username']) . "!</p>";
+            } else {
+                echo "<p>Welcome, Guest!</p>";
+            }
+            ?>
+        </div>
     </header>
-
-    <!-- JavaScript -->
-    <script>
-
-    </script>
 </body>
 </html>
