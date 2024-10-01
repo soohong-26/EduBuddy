@@ -41,6 +41,7 @@
         h2 {
             cursor: pointer;
             color: #7AA3CC;
+    
         }
 
         .nav_links {
@@ -68,6 +69,7 @@
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
+            margin-right: 20px;
         }
 
         button:hover {
@@ -80,6 +82,7 @@
     <header>
         <!-- Logo -->
         <h2>EduBuddy: Connecting Peers, Tutors, and Mentors</h2>
+
         <!-- Navigation Panel -->
         <nav>
             <ul class="nav_links">
@@ -91,6 +94,9 @@
             </ul>
         </nav>
 
+        <!-- Extra Button -->
+        <a href="logout.php" class="cta"><button>Logout</button></a>
+
         <!-- Display username or guest -->
         <div>
             <?php
@@ -101,6 +107,7 @@
             }
             ?>
         </div>
+        
     </header>
 </body>
 </html>

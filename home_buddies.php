@@ -27,12 +27,7 @@ $username = $_SESSION['username'];
     </style>
 </head>
 <body>
-<?php
-        // Include header where welcome message is displayed
-        require 'header.php';
-    ?>
+    <?php require 'header.php';?>
 
-    <p>This is your personalized home page content.</p>
-    <a href="logout.php">Logout</a>
 </body>
 </html>
