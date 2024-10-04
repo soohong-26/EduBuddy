@@ -86,7 +86,7 @@
         <!-- Navigation Panel -->
         <nav>
             <ul class="nav_links">
-                <li><a href="#">Buddies</a></li>
+                <li><a href="study_buddies.php">Buddies</a></li>
                 <li><a href="#">Achievements</a></li>
                 <li><a href="#">Community</a></li>
                 <li><a href="#">Chats</a></li>

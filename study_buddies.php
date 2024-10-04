@@ -24,8 +24,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("sssssss", $username, $strengths, $weaknesses, $extra_skills, $strengths, $weaknesses, $extra_skills);
     $stmt->execute();
     $stmt->close();
-}
 
+    $select = mysqli_query($conn, "SELECT * FROM skills WHERE username = '$username'") or die('query failed');
+
+    if (mysqli_num_rows($select) > 0){
+        header('location:study_buddies_dummy.php');
+    } else {
+        echo '<script>alert("You have submitted before!")</script>';
+    }
+}
     // Fetch matching study buddies (weaknesses of the user matched to strengths of others)
     // Initialising an empty array to store the matching results
     $matches = [];
