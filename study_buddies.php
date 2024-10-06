@@ -91,7 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin-right: 10px;
         }
         button {
-            margin-top: 20px;
             padding: 10px 20px;
             background-color: #007BFF;
             color: white;
@@ -119,6 +118,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 </head>
 <body>
+
+<!-- Navigation Bar -->
+<?php require 'header.php';?>
 
 <h2>Fill Out Your Skills to Find Study Buddies</h2>
 <form action="" method="POST">
