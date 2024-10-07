@@ -77,19 +77,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin: 20px;
             padding: 20px;
         }
-        form {
+
+        /* Title Header */
+        .title-page {
+            color: #7AA3CC;
+            font-family: "Poppins", sans-serif;
+            margin: 0 0 20px 20px;
+        }
+
+        /* Form Submission */
+        .skills-form {
             background: white;
             padding: 20px;
             border-radius: 8px;
+            margin: 0 25px 10px 25px;
         }
+
         label {
             margin-top: 10px;
             display: block;
             font-weight: bold;
         }
+
         input[type="checkbox"], input[type="text"] {
             margin-right: 10px;
         }
+
         button {
             padding: 10px 20px;
             background-color: #007BFF;
@@ -98,16 +111,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             border-radius: 5px;
             cursor: pointer;
         }
+
         button:hover {
             background-color: #0056b3;
         }
-        .buddies-list {
-            margin-top: 20px;
+
+        /* Output Buddies */
+        .sub-title-page {
+            color: #7AA3CC;
+            font-family: "Poppins", sans-serif;
+            margin: 0 0 10px 0;
         }
+
+        .buddies-list {
+            margin: 20px 25px 10px 25px;
+        }
+
         .buddies-list ul {
             list-style-type: none;
             padding: 0;
         }
+        
         .buddies-list li {
             background: #fff;
             padding: 10px;
@@ -122,8 +146,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!-- Navigation Bar -->
 <?php require 'header.php';?>
 
-<h2>Fill Out Your Skills to Find Study Buddies</h2>
-<form action="" method="POST">
+<h2 class="title-page">Fill Out Your Skills to Find Study Buddies</h2>
+<form action="" class="skills-form" method="POST">
     <div>
         <label>Strengths:</label>
         <div>
@@ -148,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </form>
 
 <div class="buddies-list">
-    <h3>Your Study Buddies</h3>
+    <h3 class="sub-title-page">Your Study Buddies</h3>
     <ul>
         <?php if (!empty($matches)) : ?>
             <?php foreach ($matches as $match) : ?>

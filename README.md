@@ -22,5 +22,4 @@ By doing so it allows a mutual support among each other.
 
 # To-Do
 - Fix the current issue where the user can't view other buddies strengths to help them
-- Fix header issue when changing the pages it will follow the header
 - - To add a class to each code to solve it
