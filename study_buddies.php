@@ -98,12 +98,14 @@ $stmt->close();
             padding: 20px;
         }
 
+        /* Title Header */
         .title-page {
             color: #7AA3CC;
             font-family: "Poppins", sans-serif;
             margin: 0 0 20px 20px;
         }
 
+        /* Form Submission */
         .skills-form {
             background: white;
             padding: 20px;
@@ -134,6 +136,7 @@ $stmt->close();
             background-color: #0056b3;
         }
 
+        /* Output Buddies */
         .sub-title-page {
             color: #7AA3CC;
             font-family: "Poppins", sans-serif;
@@ -204,7 +207,6 @@ $stmt->close();
         <?php endif; ?>
     </ul>
 </div>
-
 </body>
 </html>
 
