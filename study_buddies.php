@@ -10,6 +10,9 @@ if (!isset($_SESSION['username'])) {
 // Fetch logged-in user's username
 $username = $_SESSION['username']; 
 
+// Initialize weaknesses variable to avoid undefined warnings
+$weaknesses = '';
+
 // Check if form was submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sanitize and process form input
@@ -33,35 +36,52 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo '<script>alert("You have submitted before!")</script>';
     }
 }
-    // Fetch matching study buddies (weaknesses of the user matched to strengths of others)
-    // Initialising an empty array to store the matching results
-    $matches = [];
-    $sql = "SELECT u.username, s.strengths, s.weaknesses FROM users u
-            -- Constructing SQL to fetch username, strengths, and weaknesses
-            JOIN skills s ON u.username = s.username
-            -- Filter matches based on the strengths and excluding the current username
-            WHERE s.strengths LIKE CONCAT('%', ?, '%') AND u.username != ?";
 
-    // Preparing the SQL statement for execution to prevent SQL injection
-    $stmt = $conn->prepare($sql);
+// Fetch matching study buddies (weaknesses of the user matched to strengths of others)
+$matches = [];
+$weaknessArray = explode(',', $weaknesses);
 
-    // Use user's weaknesses to find matches
-    $stmt->bind_param("ss", $weaknesses, $username);
+// Build dynamic SQL with placeholders for each weakness
+$placeholders = implode(' OR ', array_fill(0, count($weaknessArray), 'most_recent_skills.strengths LIKE ?'));
 
-    // Execute the prepared statement
-    $stmt->execute();
+// Construct the query to select the most recent skill record for each user.
+$sql = "
+    SELECT u.username, most_recent_skills.strengths, most_recent_skills.weaknesses 
+    FROM users u
+    JOIN (
+        SELECT s1.username, s1.strengths, s1.weaknesses
+        FROM skills s1
+        JOIN (
+            SELECT username, MAX(id) AS max_id
+            FROM skills
+            GROUP BY username
+        ) s2 ON s1.username = s2.username AND s1.id = s2.max_id
+    ) most_recent_skills ON u.username = most_recent_skills.username
+    WHERE ($placeholders) AND u.username != ?";
 
-    // Get the result set from the executed statement
-    $result = $stmt->get_result();
+// Prepare the SQL statement for execution to prevent SQL injection
+$stmt = $conn->prepare($sql);
 
-    // Fetch each row from the result set and add to the matches array
-    while ($row = $result->fetch_assoc()) {
-        $matches[] = $row;
-    }
+// Bind each weakness to a wildcard pattern
+$weaknessParams = array_map(fn($w) => "%$w%", $weaknessArray);
+$weaknessParams[] = $username; // Add the current username as the last parameter for exclusion
 
-    // Close statement
-    $stmt->close();
+// Dynamically bind parameters using call_user_func_array
+$stmt->bind_param(str_repeat('s', count($weaknessParams)), ...$weaknessParams);
 
+// Execute the prepared statement
+$stmt->execute();
+
+// Get the result set from the executed statement
+$result = $stmt->get_result();
+
+// Fetch each row from the result set and add to the matches array
+while ($row = $result->fetch_assoc()) {
+    $matches[] = $row;
+}
+
+// Close statement
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -78,14 +98,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 20px;
         }
 
-        /* Title Header */
         .title-page {
             color: #7AA3CC;
             font-family: "Poppins", sans-serif;
             margin: 0 0 20px 20px;
         }
 
-        /* Form Submission */
         .skills-form {
             background: white;
             padding: 20px;
@@ -116,7 +134,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background-color: #0056b3;
         }
 
-        /* Output Buddies */
         .sub-title-page {
             color: #7AA3CC;
             font-family: "Poppins", sans-serif;
