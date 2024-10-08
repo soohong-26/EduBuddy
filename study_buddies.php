@@ -114,7 +114,7 @@ $stmt->close();
         }
 
         label {
-            margin-top: 10px;
+            margin: 10px 0 5px 0;
             display: block;
             font-weight: bold;
         }
@@ -159,6 +159,43 @@ $stmt->close();
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+
+        .buddy-username {
+            color: black;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .buddy-strength {
+            color: black;
+        }
+
+        .buddy-weakness {
+            color: black;
+        }
+
+        /* Extra Skills */
+        .extra-skills-placeholder {
+            width: 250px;
+            padding: 10px;
+            margin: 5px 0 10px 0;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text);
+            font-size: 16px;
+        }
+
+        .extra-skills-button {
+            width: 150px;
+            padding: 10px;
+            margin: 10px 0 10px 0;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
     </style>
 </head>
 <body>
@@ -169,26 +206,44 @@ $stmt->close();
 <h2 class="title-page">Fill Out Your Skills to Find Study Buddies</h2>
 <form action="" class="skills-form" method="POST">
     <div>
+        <!-- Strength Boxes -->
         <label>Strengths:</label>
         <div>
-            <input type="checkbox" name="strengths[]" value="Math"> Math
-            <input type="checkbox" name="strengths[]" value="Science"> Science
-            <input type="checkbox" name="strengths[]" value="Writing"> Writing
+            <input type="checkbox" name="strengths[]" value="American University Program">American University Program <br>
+            <input type="checkbox" name="strengths[]" value="Art & Design">Art & Design <br>
+            <input type="checkbox" name="strengths[]" value="Biotechnology & Life Science">Biotechnology & Life Science <br>
+            <input type="checkbox" name="strengths[]" value="Business">Business <br>
+            <input type="checkbox" name="strengths[]" value="Computing & IT">Computing & IT <br>
+            <input type="checkbox" name="strengths[]" value="Computer Science">Computer Science <br>
+            <input type="checkbox" name="strengths[]" value="Marketing">Marketing <br>
+            <input type="checkbox" name="strengths[]" value="Engineering">Engineering <br>
+            <input type="checkbox" name="strengths[]" value="Fashion Design">Fashion Design <br>
+            <input type="checkbox" name="strengths[]" value="Management">Management <br>
         </div>
     </div>
     <div>
+        <!-- Weakness Boxes -->
         <label>Weaknesses:</label>
         <div>
-            <input type="checkbox" name="weaknesses[]" value="Math"> Math
-            <input type="checkbox" name="weaknesses[]" value="Science"> Science
-            <input type="checkbox" name="weaknesses[]" value="Writing"> Writing
+            <input type="checkbox" name="weaknesses[]" value="American University Program">American University Program <br>
+            <input type="checkbox" name="weaknesses[]" value="Art & Design">Art & Design <br>
+            <input type="checkbox" name="weaknesses[]" value="Biotechnology & Life Science">Biotechnology & Life Science <br>
+            <input type="checkbox" name="weaknesses[]" value="Business">Business <br>
+            <input type="checkbox" name="weaknesses[]" value="Computing & IT">Computing & IT <br>
+            <input type="checkbox" name="weaknesses[]" value="Computer Science">Computer Science <br>
+            <input type="checkbox" name="weaknesses[]" value="Marketing">Marketing <br>
+            <input type="checkbox" name="weaknesses[]" value="Engineering">Engineering <br>
+            <input type="checkbox" name="weaknesses[]" value="Fashion Design">Fashion Design <br>
+            <input type="checkbox" name="weaknesses[]" value="Management">Management <br>
         </div>
     </div>
     <div>
+        <!-- Extra Skills -->
         <label>Extra Skills:</label>
-        <input type="text" name="extra_skills" placeholder="Type your extra skills">
+        <!-- Placeholder -->
+        <input class="extra-skills-placeholder" type="text" name="extra_skills" placeholder="Type your extra skills">
     </div>
-    <button type="submit">Submit</button>
+    <button class="extra-skills-button" type="submit">Submit</button>
 </form>
 
 <div class="buddies-list">
@@ -196,10 +251,12 @@ $stmt->close();
     <ul>
         <?php if (!empty($matches)) : ?>
             <?php foreach ($matches as $match) : ?>
+                <!-- The box -->
                 <li>
-                    <strong><?php echo htmlspecialchars($match['username']); ?></strong><br>
-                    Strengths: <?php echo htmlspecialchars($match['strengths']); ?><br>
-                    Weaknesses: <?php echo htmlspecialchars($match['weaknesses']); ?>
+                    <strong class="buddy-username"><?php echo htmlspecialchars($match['username']); ?></strong><br>
+                    <span class="buddy-strength">Strengths: <?php echo htmlspecialchars($match['strengths']); ?></span>
+                    <br>
+                    <span class="buddy-weakness">Weaknesses: <?php echo htmlspecialchars($match['weaknesses']); ?></span>
                 </li>
             <?php endforeach; ?>
         <?php else : ?>
