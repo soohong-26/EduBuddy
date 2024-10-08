@@ -174,11 +174,15 @@ $stmt->close();
             color: black;
         }
 
+        .buddy-none {
+            color: black;
+        }
+
         /* Extra Skills */
         .extra-skills-placeholder {
             width: 250px;
-            padding: 10px;
-            margin: 5px 0 10px 0;
+            padding: 5px;
+            margin: 5px 0 5px 0;
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.2);
             color: var(--text);
@@ -195,7 +199,6 @@ $stmt->close();
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
     </style>
 </head>
 <body>
@@ -260,7 +263,7 @@ $stmt->close();
                 </li>
             <?php endforeach; ?>
         <?php else : ?>
-            <li>No matches found yet.</li>
+            <li class="buddy-none">No matches found yet.</li>
         <?php endif; ?>
     </ul>
 </div>

@@ -34,7 +34,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 30px;
+            padding: 20px;
             margin: 0 20px 0 20px ;
         }
 
@@ -81,6 +81,7 @@
             color: #eaf2e8;
             font-family: "Poppins", sans-serif;
             font-style: normal;
+            margin: 0 0 0 10px;
         }
         
     </style>
@@ -96,8 +97,8 @@
                 <li><a class='nav_anc' href="study_buddies.php">Buddies</a></li>
                 <li><a class='nav_anc' href="#">Achievements</a></li>
                 <li><a class='nav_anc' href="#">Community</a></li>
-                <li><a class='nav_anc' href="#">Chats</a></li>
-                <li><a class='nav_anc' href="#">Mentors</a></li>
+                <!-- <li><a class='nav_anc' href="#">Chats</a></li>
+                <li><a class='nav_anc' href="#">Mentors</a></li> -->
             </ul>
         </nav>
 
@@ -107,7 +108,7 @@
         </a>
 
         <!-- Display username or guest -->
-        <div>
+        <div class="welcome-message">
             <?php
             if (isset($_SESSION['username'])) {
                 echo "<p class='username-text'>Welcome, " . htmlspecialchars($_SESSION['username']) . "!</p>";
