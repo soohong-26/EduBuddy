@@ -21,4 +21,5 @@ By doing so it allows a mutual support among each other.
 - header_mentor.php
 
 # To-Do
-- Make it so that username cannot have spaces
+- Make it so that username cannot have spaces (register page)
+- Create a community forum
