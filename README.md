@@ -21,5 +21,4 @@ By doing so it allows a mutual support among each other.
 - header_mentor.php
 
 # To-Do
-- Fix the current issue where the user can't view other buddies strengths to help them
-- - To add a class to each code to solve it
+- Make it so that username cannot have spaces

@@ -10,14 +10,16 @@ if (!isset($_SESSION['username'])) {
 // Fetch logged-in user's username
 $username = $_SESSION['username']; 
 
-// Initialize weaknesses variable to avoid undefined warnings
+// Initialize variables to avoid undefined warnings
+$strengths = '';
 $weaknesses = '';
+$matches = []; // Initialize matches array
 
 // Check if form was submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sanitize and process form input
-    $strengths = isset($_POST['strengths']) ? implode(',', array_map('htmlspecialchars', $_POST['strengths'])) : '';
-    $weaknesses = isset($_POST['weaknesses']) ? implode(',', array_map('htmlspecialchars', $_POST['weaknesses'])) : '';
+    $strengths = isset($_POST['strengths']) ? htmlspecialchars($_POST['strengths']) : '';
+    $weaknesses = isset($_POST['weaknesses']) ? htmlspecialchars($_POST['weaknesses']) : '';
     $extra_skills = htmlspecialchars($_POST['extra_skills']);
 
     // Insert data into the skills table
@@ -28,60 +30,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute();
     $stmt->close();
 
-    $select = mysqli_query($conn, "SELECT * FROM skills WHERE username = '$username'") or die('query failed');
+    // If there are any weaknesses specified, match them against other users' strengths
+    if (!empty($weaknesses)) {
+        $sql = "
+            SELECT u.username, most_recent_skills.strengths, most_recent_skills.weaknesses 
+            FROM users u
+            JOIN (
+                SELECT s1.username, s1.strengths, s1.weaknesses
+                FROM skills s1
+                JOIN (
+                    SELECT username, MAX(id) AS max_id
+                    FROM skills
+                    GROUP BY username
+                ) s2 ON s1.username = s2.username AND s1.id = s2.max_id
+            ) most_recent_skills ON u.username = most_recent_skills.username
+            WHERE most_recent_skills.strengths LIKE CONCAT('%', ?, '%') AND u.username != ?";
 
-    if (mysqli_num_rows($select) > 0){
-        header('location:study_buddies_dummy.php');
-    } else {
-        echo '<script>alert("You have submitted before!")</script>';
+        // Prepare the SQL statement for execution to prevent SQL injection
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $weaknesses, $username);
+
+        // Execute the prepared statement
+        $stmt->execute();
+
+        // Get the result set from the executed statement
+        $result = $stmt->get_result();
+
+        // Fetch each row from the result set and add to the matches array
+        while ($row = $result->fetch_assoc()) {
+            $matches[] = $row;
+        }
+
+        // Close statement
+        $stmt->close();
     }
 }
-
-// Fetch matching study buddies (weaknesses of the user matched to strengths of others)
-$matches = [];
-$weaknessArray = explode(',', $weaknesses);
-
-// Build dynamic SQL with placeholders for each weakness
-$placeholders = implode(' OR ', array_fill(0, count($weaknessArray), 'most_recent_skills.strengths LIKE ?'));
-
-// Construct the query to select the most recent skill record for each user.
-$sql = "
-    SELECT u.username, most_recent_skills.strengths, most_recent_skills.weaknesses 
-    FROM users u
-    JOIN (
-        SELECT s1.username, s1.strengths, s1.weaknesses
-        FROM skills s1
-        JOIN (
-            SELECT username, MAX(id) AS max_id
-            FROM skills
-            GROUP BY username
-        ) s2 ON s1.username = s2.username AND s1.id = s2.max_id
-    ) most_recent_skills ON u.username = most_recent_skills.username
-    WHERE ($placeholders) AND u.username != ?";
-
-// Prepare the SQL statement for execution to prevent SQL injection
-$stmt = $conn->prepare($sql);
-
-// Bind each weakness to a wildcard pattern
-$weaknessParams = array_map(fn($w) => "%$w%", $weaknessArray);
-$weaknessParams[] = $username; // Add the current username as the last parameter for exclusion
-
-// Dynamically bind parameters using call_user_func_array
-$stmt->bind_param(str_repeat('s', count($weaknessParams)), ...$weaknessParams);
-
-// Execute the prepared statement
-$stmt->execute();
-
-// Get the result set from the executed statement
-$result = $stmt->get_result();
-
-// Fetch each row from the result set and add to the matches array
-while ($row = $result->fetch_assoc()) {
-    $matches[] = $row;
-}
-
-// Close statement
-$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -199,6 +182,17 @@ $stmt->close();
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+
+        .view-profile-button {
+            width: 150px;
+            padding: 10px;
+            margin: 10px 0 10px 0;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
     </style>
 </head>
 <body>
@@ -212,32 +206,32 @@ $stmt->close();
         <!-- Strength Boxes -->
         <label>Strengths:</label>
         <div>
-            <input type="checkbox" name="strengths[]" value="American University Program">American University Program <br>
-            <input type="checkbox" name="strengths[]" value="Art & Design">Art & Design <br>
-            <input type="checkbox" name="strengths[]" value="Biotechnology & Life Science">Biotechnology & Life Science <br>
-            <input type="checkbox" name="strengths[]" value="Business">Business <br>
-            <input type="checkbox" name="strengths[]" value="Computing & IT">Computing & IT <br>
-            <input type="checkbox" name="strengths[]" value="Computer Science">Computer Science <br>
-            <input type="checkbox" name="strengths[]" value="Marketing">Marketing <br>
-            <input type="checkbox" name="strengths[]" value="Engineering">Engineering <br>
-            <input type="checkbox" name="strengths[]" value="Fashion Design">Fashion Design <br>
-            <input type="checkbox" name="strengths[]" value="Management">Management <br>
+            <input type="radio" name="strengths" value="American University Program">American University Program <br>
+            <input type="radio" name="strengths" value="Art & Design">Art & Design <br>
+            <input type="radio" name="strengths" value="Biotechnology & Life Science">Biotechnology & Life Science <br>
+            <input type="radio" name="strengths" value="Business">Business <br>
+            <input type="radio" name="strengths" value="Computing & IT">Computing & IT <br>
+            <input type="radio" name="strengths" value="Computer Science">Computer Science <br>
+            <input type="radio" name="strengths" value="Marketing">Marketing <br>
+            <input type="radio" name="strengths" value="Engineering">Engineering <br>
+            <input type="radio" name="strengths" value="Fashion Design">Fashion Design <br>
+            <input type="radio" name="strengths" value="Management">Management <br>
         </div>
     </div>
     <div>
         <!-- Weakness Boxes -->
         <label>Weaknesses:</label>
         <div>
-            <input type="checkbox" name="weaknesses[]" value="American University Program">American University Program <br>
-            <input type="checkbox" name="weaknesses[]" value="Art & Design">Art & Design <br>
-            <input type="checkbox" name="weaknesses[]" value="Biotechnology & Life Science">Biotechnology & Life Science <br>
-            <input type="checkbox" name="weaknesses[]" value="Business">Business <br>
-            <input type="checkbox" name="weaknesses[]" value="Computing & IT">Computing & IT <br>
-            <input type="checkbox" name="weaknesses[]" value="Computer Science">Computer Science <br>
-            <input type="checkbox" name="weaknesses[]" value="Marketing">Marketing <br>
-            <input type="checkbox" name="weaknesses[]" value="Engineering">Engineering <br>
-            <input type="checkbox" name="weaknesses[]" value="Fashion Design">Fashion Design <br>
-            <input type="checkbox" name="weaknesses[]" value="Management">Management <br>
+            <input type="radio" name="weaknesses" value="American University Program">American University Program <br>
+            <input type="radio" name="weaknesses" value="Art & Design">Art & Design <br>
+            <input type="radio" name="weaknesses" value="Biotechnology & Life Science">Biotechnology & Life Science <br>
+            <input type="radio" name="weaknesses" value="Business">Business <br>
+            <input type="radio" name="weaknesses" value="Computing & IT">Computing & IT <br>
+            <input type="radio" name="weaknesses" value="Computer Science">Computer Science <br>
+            <input type="radio" name="weaknesses" value="Marketing">Marketing <br>
+            <input type="radio" name="weaknesses" value="Engineering">Engineering <br>
+            <input type="radio" name="weaknesses" value="Fashion Design">Fashion Design <br>
+            <input type="radio" name="weaknesses" value="Management">Management <br>
         </div>
     </div>
     <div>
@@ -256,10 +250,16 @@ $stmt->close();
             <?php foreach ($matches as $match) : ?>
                 <!-- The box -->
                 <li>
-                    <strong class="buddy-username"><?php echo htmlspecialchars($match['username']); ?></strong><br>
-                    <span class="buddy-strength">Strengths: <?php echo htmlspecialchars($match['strengths']); ?></span>
-                    <br>
-                    <span class="buddy-weakness">Weaknesses: <?php echo htmlspecialchars($match['weaknesses']); ?></span>
+                <strong class="buddy-username"><?php echo htmlspecialchars($match['username']); ?></strong><br>
+                <span class="buddy-strength">Strengths: <?php echo html_entity_decode(htmlspecialchars($match['strengths'])); ?></span>
+                <br>
+                <span class="buddy-weakness">Weaknesses: <?php echo html_entity_decode(htmlspecialchars($match['weaknesses'])); ?></span>
+                <br>
+                    <!-- Add a button to view the profile -->
+                    <form action="profile.php" method="GET" style="display: inline;">
+                        <input type="hidden" name="username" value="<?php echo urlencode($match['username']); ?>">
+                        <button type="submit" class="view-profile-button">View Profile</button>
+                    </form>
                 </li>
             <?php endforeach; ?>
         <?php else : ?>
