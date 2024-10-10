@@ -20,6 +20,13 @@ By doing so it allows a mutual support among each other.
 - header.php
 - header_mentor.php
 
+## Finding Buddies
+- study_buddies.php
+- study_buddies_dummy.php
+- profile.php
+- submit_skills.php
+- find_buddies.php
+
 # To-Do
-- Make it so that username cannot have spaces (register page)
 - Create a community forum
+- Create a toggle button to switch between the find and submit buddies

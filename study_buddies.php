@@ -1,28 +1,24 @@
 <?php
 require 'database.php'; // Include the database connection
 
-// If user is not logged in, redirect to login page
+// Ensure the user is logged in
 if (!isset($_SESSION['username'])) {
     header('Location: login.php');
     exit;
 }
 
-// Fetch logged-in user's username
-$username = $_SESSION['username']; 
-
-// Initialize variables to avoid undefined warnings
+$username = $_SESSION['username']; // Fetch the logged-in user's username
 $strengths = '';
 $weaknesses = '';
 $matches = []; // Initialize matches array
 
-// Check if form was submitted
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Sanitize and process form input
     $strengths = isset($_POST['strengths']) ? htmlspecialchars($_POST['strengths']) : '';
     $weaknesses = isset($_POST['weaknesses']) ? htmlspecialchars($_POST['weaknesses']) : '';
     $extra_skills = htmlspecialchars($_POST['extra_skills']);
 
-    // Insert data into the skills table
+    // Insert data into the skills table or update existing entries
     $sql = "INSERT INTO skills (username, strengths, weaknesses, extra_skills) VALUES (?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE strengths = ?, weaknesses = ?, extra_skills = ?";
     $stmt = $conn->prepare($sql);
@@ -30,38 +26,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute();
     $stmt->close();
 
-    // If there are any weaknesses specified, match them against other users' strengths
+    // Search for matches based on weaknesses
     if (!empty($weaknesses)) {
         $sql = "
-            SELECT u.username, most_recent_skills.strengths, most_recent_skills.weaknesses 
+            SELECT u.username, s.strengths, s.weaknesses
             FROM users u
-            JOIN (
-                SELECT s1.username, s1.strengths, s1.weaknesses
-                FROM skills s1
-                JOIN (
-                    SELECT username, MAX(id) AS max_id
-                    FROM skills
-                    GROUP BY username
-                ) s2 ON s1.username = s2.username AND s1.id = s2.max_id
-            ) most_recent_skills ON u.username = most_recent_skills.username
-            WHERE most_recent_skills.strengths LIKE CONCAT('%', ?, '%') AND u.username != ?";
-
-        // Prepare the SQL statement for execution to prevent SQL injection
+            JOIN skills s ON u.username = s.username
+            WHERE s.strengths LIKE CONCAT('%', ?, '%') AND u.username != ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $weaknesses, $username);
-
-        // Execute the prepared statement
+        $stmt->bind_param("ss", $weaknesses, $username); // Bind the weaknesses to find matching strengths
         $stmt->execute();
-
-        // Get the result set from the executed statement
         $result = $stmt->get_result();
 
-        // Fetch each row from the result set and add to the matches array
+        // Fetch and store the matched results
         while ($row = $result->fetch_assoc()) {
             $matches[] = $row;
         }
-
-        // Close statement
         $stmt->close();
     }
 }
@@ -75,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>EduBuddy - Find Study Buddies</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Poppins", sans-serif;
             background-color: #f4f4f4;
             margin: 20px;
             padding: 20px;
@@ -207,10 +187,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label>Strengths:</label>
         <div>
             <input type="radio" name="strengths" value="American University Program">American University Program <br>
-            <input type="radio" name="strengths" value="Art & Design">Art & Design <br>
-            <input type="radio" name="strengths" value="Biotechnology & Life Science">Biotechnology & Life Science <br>
+            <input type="radio" name="strengths" value="Art and Design">Art and Design <br>
+            <input type="radio" name="strengths" value="Biotechnology and Life Science">Biotechnology and Life Science <br>
             <input type="radio" name="strengths" value="Business">Business <br>
-            <input type="radio" name="strengths" value="Computing & IT">Computing & IT <br>
+            <input type="radio" name="strengths" value="Computing and IT">Computing and IT <br>
             <input type="radio" name="strengths" value="Computer Science">Computer Science <br>
             <input type="radio" name="strengths" value="Marketing">Marketing <br>
             <input type="radio" name="strengths" value="Engineering">Engineering <br>
@@ -223,10 +203,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label>Weaknesses:</label>
         <div>
             <input type="radio" name="weaknesses" value="American University Program">American University Program <br>
-            <input type="radio" name="weaknesses" value="Art & Design">Art & Design <br>
-            <input type="radio" name="weaknesses" value="Biotechnology & Life Science">Biotechnology & Life Science <br>
+            <input type="radio" name="weaknesses" value="Art and Design">Art and Design <br>
+            <input type="radio" name="weaknesses" value="Biotechnology and Life Science">Biotechnology and Life Science <br>
             <input type="radio" name="weaknesses" value="Business">Business <br>
-            <input type="radio" name="weaknesses" value="Computing & IT">Computing & IT <br>
+            <input type="radio" name="weaknesses" value="Computing and IT">Computing and IT <br>
             <input type="radio" name="weaknesses" value="Computer Science">Computer Science <br>
             <input type="radio" name="weaknesses" value="Marketing">Marketing <br>
             <input type="radio" name="weaknesses" value="Engineering">Engineering <br>
