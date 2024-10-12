@@ -94,7 +94,7 @@
         <!-- Navigation Panel -->
         <nav>
             <ul class="nav_links">
-                <li><a class='nav_anc' href="study_buddies.php">Buddies</a></li>
+                <li><a class='nav_anc' href="submit_skills.php">Buddies</a></li>
                 <li><a class='nav_anc' href="#">Achievements</a></li>
                 <li><a class='nav_anc' href="#">Community</a></li>
                 <!-- <li><a class='nav_anc' href="#">Chats</a></li>

@@ -21,8 +21,8 @@ By doing so it allows a mutual support among each other.
 - header_mentor.php
 
 ## Finding Buddies
-- study_buddies.php
-- study_buddies_dummy.php
+- study_buddies.php (old)
+- study_buddies_dummy.php (old)
 - profile.php
 - submit_skills.php
 - find_buddies.php

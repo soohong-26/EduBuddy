@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
         $result = $stmt->get_result();
 
-        // Fetch and store the matched results
+        
         while ($row = $result->fetch_assoc()) {
             $matches[] = $row;
         }

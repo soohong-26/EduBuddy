@@ -23,8 +23,8 @@ if ($user_data && isset($user_data['weaknesses'])) {
     $weaknesses = $user_data['weaknesses']; // Safely assign weaknesses if available
 }
 
+// Search for matches based on the user's weaknesses
 if (!empty($weaknesses)) {
-    // Search for matches based on the user's weaknesses
     $sql = "
         SELECT u.username, s.strengths, s.weaknesses
         FROM users u
@@ -35,8 +35,9 @@ if (!empty($weaknesses)) {
     $stmt->execute();
     $result = $stmt->get_result();
 
+    // Fetch and store the matched results
     while ($row = $result->fetch_assoc()) {
-        $matches[] = $row; // Store each match
+        $matches[] = $row; 
     }
     $stmt->close();
 }
@@ -170,28 +171,58 @@ $conn->close();
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+
+        /* General Toggle Button Styling */
+        .toggle-button {
+            display: inline-block;
+            width: 200px;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Active Button Styling */
+        .active-button {
+            background-color: #004C8C; /* Darker shade for the active page */
+        }
     </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
     <?php include 'header.php'; ?>
 
-    <h2>Your Study Buddies</h2>
+    <!-- Navigation Buttons -->
+    <div>
+        <a href="submit_skills.php" class="toggle-button <?php echo basename(__FILE__) == 'submit_skills.php' ? 'active-button' : ''; ?>">Submit Your Skills</a>
+        <a href="find_buddies.php" class="toggle-button <?php echo basename(__FILE__) == 'find_buddies.php' ? 'active-button' : ''; ?>">View Study Buddies</a>
+    </div>
+
+    <h2 class="title-page">Your Study Buddies</h2>
     <div class="buddies-list">
         <ul>
             <?php if (!empty($matches)) : ?>
                 <?php foreach ($matches as $match) : ?>
                     <li>
-                        <strong><?php echo htmlspecialchars($match['username']); ?></strong><br>
-                        Strengths: <?php echo htmlspecialchars($match['strengths']); ?><br>
-                        Weaknesses: <?php echo htmlspecialchars($match['weaknesses']); ?><br>
+                        <strong class="buddy-username"><?php echo htmlspecialchars($match['username']); ?></strong><br>
+                        <span class="buddy-strength">Strengths: <?php echo htmlspecialchars($match['strengths']); ?></span><br>
+                        <span class="buddy-weakness">Weaknesses: <?php echo htmlspecialchars($match['weaknesses']); ?></span><br>
                         <form action="profile.php" method="GET">
                             <input type="hidden" name="username" value="<?php echo urlencode($match['username']); ?>">
-                            <button type="submit">View Profile</button>
+                            <button type="submit" class="view-profile-button">View Profile</button>
                         </form>
                     </li>
                 <?php endforeach; ?>
             <?php else : ?>
-                <li>No matches found.</li>
+                <li class="buddy-none">No matches found.</li>
             <?php endif; ?>
         </ul>
     </div>

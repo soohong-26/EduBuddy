@@ -155,28 +155,72 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+
+        /* General Toggle Button Styling */
+        .toggle-button {
+            display: inline-block;
+            width: 200px;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Active Button Styling */
+        .active-button {
+            background-color: #004C8C; /* Darker shade for the active page */
+        }
     </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
     <?php include 'header.php'; ?>
 
-    <h2>Fill Out Your Skills to Find Study Buddies</h2>
+    <!-- Navigation Buttons -->
+    <div>
+        <a href="submit_skills.php" class="toggle-button <?php echo basename(__FILE__) == 'submit_skills.php' ? 'active-button' : ''; ?>">Submit Your Skills</a>
+        <a href="find_buddies.php" class="toggle-button <?php echo basename(__FILE__) == 'find_buddies.php' ? 'active-button' : ''; ?>">View Study Buddies</a>
+    </div>
+
+    <h2 class="title-page">Fill Out Your Skills to Find Study Buddies</h2>
     <form action="" method="POST" class="skills-form">
         <!-- Input fields for strengths, weaknesses, and extra skills -->
         <div>
             <label>Strengths:</label>
             <div>
-                <input type="radio" name="strengths" value="American University Program">American University Program<br>
-                <input type="radio" name="strengths" value="Art and Design">Art and Design<br>
-                <!-- Add more options as needed -->
+            <input type="radio" name="strengths" value="American University Program">American University Program <br>
+            <input type="radio" name="strengths" value="Art and Design">Art and Design <br>
+            <input type="radio" name="strengths" value="Biotechnology and Life Science">Biotechnology and Life Science <br>
+            <input type="radio" name="strengths" value="Business">Business <br>
+            <input type="radio" name="strengths" value="Computing and IT">Computing and IT <br>
+            <input type="radio" name="strengths" value="Computer Science">Computer Science <br>
+            <input type="radio" name="strengths" value="Marketing">Marketing <br>
+            <input type="radio" name="strengths" value="Engineering">Engineering <br>
+            <input type="radio" name="strengths" value="Fashion Design">Fashion Design <br>
+            <input type="radio" name="strengths" value="Management">Management <br>
             </div>
         </div>
         <div>
             <label>Weaknesses:</label>
             <div>
-                <input type="radio" name="weaknesses" value="Computing and IT">Computing and IT<br>
-                <input type="radio" name="weaknesses" value="Engineering">Engineering<br>
-                <!-- Add more options as needed -->
+            <input type="radio" name="weaknesses" value="American University Program">American University Program <br>
+            <input type="radio" name="weaknesses" value="Art and Design">Art and Design <br>
+            <input type="radio" name="weaknesses" value="Biotechnology and Life Science">Biotechnology and Life Science <br>
+            <input type="radio" name="weaknesses" value="Business">Business <br>
+            <input type="radio" name="weaknesses" value="Computing and IT">Computing and IT <br>
+            <input type="radio" name="weaknesses" value="Computer Science">Computer Science <br>
+            <input type="radio" name="weaknesses" value="Marketing">Marketing <br>
+            <input type="radio" name="weaknesses" value="Engineering">Engineering <br>
+            <input type="radio" name="weaknesses" value="Fashion Design">Fashion Design <br>
+            <input type="radio" name="weaknesses" value="Management">Management <br>
             </div>
         </div>
         <div>
