@@ -9,7 +9,6 @@ if (!isset($_SESSION['username'])) {
 
 $username = $_SESSION['username']; // Fetch the logged-in user's username
 $matches = []; // Initialize matches array
-$weaknesses = ''; // Initialize weaknesses variable
 
 // Retrieve the user's weaknesses
 $sql = "SELECT weaknesses FROM skills WHERE username = ?";
@@ -19,25 +18,26 @@ $stmt->execute();
 $result = $stmt->get_result();
 $user_data = $result->fetch_assoc();
 
-if ($user_data && isset($user_data['weaknesses'])) {
-    $weaknesses = $user_data['weaknesses']; // Safely assign weaknesses if available
-}
+$weaknesses = $user_data ? $user_data['weaknesses'] : '';
 
-// Search for matches based on the user's weaknesses
+// Search for matches based on weaknesses
 if (!empty($weaknesses)) {
-    $sql = "
-        SELECT u.username, s.strengths, s.weaknesses
-        FROM users u
-        JOIN skills s ON u.username = s.username
-        WHERE s.strengths LIKE CONCAT('%', ?, '%') AND u.username != ?";
+    $weaknessArray = explode(',', $weaknesses); // Split weaknesses into an array
+    $sql = "SELECT u.username, s.strengths, s.weaknesses FROM users u
+            JOIN skills s ON u.username = s.username
+            WHERE u.username != ?";
+    foreach ($weaknessArray as $weakness) {
+        $sql .= " AND FIND_IN_SET('" . $conn->real_escape_string(trim($weakness)) . "', s.strengths) > 0";
+    }
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $weaknesses, $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Fetch and store the matched results
-    while ($row = $result->fetch_assoc()) {
-        $matches[] = $row; 
+    $stmt->bind_param("s", $username);
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $matches[] = $row;
+        }
+    } else {
+        echo "SQL Error: " . $stmt->error;
     }
     $stmt->close();
 }
@@ -63,7 +63,7 @@ $conn->close();
         .title-page {
             color: #7AA3CC;
             font-family: "Poppins", sans-serif;
-            margin: 0 0 20px 20px;
+            margin: 0 0 20px 25px;
         }
 
         /* Form Submission */
@@ -177,6 +177,7 @@ $conn->close();
             display: inline-block;
             width: 200px;
             padding: 10px;
+            margin: 0 8px 0 0;
             background-color: #007BFF;
             color: white;
             text-align: center;
@@ -190,9 +191,13 @@ $conn->close();
             background-color: #0056b3;
         }
 
-        /* Active Button Styling */
         .active-button {
-            background-color: #004C8C; /* Darker shade for the active page */
+            background-color: #004C8C; 
+        }
+
+        /* Button Container */
+        .button-container {
+            margin: 0 0 15px 25px;
         }
     </style>
 </head>
@@ -201,7 +206,7 @@ $conn->close();
     <?php include 'header.php'; ?>
 
     <!-- Navigation Buttons -->
-    <div>
+    <div class="button-container">
         <a href="submit_skills.php" class="toggle-button <?php echo basename(__FILE__) == 'submit_skills.php' ? 'active-button' : ''; ?>">Submit Your Skills</a>
         <a href="find_buddies.php" class="toggle-button <?php echo basename(__FILE__) == 'find_buddies.php' ? 'active-button' : ''; ?>">View Study Buddies</a>
     </div>

@@ -28,5 +28,7 @@ By doing so it allows a mutual support among each other.
 - find_buddies.php
 
 # To-Do
+- Generate a display in the submit_skills to show the user whether is there anything submitted in the profile at the moment or it is blank
+- Change from checkboxes to radio
 - Create a community forum
-- Create a toggle button to switch between the find and submit buddies
+- Make the profile page

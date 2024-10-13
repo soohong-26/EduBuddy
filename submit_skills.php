@@ -1,31 +1,29 @@
 <?php
 require 'database.php'; // Include the database connection
 
-// Ensure the user is logged in
 if (!isset($_SESSION['username'])) {
-    header('Location: login.php');
+    header('Location: login.php'); // Redirect if not logged in
     exit;
 }
 
 $username = $_SESSION['username']; // Fetch the logged-in user's username
 
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $strengths = isset($_POST['strengths']) ? htmlspecialchars($_POST['strengths']) : '';
-    $weaknesses = isset($_POST['weaknesses']) ? htmlspecialchars($_POST['weaknesses']) : '';
+    $strengths = isset($_POST['strengths']) ? implode(',', $_POST['strengths']) : ''; // Convert array to string
+    $weaknesses = isset($_POST['weaknesses']) ? implode(',', $_POST['weaknesses']) : ''; // Convert array to string
     $extra_skills = htmlspecialchars($_POST['extra_skills']);
 
-    // Insert data into the skills table or update existing entries
     $sql = "INSERT INTO skills (username, strengths, weaknesses, extra_skills) VALUES (?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE strengths = ?, weaknesses = ?, extra_skills = ?";
+            ON DUPLICATE KEY UPDATE strengths = VALUES(strengths), weaknesses = VALUES(weaknesses), extra_skills = VALUES(extra_skills)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssss", $username, $strengths, $weaknesses, $extra_skills, $strengths, $weaknesses, $extra_skills);
-    $stmt->execute();
+    $stmt->bind_param("ssss", $username, $strengths, $weaknesses, $extra_skills);
+    if ($stmt->execute()) {
+        header("Location: find_buddies.php"); // Redirect to find buddies page on successful insertion
+        exit;
+    } else {
+        echo "SQL Error: " . $stmt->error; // Display SQL errors if any
+    }
     $stmt->close();
-
-    // Redirect to the search results page
-    header("Location: find_buddies.php");
-    exit;
 }
 ?>
 
@@ -47,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .title-page {
             color: #7AA3CC;
             font-family: "Poppins", sans-serif;
-            margin: 0 0 20px 20px;
+            margin: 0 0 20px 25px;
         }
 
         /* Form Submission */
@@ -126,18 +124,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         /* Extra Skills */
         .extra-skills-placeholder {
             width: 250px;
-            padding: 5px;
+            padding: 8px 8px 8px 8px;
             margin: 5px 0 5px 0;
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.2);
             color: var(--text);
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .extra-skills-button {
             width: 150px;
-            padding: 10px;
-            margin: 10px 0 10px 0;
+            padding: 7px;
+            margin: 4px 0 10px 0;
             border-radius: 5px;
             color: white;
             font-size: 16px;
@@ -161,6 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: inline-block;
             width: 200px;
             padding: 10px;
+            margin: 0 8px 0 0;
             background-color: #007BFF;
             color: white;
             text-align: center;
@@ -174,9 +173,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background-color: #0056b3;
         }
 
-        /* Active Button Styling */
         .active-button {
-            background-color: #004C8C; /* Darker shade for the active page */
+            background-color: #004C8C; 
+        }
+
+        /* Button Container */
+        .button-container {
+            margin: 0 0 15px 25px;
         }
     </style>
 </head>
@@ -185,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php include 'header.php'; ?>
 
     <!-- Navigation Buttons -->
-    <div>
+    <div class="button-container">
         <a href="submit_skills.php" class="toggle-button <?php echo basename(__FILE__) == 'submit_skills.php' ? 'active-button' : ''; ?>">Submit Your Skills</a>
         <a href="find_buddies.php" class="toggle-button <?php echo basename(__FILE__) == 'find_buddies.php' ? 'active-button' : ''; ?>">View Study Buddies</a>
     </div>
@@ -196,38 +199,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div>
             <label>Strengths:</label>
             <div>
-            <input type="radio" name="strengths" value="American University Program">American University Program <br>
-            <input type="radio" name="strengths" value="Art and Design">Art and Design <br>
-            <input type="radio" name="strengths" value="Biotechnology and Life Science">Biotechnology and Life Science <br>
-            <input type="radio" name="strengths" value="Business">Business <br>
-            <input type="radio" name="strengths" value="Computing and IT">Computing and IT <br>
-            <input type="radio" name="strengths" value="Computer Science">Computer Science <br>
-            <input type="radio" name="strengths" value="Marketing">Marketing <br>
-            <input type="radio" name="strengths" value="Engineering">Engineering <br>
-            <input type="radio" name="strengths" value="Fashion Design">Fashion Design <br>
-            <input type="radio" name="strengths" value="Management">Management <br>
+            <input type="checkbox" name="strengths[]" value="American University Program">American University Program<br>
+            <input type="checkbox" name="strengths[]" value="Art and Design">Art and Design<br>
+            <!-- Add more checkboxes as needed -->
             </div>
         </div>
         <div>
             <label>Weaknesses:</label>
             <div>
-            <input type="radio" name="weaknesses" value="American University Program">American University Program <br>
-            <input type="radio" name="weaknesses" value="Art and Design">Art and Design <br>
-            <input type="radio" name="weaknesses" value="Biotechnology and Life Science">Biotechnology and Life Science <br>
-            <input type="radio" name="weaknesses" value="Business">Business <br>
-            <input type="radio" name="weaknesses" value="Computing and IT">Computing and IT <br>
-            <input type="radio" name="weaknesses" value="Computer Science">Computer Science <br>
-            <input type="radio" name="weaknesses" value="Marketing">Marketing <br>
-            <input type="radio" name="weaknesses" value="Engineering">Engineering <br>
-            <input type="radio" name="weaknesses" value="Fashion Design">Fashion Design <br>
-            <input type="radio" name="weaknesses" value="Management">Management <br>
+            <input type="checkbox" name="weaknesses[]" value="American University Program">American University Program<br>
+            <input type="checkbox" name="weaknesses[]" value="Art and Design">Art and Design<br>
+            <!-- Add more checkboxes as needed -->
             </div>
         </div>
         <div>
             <label>Extra Skills:</label>
-            <input type="text" name="extra_skills" placeholder="Type your extra skills">
+            <input type="text" name="extra_skills" placeholder="Type your extra skills" class="extra-skills-placeholder">
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" class="extra-skills-button">Submit</button>
     </form>
 </body>
 </html>
