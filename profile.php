@@ -52,8 +52,8 @@ $stmt->close();
     <title><?php echo htmlspecialchars($user['username']); ?>'s Profile</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: "Poppins", sans-serif;
+            background-color: #212121;
             margin: 20px;
             padding: 20px;
         }
@@ -89,14 +89,21 @@ $stmt->close();
             margin-bottom: 20px;
         }
 
-        .back-link {
+        /* Back button for profile */
+        .back-button {
+            display: inline-block;
+            width: 200px;
+            padding: 10px;
+            margin: 0 8px 0 0;
+            background-color: rgba(0, 99, 158, .4);
+            color: white;
+            text-align: center;
+            border-radius: 5px;
             text-decoration: none;
-            color: #007BFF;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
         }
 
-        .back-link:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
@@ -126,7 +133,8 @@ $stmt->close();
         <span class="profile-label">Extra Skills:</span> <?php echo htmlspecialchars($user['extra_skills']); ?>
     </p>
 
-    <a href="find_buddies.php" class="back-link">Back to Study Buddies</a>
+    <!-- Back button -->
+     <button class="back-button" onclick="window.location.href = 'find_buddies.php'">Back To Study Buddy</button>
 </div>
 
 </body>

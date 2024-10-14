@@ -170,6 +170,11 @@ $conn->close();
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            background-color: rgba(0, 136, 169, 1);
+        }
+
+        .view-profile-button:hover {
+            background-color: rgba(0, 136, 169, 0.8);
         }
 
         /* General Toggle Button Styling */
@@ -178,7 +183,7 @@ $conn->close();
             width: 200px;
             padding: 10px;
             margin: 0 8px 0 0;
-            background-color: #007BFF;
+            background-color: rgba(0, 99, 158, .4);
             color: white;
             text-align: center;
             border-radius: 5px;
@@ -188,11 +193,11 @@ $conn->close();
         }
 
         .toggle-button:hover {
-            background-color: #0056b3;
+            background-color: rgba(0, 136, 169, 0.8);
         }
 
         .active-button {
-            background-color: #004C8C; 
+            background-color: rgba(0, 136, 169, 1);
         }
 
         /* Button Container */

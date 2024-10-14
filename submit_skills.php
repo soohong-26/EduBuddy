@@ -174,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             width: 200px;
             padding: 10px;
             margin: 0 8px 0 0;
-            background-color: #007BFF;
+            background-color: rgba(0, 99, 158, .4);
             color: white;
             text-align: center;
             border-radius: 5px;
@@ -184,11 +184,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .toggle-button:hover {
-            background-color: #0056b3;
+            background-color: rgba(0, 136, 169, 0.8);
         }
 
         .active-button {
-            background-color: #004C8C; 
+            background-color: rgba(0, 136, 169, 1);
         }
 
         /* Button Container */
@@ -408,7 +408,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Button -->
     <button type="submit" class="extra-skills-button">Submit</button>
-    
+
     </form>
 </body>
 </html>
