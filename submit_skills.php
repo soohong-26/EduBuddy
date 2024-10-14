@@ -1,16 +1,22 @@
+<!-- PHP -->
 <?php
-require 'database.php'; // Include the database connection
+// Include the database connection
+require 'database.php'; 
 
 if (!isset($_SESSION['username'])) {
-    header('Location: login.php'); // Redirect if not logged in
+    // Redirect if not logged in
+    header('Location: login.php'); 
     exit;
 }
 
-$username = $_SESSION['username']; // Fetch the logged-in user's username
+// Fetch the logged-in user's username
+$username = $_SESSION['username']; 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $strengths = isset($_POST['strengths']) ? implode(',', $_POST['strengths']) : ''; // Convert array to string
-    $weaknesses = isset($_POST['weaknesses']) ? implode(',', $_POST['weaknesses']) : ''; // Convert array to string
+    // Convert array to string
+    $strengths = isset($_POST['strengths']) ? implode(',', $_POST['strengths']) : ''; 
+    // Convert array to string
+    $weaknesses = isset($_POST['weaknesses']) ? implode(',', $_POST['weaknesses']) : ''; 
     $extra_skills = htmlspecialchars($_POST['extra_skills']);
 
     $sql = "INSERT INTO skills (username, strengths, weaknesses, extra_skills) VALUES (?, ?, ?, ?)
@@ -18,15 +24,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssss", $username, $strengths, $weaknesses, $extra_skills);
     if ($stmt->execute()) {
-        header("Location: find_buddies.php"); // Redirect to find buddies page on successful insertion
+        // Redirect to find buddies page on successful insertion
+        header("Location: find_buddies.php"); 
         exit;
     } else {
-        echo "SQL Error: " . $stmt->error; // Display SQL errors if any
+        // Display SQL errors if any
+        echo "SQL Error: " . $stmt->error; 
     }
     $stmt->close();
 }
 ?>
 
+<!-- HTML -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,6 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin: 10px 0 5px 0;
             display: block;
             font-weight: bold;
+            font-size: 18px;
         }
 
         input[type="checkbox"], input[type="text"] {
@@ -77,6 +87,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         button:hover {
             background-color: #0056b3;
+        }
+
+        .sub-title {
+            font-size: 18px;
         }
 
         /* Output Buddies */
@@ -181,6 +195,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .button-container {
             margin: 0 0 15px 25px;
         }
+
+        /* Flex Container for strengths and weaknesses */
+        .strengths-container, .weaknesses-container {
+            display: flex;
+            justify-content: space-between; /* Ensures spacing between columns */
+            margin-bottom: 20px;
+        }
+
+        /* Column styling */
+        .strength-column, .weakness-column {
+            flex: 1; /* Each column takes equal space */
+            padding: 10px; /* Adds padding around the content of each column */
+        }
+
+
     </style>
 </head>
 <body>
@@ -197,26 +226,189 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <form action="" method="POST" class="skills-form">
         <!-- Input fields for strengths, weaknesses, and extra skills -->
         <div>
+            <!-- Strengths -->
             <label>Strengths:</label>
-            <div>
-            <input type="checkbox" name="strengths[]" value="American University Program">American University Program<br>
-            <input type="checkbox" name="strengths[]" value="Art and Design">Art and Design<br>
-            <!-- Add more checkboxes as needed -->
+
+            <div class="strengths-container">
+                <div class="strength-column">
+                    <!-- Art and Design -->
+                    <div>
+                        <h3 class="sub-title">Art and Design</h3>
+                            <input type="checkbox" name="strengths[]" value="Art and Design History">Art and Design History<br>
+                            <input type="checkbox" name="strengths[]" value="3D Design">3D Design<br>
+                            <input type="checkbox" name="strengths[]" value="Design Elements">Design Elements<br>
+                            <input type="checkbox" name="strengths[]" value="Design Principles">Design Principles<br>
+                            <input type="checkbox" name="strengths[]" value="Drawing">Drawing<br>
+                            <input type="checkbox" name="strengths[]" value="Digital Graphics">Digital Graphics<br>
+                            <input type="checkbox" name="strengths[]" value="Photography">Photography<br>
+                            <input type="checkbox" name="strengths[]" value="Painting and Printing Techniques">Painting and Printing Techniques<br>
+                    </div>
+                </div>
+
+                <div class="strength-column">
+                    <!-- Biotechnology and Life Science -->
+                    <div>
+                        <h3 class="sub-title">Biotechnology and Life Science</h3>
+                            <input type="checkbox" name="strengths[]" value="Biology">Biology<br>
+                            <input type="checkbox" name="strengths[]" value="Chemistry">Chemistry<br>
+                            <input type="checkbox" name="strengths[]" value="Biotechnology">Biotechnology<br>
+                            <input type="checkbox" name="strengths[]" value="Mathematics and Statistics">Mathematics and Statistics<br>
+                            <input type="checkbox" name="strengths[]" value="Biochemistry">Biochemistry<br>
+                            <input type="checkbox" name="strengths[]" value="Argrobiotechnology">Argrobiotechnology<br>
+                    </div>
+                </div>
+
+                <div class="strength-column">
+                    <!-- Business -->
+                    <div>
+                        <h3 class="sub-title">Business</h3>
+                            <input type="checkbox" name="strengths[]" value="Accounting">Accounting<br>
+                            <input type="checkbox" name="strengths[]" value="Ethics">Ethics<br>
+                            <input type="checkbox" name="strengths[]" value="Entrepreneurship">Entrepreneurship<br>
+                            <input type="checkbox" name="strengths[]" value="Financial Management">Financial Management<br>
+                            <input type="checkbox" name="strengths[]" value="Human Resources">Human Resources<br>
+                            <input type="checkbox" name="strengths[]" value="Information Management">Information Management<br>
+                            <input type="checkbox" name="strengths[]" value="Marketing Principles">Marketing Principles<br>
+                            <input type="checkbox" name="strengths[]" value="Operation Management">Operation Management<br>
+                            <input type="checkbox" name="strengths[]" value="Leadership in Organisation">Leadership in Organisation<br>
+                            <input type="checkbox" name="strengths[]" value="Business Mathematics">Business Mathematics<br>
+                            <input type="checkbox" name="strengths[]" value="Marketing">Marketing<br>
+                    </div>
+                </div>
+
+                <div class="strength-column">
+                    <!-- Computing and IT -->
+                    <div>
+                        <h3 class="sub-title">Computing and IT</h3>
+                            <input type="checkbox" name="strengths[]" value="Programming">Programming<br>
+                            <input type="checkbox" name="strengths[]" value="Discrete Mathematics">Discrete Mathematics<br>
+                            <input type="checkbox" name="strengths[]" value="Internet Technology and Application">Internet Technology and Application<br>
+                            <input type="checkbox" name="strengths[]" value="Database Management">Database Management<br>
+                            <input type="checkbox" name="strengths[]" value="Networking">Networking<br>
+                            <input type="checkbox" name="strengths[]" value="System Analysis and Design">System Analysis and Design<br>
+                            <input type="checkbox" name="strengths[]" value="Rapid Application Development">Rapid Application Development<br>
+                            <input type="checkbox" name="strengths[]" value="Computer Architecture">Computer Architecture<br>
+                            <input type="checkbox" name="strengths[]" value="Data Structures">Data Structures<br>
+                            <input type="checkbox" name="strengths[]" value="Software Engineering">Software Engineering<br>
+                            <input type="checkbox" name="strengths[]" value="IT Project Management">IT Project Management<br>
+                    </div>
+                </div>
+                
+                <div class="strength-column">
+                    <!-- Engineering -->
+                    <div>
+                        <h3 class="sub-title">Engineering</h3>
+                            <input type="checkbox" name="strengths[]" value="Electrical Circuits">Electrical Circuits<br>
+                            <input type="checkbox" name="strengths[]" value="Engineering Mathematics">Engineering Mathematics<br>
+                            <input type="checkbox" name="strengths[]" value="Fluid Mechanics">Fluid Mechanics<br>
+                            <input type="checkbox" name="strengths[]" value="Thermodynamics">Thermodynamics<br>
+                            <input type="checkbox" name="strengths[]" value="Design of Machine Elements">Design of Machine Elements<br>
+                            <input type="checkbox" name="strengths[]" value="Engineering Geology">Engineering Geology<br>
+                            <input type="checkbox" name="strengths[]" value="Structural Analysis">Structural Analysis<br>
+                            <input type="checkbox" name="strengths[]" value="Civil Engineering Materials">Civil Engineering Materials<br>
+                            <input type="checkbox" name="strengths[]" value="Digital Electronics">Digital Electronics<br>
+                            <input type="checkbox" name="strengths[]" value="Control Systems">Control Systems<br>
+                    </div>
+                </div>
             </div>
-        </div>
+        </div> 
+
+        <!-- Weaknesses -->
         <div>
             <label>Weaknesses:</label>
-            <div>
-            <input type="checkbox" name="weaknesses[]" value="American University Program">American University Program<br>
-            <input type="checkbox" name="weaknesses[]" value="Art and Design">Art and Design<br>
-            <!-- Add more checkboxes as needed -->
+            <div class="weaknesses-container">
+                <div class="weakness-column">
+                    <!-- Art and Design -->
+                    <div>
+                        <h3 class="sub-title">Art and Design</h3>
+                            <input type="checkbox" name="weaknesses[]" value="Art and Design History">Art and Design History<br>
+                            <input type="checkbox" name="weaknesses[]" value="3D Design">3D Design<br>
+                            <input type="checkbox" name="weaknesses[]" value="Design Elements">Design Elements<br>
+                            <input type="checkbox" name="weaknesses[]" value="Design Principles">Design Principles<br>
+                            <input type="checkbox" name="weaknesses[]" value="Drawing">Drawing<br>
+                            <input type="checkbox" name="weaknesses[]" value="Digital Graphics">Digital Graphics<br>
+                            <input type="checkbox" name="weaknesses[]" value="Photography">Photography<br>
+                            <input type="checkbox" name="weaknesses[]" value="Painting and Printing Techniques">Painting and Printing Techniques<br>
+                    </div>
+                </div>
+
+            <div class="weakness-column">
+                <!-- Biotechnology and Life Science -->
+                <div>
+                    <h3 class="sub-title">Biotechnology and Life Science</h3>
+                        <input type="checkbox" name="weaknesses[]" value="Biology">Biology<br>
+                        <input type="checkbox" name="weaknesses[]" value="Chemistry">Chemistry<br>
+                        <input type="checkbox" name="weaknesses[]" value="Biotechnology">Biotechnology<br>
+                        <input type="checkbox" name="weaknesses[]" value="Mathematics and Statistics">Mathematics and Statistics<br>
+                        <input type="checkbox" name="weaknesses[]" value="Biochemistry">Biochemistry<br>
+                        <input type="checkbox" name="weaknesses[]" value="Argrobiotechnology">Argrobiotechnology<br>
+                </div>
+            </div>
+
+            <div class="weakness-column">
+                <!-- Business -->
+                <div>
+                    <h3 class="sub-title">Business</h3>
+                        <input type="checkbox" name="weaknesses[]" value="Accounting">Accounting<br>
+                        <input type="checkbox" name="weaknesses[]" value="Ethics">Ethics<br>
+                        <input type="checkbox" name="weaknesses[]" value="Entrepreneurship">Entrepreneurship<br>
+                        <input type="checkbox" name="weaknesses[]" value="Financial Management">Financial Management<br>
+                        <input type="checkbox" name="weaknesses[]" value="Human Resources">Human Resources<br>
+                        <input type="checkbox" name="weaknesses[]" value="Information Management">Information Management<br>
+                        <input type="checkbox" name="weaknesses[]" value="Marketing Principles">Marketing Principles<br>
+                        <input type="checkbox" name="weaknesses[]" value="Operation Management">Operation Management<br>
+                        <input type="checkbox" name="weaknesses[]" value="Leadership in Organisation">Leadership in Organisation<br>
+                        <input type="checkbox" name="weaknesses[]" value="Business Mathematics">Business Mathematics<br>
+                        <input type="checkbox" name="weaknesses[]" value="Marketing">Marketing<br>
+                </div>
+            </div>
+
+            <div class="weakness-column">
+                <!-- Computing and IT -->
+                <div>
+                    <h3 class="sub-title">Computing and IT</h3>
+                        <input type="checkbox" name="weaknesses[]" value="Programming">Programming<br>
+                        <input type="checkbox" name="weaknesses[]" value="Discrete Mathematics">Discrete Mathematics<br>
+                        <input type="checkbox" name="weaknesses[]" value="Internet Technology and Application">Internet Technology and Application<br>
+                        <input type="checkbox" name="weaknesses[]" value="Database Management">Database Management<br>
+                        <input type="checkbox" name="weaknesses[]" value="Networking">Networking<br>
+                        <input type="checkbox" name="weaknesses[]" value="System Analysis and Design">System Analysis and Design<br>
+                        <input type="checkbox" name="weaknesses[]" value="Rapid Application Development">Rapid Application Development<br>
+                        <input type="checkbox" name="weaknesses[]" value="Computer Architecture">Computer Architecture<br>
+                        <input type="checkbox" name="weaknesses[]" value="Data Structures">Data Structures<br>
+                        <input type="checkbox" name="weaknesses[]" value="Software Engineering">Software Engineering<br>
+                        <input type="checkbox" name="weaknesses[]" value="IT Project Management">IT Project Management<br>
+                </div>
+            </div>
+            
+            <div class="weakness-column">
+                <!-- Engineering -->
+                <div>
+                    <h3 class="sub-title">Engineering</h3>
+                        <input type="checkbox" name="weaknesses[]" value="Electrical Circuits">Electrical Circuits<br>
+                        <input type="checkbox" name="weaknesses[]" value="Engineering Mathematics">Engineering Mathematics<br>
+                        <input type="checkbox" name="weaknesses[]" value="Fluid Mechanics">Fluid Mechanics<br>
+                        <input type="checkbox" name="weaknesses[]" value="Thermodynamics">Thermodynamics<br>
+                        <input type="checkbox" name="weaknesses[]" value="Design of Machine Elements">Design of Machine Elements<br>
+                        <input type="checkbox" name="weaknesses[]" value="Engineering Geology">Engineering Geology<br>
+                        <input type="checkbox" name="weaknesses[]" value="Structural Analysis">Structural Analysis<br>
+                        <input type="checkbox" name="weaknesses[]" value="Civil Engineering Materials">Civil Engineering Materials<br>
+                        <input type="checkbox" name="weaknesses[]" value="Digital Electronics">Digital Electronics<br>
+                        <input type="checkbox" name="weaknesses[]" value="Control Systems">Control Systems<br>
+                </div>
             </div>
         </div>
-        <div>
-            <label>Extra Skills:</label>
-            <input type="text" name="extra_skills" placeholder="Type your extra skills" class="extra-skills-placeholder">
-        </div>
-        <button type="submit" class="extra-skills-button">Submit</button>
+    </div>
+
+    <!-- Extra skills section -->
+    <div>
+        <label>Extra Skills:</label>
+        <input type="text" name="extra_skills" placeholder="Type your extra skills" class="extra-skills-placeholder">
+    </div>
+
+    <!-- Button -->
+    <button type="submit" class="extra-skills-button">Submit</button>
+    
     </form>
 </body>
 </html>

@@ -126,7 +126,7 @@ $stmt->close();
         <span class="profile-label">Extra Skills:</span> <?php echo htmlspecialchars($user['extra_skills']); ?>
     </p>
 
-    <a href="study_buddies.php" class="back-link">Back to Study Buddies</a>
+    <a href="find_buddies.php" class="back-link">Back to Study Buddies</a>
 </div>
 
 </body>

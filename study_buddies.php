@@ -1,3 +1,4 @@
+<!-- PHP -->
 <?php
 require 'database.php'; // Include the database connection
 
@@ -47,12 +48,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
+<!-- HTML -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduBuddy - Find Study Buddies</title>
+    <!-- CSS -->
     <style>
         body {
             font-family: "Poppins", sans-serif;
