@@ -106,7 +106,7 @@ $stmt->close();
             display: inline-block;
             width: 200px;
             padding: 10px;
-            margin: 10px 0 0 0;
+            margin: 10px 0 19px 0;
             background-color: rgba(0, 99, 158, 1);
             color: white;
             text-align: center;

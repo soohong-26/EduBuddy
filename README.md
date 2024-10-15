@@ -30,3 +30,4 @@ By doing so it allows a mutual support among each other.
 # To-Do
 - Generate a display in the submit_skills to show the user whether is there anything submitted in the profile at the moment or it is blank
 - Create a community forum
+- Fix the issue where the username only can be retrieving data if there are no spaces
