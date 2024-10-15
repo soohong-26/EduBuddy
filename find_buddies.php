@@ -219,12 +219,20 @@ $conn->close();
     <h2 class="title-page">Your Study Buddies</h2>
     <div class="buddies-list">
         <ul>
+            <!-- Box -->
             <?php if (!empty($matches)) : ?>
                 <?php foreach ($matches as $match) : ?>
                     <li>
+                        <!-- Username -->
                         <strong class="buddy-username"><?php echo htmlspecialchars($match['username']); ?></strong><br>
+
+                        <!-- Strengths -->
                         <span class="buddy-strength">Strengths: <?php echo htmlspecialchars($match['strengths']); ?></span><br>
+
+                        <!-- Weaknesses -->
                         <span class="buddy-weakness">Weaknesses: <?php echo htmlspecialchars($match['weaknesses']); ?></span><br>
+
+                        <!-- Submit button -->
                         <form action="profile.php" method="GET">
                             <input type="hidden" name="username" value="<?php echo urlencode($match['username']); ?>">
                             <button type="submit" class="view-profile-button">View Profile</button>
