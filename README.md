@@ -29,6 +29,4 @@ By doing so it allows a mutual support among each other.
 
 # To-Do
 - Generate a display in the submit_skills to show the user whether is there anything submitted in the profile at the moment or it is blank
-- Change from checkboxes to radio
 - Create a community forum
-- Make the profile page

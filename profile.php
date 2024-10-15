@@ -51,15 +51,19 @@ $stmt->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($user['username']); ?>'s Profile</title>
     <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
         body {
             font-family: "Poppins", sans-serif;
             background-color: #212121;
             margin: 20px;
             padding: 20px;
+            color: white;
         }
 
         .profile-container {
-            background: white;
+            background: #3B4E61;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -70,71 +74,105 @@ $stmt->close();
 
         .profile-header {
             font-size: 24px;
-            color: #007BFF;
+            color: #ffffff;
             margin-bottom: 10px;
         }
 
         .profile-detail {
-            margin: 5px 0;
+            margin: 18px 0;
         }
 
         .profile-label {
-            font-weight: bold;
+            font-weight: 600;
         }
 
         .profile-img {
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            margin-bottom: 20px;
+            display: block;
+            margin: 15px auto 10px auto;
         }
 
-        /* Back button for profile */
+        /* Container for the back button to center it */
+        .button-container {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            width: 100%; /* Take full width of the profile container */
+        }
+
         .back-button {
+            font-family: "Poppins", sans-serif;
             display: inline-block;
             width: 200px;
             padding: 10px;
-            margin: 0 8px 0 0;
-            background-color: rgba(0, 99, 158, .4);
+            margin: 10px 0 0 0;
+            background-color: rgba(0, 99, 158, 1);
             color: white;
             text-align: center;
+            border: none;
             border-radius: 5px;
-            text-decoration: none;
             font-size: 16px;
             transition: background-color 0.3s ease;
         }
-
     </style>
 </head>
 <body>
 
 <div class="profile-container">
+
+    <!-- Username -->
     <h2 class="profile-header"><?php echo htmlspecialchars($user['username']); ?>'s Profile</h2>
 
-    <?php if (!empty($user['profile_img'])) : ?>
-        <img src="<?php echo htmlspecialchars($user['profile_img']); ?>" alt="Profile Image" class="profile-img">
-    <?php else : ?>
-        <img src="default-profile.png" alt="Default Profile Image" class="profile-img">
-    <?php endif; ?>
+    <!-- Profile picture -->
+    <?php 
+    // Check if the profile image is not empty and exists
+    $profileImagePath = !empty($user['profile_img']) ? $user['profile_img'] : "images/profile.png";
+    ?>
+    <img src="<?php echo htmlspecialchars($profileImagePath); ?>" alt="Profile Image" class="profile-img">
 
+    <!-- Email -->
     <p class="profile-detail">
-        <span class="profile-label">Email:</span> <?php echo htmlspecialchars($user['email']); ?>
-    </p>
-    <p class="profile-detail">
-        <span class="profile-label">Role:</span> <?php echo htmlspecialchars($user['roles']); ?>
-    </p>
-    <p class="profile-detail">
-        <span class="profile-label">Strengths:</span> <?php echo htmlspecialchars($user['strengths']); ?>
-    </p>
-    <p class="profile-detail">
-        <span class="profile-label">Weaknesses:</span> <?php echo htmlspecialchars($user['weaknesses']); ?>
-    </p>
-    <p class="profile-detail">
-        <span class="profile-label">Extra Skills:</span> <?php echo htmlspecialchars($user['extra_skills']); ?>
+        <span class="profile-label">Email:</span> 
+        <?php echo htmlspecialchars($user['email']); ?>
     </p>
 
-    <!-- Back button -->
-     <button class="back-button" onclick="window.location.href = 'find_buddies.php'">Back To Study Buddy</button>
+    <!-- Roles (student/tutor) -->
+    <p class="profile-detail">
+        <span class="profile-label">Role:</span>
+            <?php
+            // Role indicator
+            echo $user['roles'] === 'student' ? 'Student' : ($user['roles'] === 'tutor' ? 'Tutor' : 'Unknown Role');
+            ?>
+    </p>
+
+    <!-- Strengths -->
+    <p class="profile-detail">
+        <span class="profile-label">Strengths:</span> 
+        <?php echo htmlspecialchars($user['strengths']); ?>
+    </p>
+
+    <!-- Weakness -->
+    <p class="profile-detail">
+        <span class="profile-label">Weaknesses:</span> 
+        <?php echo htmlspecialchars($user['weaknesses']); ?>
+    </p>
+
+    <!-- Extra Skills -->
+    <p class="profile-detail">
+        <span class="profile-label">Extra Skills:</span>
+            <?php
+            // Check if extra_skills is empty or null
+            echo !empty($user['extra_skills']) ? htmlspecialchars($user['extra_skills']) : "None";
+            ?>
+    </p>
+
+    <div class="button-container">
+        <!-- Back button -->
+        <button class="back-button" onclick="window.location.href = 'find_buddies.php'">
+            Back To Study Buddy
+        </button>
+    </div>
 </div>
 
 </body>
