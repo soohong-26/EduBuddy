@@ -1,12 +1,12 @@
 <?php
 include 'database.php'; // Include your database connection
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['username'];
 $buddy_user_id = $_POST['buddy_user_id'];
 
 // Check if the request is valid

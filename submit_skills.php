@@ -34,6 +34,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     $stmt->close();
 }
+
+    // Fetch existing strengths and weaknesses for the user
+    $strengths_display = 'None';
+    $weaknesses_display = 'None';
+
+    $query = "SELECT strengths, weaknesses FROM skills WHERE username = ? ORDER BY id DESC LIMIT 1";
+    if ($stmt = $conn->prepare($query)) {
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $data = $result->fetch_assoc();
+            $strengths_display = !empty($data['strengths']) ? $data['strengths'] : 'None';
+            $weaknesses_display = !empty($data['weaknesses']) ? $data['weaknesses'] : 'None';
+        }
+        $stmt->close();
+    }
+
 ?>
 
 <!-- HTML -->
@@ -210,6 +228,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 10px; /* Adds padding around the content of each column */
         }
 
+        /* Statistics */
+        .stats-container {
+            background-color: #333;
+            color: #ffffff; 
+            padding: 10px; 
+            margin: 10px 0 0 5px; 
+            border-radius: 5px; 
+            display: inline-block; 
+            width: auto; 
+        }
+
+        .stats-container strong {
+            font-weight: 600;
+        }
 
     </style>
 </head>
@@ -221,6 +253,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="button-container">
         <a href="submit_skills.php" class="toggle-button <?php echo basename(__FILE__) == 'submit_skills.php' ? 'active-button' : ''; ?>">Submit Your Skills</a>
         <a href="find_buddies.php" class="toggle-button <?php echo basename(__FILE__) == 'find_buddies.php' ? 'active-button' : ''; ?>">View Study Buddies</a>
+
+        <div class="stats-container">
+            <strong>Current Strengths:</strong> <?php echo $strengths_display; ?>
+        </div>
+
+        <div class="stats-container">
+            <strong>Current Weaknesses:</strong> <?php echo $weaknesses_display; ?>
+        </div>
     </div>
 
     <h2 class="title-page">Fill Out Your Skills to Find Study Buddies</h2>

@@ -1,8 +1,7 @@
-// view_buddies.php
 <?php
 include 'database.php';
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
 }
@@ -20,12 +19,34 @@ $stmt->execute();
 $result = $stmt->get_result();
 ?>
 
-<h2>Your Buddies</h2>
-<ul>
-    <?php while ($row = $result->fetch_assoc()) { ?>
-        <li>
-            <img src="<?php echo $row['profile_img']; ?>" alt="Profile Image" width="50">
-            <?php echo $row['username']; ?>
-        </li>
-    <?php } ?>
-</ul>
+<!-- HTML -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduBuddy - View Buddies</title>
+    <!-- CSS -->
+     <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: #212121;
+        }
+     </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <?php include 'header.php'; ?>
+        <h2>Your Buddies</h2>
+        <ul>
+            <?php while ($row = $result->fetch_assoc()) { ?>
+                <li>
+                    <img src="<?php echo $row['profile_img']; ?>" alt="Profile Image" width="50">
+                    <?php echo $row['username']; ?>
+                </li>
+            <?php } ?>
+        </ul>
+    
+</body>
+</html>
