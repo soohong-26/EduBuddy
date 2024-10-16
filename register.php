@@ -6,9 +6,15 @@ require 'database.php';
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get form input data
-    $username = $_POST['username'];
-    $email = $_POST['email'];
+    $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
+
+    // Server-side check to ensure username has no spaces
+    if (preg_match('/\s/', $username)) {
+        echo "<script>alert('Username must not contain spaces.'); window.history.back();</script>";
+        exit;
+    }
 
     // Check if the username already exists
     $check_username_sql = "SELECT user_id FROM users WHERE username = ?";
@@ -150,6 +156,7 @@ $conn->close();
         document.getElementById('registerForm').addEventListener('submit', function(event) {
 
         // Get form inputs
+        const username =document.getElementById('regusterUsername').value;
         const email = document.getElementById('registerEmail').value;
         const password = document.getElementById('registerPassword').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
@@ -157,7 +164,16 @@ $conn->close();
         // Email validation pattern
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+        // Username no white spaces validation
+        const usernamePattern = /^\S*$/; // No spaces allowed
+
         // Validation checks
+        if (!usernamePattern.test(username)) {
+                alert("Username must not contain spaces.");
+                event.preventDefault();
+                return;
+            }
+
         if (!emailPattern.test(email)) {
             alert("Please enter a valid email address.");
             event.preventDefault(); // Stop form submission

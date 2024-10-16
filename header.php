@@ -45,6 +45,13 @@
             font-family: "Poppins", sans-serif;
         }
 
+        .header-title a {
+            text-decoration: none;
+            color: inherit;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
         .nav_links {
             list-style: none;
         }
@@ -89,7 +96,11 @@
 <body>
     <header>
         <!-- Logo -->
-        <h2 class="header-title">EduBuddy: Connecting Peers, Tutors, and Mentors</h2>
+        <h2 class="header-title">
+            <a href="home_buddies.php">
+                EduBuddy: Connecting Peers, Tutors, and Mentors
+            </a>
+        </h2>
 
         <!-- Navigation Panel -->
         <nav>

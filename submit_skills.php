@@ -1,5 +1,6 @@
 <!-- PHP -->
 <?php
+
 // Include the database connection
 require 'database.php'; 
 
