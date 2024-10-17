@@ -28,10 +28,16 @@ By doing so it allows a mutual support among each other.
 - find_buddies.php
 
 ## Adding Buddies as Friends
-- add_buddy.php
+- add_buddy.php (logic)
 - view_buddies.php
+- profile.php (To add friends, there is a button)
+
+## Community Forum
+- community.php
+- community_add.php
+- community_edit.php
+- community_comment.php
+- community_comment_edit.php
 
 # To-Do
-- Generate a display in the submit_skills to show the user whether is there anything submitted in the profile at the moment or it is blank
-- Create a community forum
 - Create a welcome banner and message in the home page

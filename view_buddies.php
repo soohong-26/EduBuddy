@@ -32,13 +32,20 @@ $result = $stmt->get_result();
             font-family: "Poppins", sans-serif;
             background-color: #212121;
         }
+
+        /* Title Header */
+        .title-page {
+            color: #7AA3CC;
+            font-family: "Poppins", sans-serif;
+            margin: 0 0 20px 25px;
+        }
      </style>
 </head>
 
 <body>
     <!-- Navigation Bar -->
     <?php include 'header.php'; ?>
-        <h2>Your Buddies</h2>
+        <h2 class="title-page">Your Buddies</h2>
         <ul>
             <?php while ($row = $result->fetch_assoc()) { ?>
                 <li>
