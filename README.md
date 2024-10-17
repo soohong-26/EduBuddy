@@ -40,4 +40,4 @@ By doing so it allows a mutual support among each other.
 - community_comment_edit.php
 
 # To-Do
-- 
+- Resolve the add friend page
