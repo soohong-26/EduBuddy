@@ -173,10 +173,10 @@ $stmt->close();
             Back To Study Buddy
         </button>
 
-        <!-- Adding friend button -->
-        <form method="POST" action="add_buddy.php">
-            <input type="hidden" name="buddy_user_id" value="<?php echo $profile_user_id; ?>">
-            <button type="submit" class="back-button" style="margin-left: 10px;">Add as Buddy</button>
+        <!-- Editing Profile Picture -->
+        <form method="POST" action="edit_profile_picture.php">
+            <!-- <input type="hidden" name="buddy_user_id" value="<?php echo $profile_user_id; ?>"> -->
+            <button type="submit" class="back-button" style="margin-left: 10px;">Change Profile Picture</button>
         </form>
     </div>
 </div>

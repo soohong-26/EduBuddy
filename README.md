@@ -27,11 +27,6 @@ By doing so it allows a mutual support among each other.
 - submit_skills.php
 - find_buddies.php
 
-## Adding Buddies as Friends
-- add_buddy.php (logic)
-- view_buddies.php
-- profile.php (To add friends, there is a button)
-
 ## Community Forum
 - community.php
 - community_add.php
@@ -39,5 +34,20 @@ By doing so it allows a mutual support among each other.
 - community_comment.php
 - community_comment_edit.php
 
+## Feature
+### Changing Profile Pictures
+- edit_profile.php
+- edit_profile_picture.php
+
+### Adding Buddies as Friends
+- add_buddy.php (old)
+- view_buddies.php (old)
+- profile.php (To add friends, there is a button)
+
 # To-Do
 - Resolve the add friend page
+- View buddy page
+    - View current friend list
+    - Accept pending friend invite
+    - View profile of that friend
+- Make a change profile picture feature

@@ -105,7 +105,7 @@
         <!-- Navigation Panel -->
         <nav>
             <ul class="nav_links">
-                <li><a class='nav_anc' href="submit_skills.php">Buddies</a></li>
+                <li><a class='nav_anc' href="submit_skills.php">Find Buddies</a></li>
                 <li><a class='nav_anc' href="view_buddies.php">View Buddies</a></li>
                 <!-- <li><a class='nav_anc' href="#">Achievements</a></li> -->
                 <li><a class='nav_anc' href="community.php">Community</a></li>
@@ -121,7 +121,8 @@
         <div class="welcome-message">
             <?php
             if (isset($_SESSION['username'])) {
-                echo "<p class='username-text'>Welcome, " . htmlspecialchars($_SESSION['username']) . "!</p>";
+                // Make username a clickable link to profile.php with their username as a query parameter
+                echo "<a href='edit_profile.php?username=" . urlencode($_SESSION['username']) . "'><p class='username-text'>Welcome, " . htmlspecialchars($_SESSION['username']) . "!</p></a>";
             } else {
                 echo "<p class='username-text'>Welcome, Guest!</p>";
             }
