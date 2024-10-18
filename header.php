@@ -1,8 +1,3 @@
-<!-- PHP -->
-<?php
-
-?>
-
 <!-- HTML -->
 <!DOCTYPE html>
 <html lang="en">
@@ -89,6 +84,11 @@
             font-family: "Poppins", sans-serif;
             font-style: normal;
             margin: 0 0 0 10px;
+        }
+
+        .profile-image {
+            height: 10px;
+            width: 10px;
         }
         
     </style>

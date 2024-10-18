@@ -46,12 +46,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Define the default role for new users
                     $default_role = 'student';
 
+                    // Define the default profile image for the new users
+                    $profile_img = 'images/profile.png';
+
                     // Prepare the SQL insert statement including the roles column
-                    $sql = "INSERT INTO users (username, email, password, roles) VALUES (?, ?, ?, ?)";
+                    $sql = "INSERT INTO users (username, email, password, profile_img, roles) VALUES (?, ?, ?, ?, ?)";
 
                     if ($stmt = $conn->prepare($sql)) {
                         // Bind parameters (s for string, the order matters)
-                        $stmt->bind_param("ssss", $username, $email, $hashed_password, $default_role);
+                        $stmt->bind_param("sssss", $username, $email, $hashed_password, $profile_img, $default_role);
 
                         // Execute the prepared statement
                         if ($stmt->execute()) {

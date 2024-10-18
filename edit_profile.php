@@ -92,6 +92,7 @@ $stmt->close();
             border-radius: 50%;
             display: block;
             margin: 15px auto 10px auto;
+            object-fit: cover;
         }
 
         /* Container for the back button to center it */
@@ -106,7 +107,7 @@ $stmt->close();
             display: inline-block;
             width: 200px;
             padding: 10px;
-            margin: 10px 0 19px 0;
+            margin: 10px 0 19px 10px;
             background-color: rgba(0, 136, 169, 1);
             color: white;
             text-align: center;
@@ -174,9 +175,10 @@ $stmt->close();
         </button>
 
         <!-- Editing Profile Picture -->
-        <form method="POST" action="edit_profile_picture.php">
-            <!-- <input type="hidden" name="buddy_user_id" value="<?php echo $profile_user_id; ?>"> -->
-            <button type="submit" class="back-button" style="margin-left: 10px;">Change Profile Picture</button>
+        <form method="POST" action="edit_profile_picture.php" enctype="multipart/form-data">
+            <label for="profile_image" class="back-button" style="cursor: pointer;">Change Profile Picture</label>
+            <input type="file" id="profile_image" name="profile_image" style="display: none;" onchange="this.form.submit()">
+            <input type="hidden" name="username" value="<?php echo htmlspecialchars($user['username']); ?>">
         </form>
     </div>
 </div>
