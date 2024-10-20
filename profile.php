@@ -1,5 +1,9 @@
 <?php
+ini_set('display_errors', 'Off'); // Turn off error displaying
+error_reporting(E_ALL); // Report all errors for logging
 require 'database.php'; // Include the database connection
+
+$user_id = $_SESSION['user_id']; // Assumes user ID is stored in session
 
 // Check if a username is provided in the query string
 if (!isset($_GET['username'])) {
@@ -11,6 +15,31 @@ $username = $_GET['username'];
 
 // Convert the username to lowercase to match case-insensitively
 $lowerUsername = strtolower($username);
+
+// Friend request sending functionality
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send_friend_request'])) {
+    $friend_id = $_POST['friend_id']; // The ID of the user to whom the request is being sent
+
+    // Check if there is already a request or friendship
+    $check = "SELECT * FROM friend_requests WHERE (requester_id = ? AND requestee_id = ?)
+              OR (requester_id = ? AND requestee_id = ?)";
+    $stmt = $conn->prepare($check);
+    $stmt->bind_param("iiii", $user_id, $friend_id, $friend_id, $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows == 0) {
+        // Insert the friend request
+        $insert = "INSERT INTO friend_requests (requester_id, requestee_id, status) VALUES (?, ?, 'pending')";
+        $stmt = $conn->prepare($insert);
+        $stmt->bind_param("ii", $user_id, $friend_id);
+        $stmt->execute();
+
+        echo "Friend request sent!";
+    } else {
+        echo "Friend request already exists or you are already friends.";
+    }
+}
 
 // Fetch the user's details from the database
 $sql = "
@@ -174,8 +203,8 @@ $stmt->close();
         </button>
 
         <!-- Adding friend button -->
-        <form method="POST" action="add_buddy.php">
-            <input type="hidden" name="buddy_user_id" value="<?php echo $profile_user_id; ?>">
+        <form method="POST" action="profile.php">
+            <input type="hidden" name="buddy_user_id" value="<?php echo $user['user_id']; ?>">
             <button type="submit" class="back-button" style="margin-left: 10px;">Add as Buddy</button>
         </form>
     </div>

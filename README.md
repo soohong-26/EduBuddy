@@ -39,6 +39,10 @@ By doing so it allows a mutual support among each other.
 
 ### Adding Buddies as Friends
 - profile.php (To add friends, there is a button)
+- friend_list.php (display current friends)
+- accept_requests.php (Manages accepting friend requests)
+- decline_requests.php (Manages declining friend requests)
+- pending_requests.php (Manages pending friend requests)
 
 # To-Do
 - Resolve the add friend page
