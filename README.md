@@ -11,14 +11,12 @@ By doing so it allows a mutual support among each other.
 - login-register.php
 
 ## Home Page
-- home_admin.php
 - home_buddies.php
 - home_mentors.php
 
 ## Utility
 - database.php
 - header.php (It will switch between buddy and mentor)
-- header_mentor.php
 
 ## Finding Buddies
 - profile.php
