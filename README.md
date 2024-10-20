@@ -45,9 +45,11 @@ By doing so it allows a mutual support among each other.
 - pending_requests.php (Manages pending friend requests)
 
 # To-Do
-- Resolve the add friend page
 - View buddy page
     - View current friend list
     - Accept pending friend invite
     - View profile of that friend
 - Create a simple mentor 
+    - View all the students in the system, including their profiles
+- Achievement Page
+    - Allows the user to add achievements to the other students

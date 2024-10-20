@@ -29,11 +29,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Set session variables
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['roles'] = $user['roles'];
             $_SESSION['logged_in'] = true;
 
-            // Redirect to user's personalized homepage
-            header("Location: home_buddies.php");
-            exit();
+            // Redirect based on role
+            if ($_SESSION['roles'] == 'mentor') {
+                header("Location: home_mentors.php");  // Redirect to a different home page for mentors
+                exit();
+            } else {
+                header("Location: home_buddies.php");  // Redirect to the general home page
+                exit();
+            }
         } else {
             echo "<script>
                     alert('Invalid Password!');

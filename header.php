@@ -84,13 +84,7 @@
             font-family: "Poppins", sans-serif;
             font-style: normal;
             margin: 0 0 0 10px;
-        }
-
-        .profile-image {
-            height: 10px;
-            width: 10px;
-        }
-        
+        } 
     </style>
 </head>
 <body>
@@ -107,7 +101,7 @@
             <ul class="nav_links">
                 <li><a class='nav_anc' href="submit_skills.php">Find Buddies</a></li>
                 <li><a class='nav_anc' href="view_buddies.php">View Buddies</a></li>
-                <!-- <li><a class='nav_anc' href="#">Achievements</a></li> -->
+                <li><a class='nav_anc' href="#">Achievements</a></li>
                 <li><a class='nav_anc' href="community.php">Community</a></li>
             </ul>
         </nav>

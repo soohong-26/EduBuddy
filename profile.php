@@ -4,14 +4,13 @@ error_reporting(E_ALL); // Report all errors for logging
 require 'database.php'; // Include the database connection
 
 $user_id = $_SESSION['user_id']; // Assumes user ID is stored in session
+$username = $_GET['username'];
 
 // Check if a username is provided in the query string
 if (!isset($_GET['username'])) {
     echo "No student selected.";
     exit;
 }
-
-$username = $_GET['username'];
 
 // Convert the username to lowercase to match case-insensitively
 $lowerUsername = strtolower($username);
