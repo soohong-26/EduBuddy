@@ -21,8 +21,6 @@ By doing so it allows a mutual support among each other.
 - header_mentor.php
 
 ## Finding Buddies
-- study_buddies.php (old)
-- study_buddies_dummy.php (old)
 - profile.php
 - submit_skills.php
 - find_buddies.php
@@ -40,8 +38,6 @@ By doing so it allows a mutual support among each other.
 - edit_profile_picture.php
 
 ### Adding Buddies as Friends
-- add_buddy.php (old)
-- view_buddies.php (old)
 - profile.php (To add friends, there is a button)
 
 # To-Do
@@ -50,4 +46,4 @@ By doing so it allows a mutual support among each other.
     - View current friend list
     - Accept pending friend invite
     - View profile of that friend
-- Make a change profile picture feature
+- Create a simple mentor 
