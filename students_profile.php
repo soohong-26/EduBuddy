@@ -7,14 +7,11 @@ if (!isset($_SESSION['user_id']) || $_SESSION['roles'] !== 'mentor') {
     exit;
 }
 
-// Check if a user_id is provided in the query string
+// Check if a username is provided in the query string
 if (!isset($_GET['username'])) {
     echo "No student selected.";
     exit;
 }
-
-// Convert the username to lowercase to match case-insensitively
-$lowerUsername = strtolower($username);
 
 $username = $_GET['username'];
 
@@ -31,10 +28,10 @@ $sql = "
             GROUP BY username
         ) s2 ON s1.username = s2.username AND s1.id = s2.max_id
     ) s ON LOWER(u.username) = LOWER(s.username)
-    WHERE LOWER(u.username) = ?";
+    WHERE LOWER(u.username) = LOWER(?)";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param('s', $lowerUsername);
+$stmt->bind_param('s', $username); // Bind the username as a string
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -53,14 +50,54 @@ $student = $result->fetch_assoc();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #212121;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        .profile-container {
+            background: #3B4E61;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: block;
+            margin: 10px auto;
+            object-fit: cover;
+        }
+        .profile-detail {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .profile-label {
+            font-weight: 600;
+            color: #CCCCCC;
+        }
+    </style>
 </head>
 <body>
-    <h1><?php echo htmlspecialchars($student['username']); ?>'s Profile</h1>
-    <p>Email: <?php echo htmlspecialchars($student['email']); ?></p>
-    <p>Profile Image: <img src="<?php echo htmlspecialchars($student['profile_img']); ?>" alt="Profile Image" style="width:150px; height:auto;"></p>
-    <p>Role: <?php echo htmlspecialchars($student['roles']); ?></p>
-    <p>Strengths: <?php echo htmlspecialchars($student['strengths']); ?></p>
-    <p>Weaknesses: <?php echo htmlspecialchars($student['weaknesses']); ?></p>
-    <p>Extra Skills: <?php echo htmlspecialchars($student['extra_skills']); ?></p>
+    <!-- Navigation Bar -->
+    <?php include 'header.php'; ?>
+
+    <div class="profile-container">
+        <img src="<?php echo htmlspecialchars($student['profile_img']); ?>" alt="Profile Image" class="profile-img">
+        <h1><?php echo htmlspecialchars($student['username']); ?>'s Profile</h1>
+        <p class="profile-detail"><span class="profile-label">Email:</span> <?php echo htmlspecialchars($student['email']); ?></p>
+        <p class="profile-detail"><span class="profile-label">Role:</span> <?php echo htmlspecialchars($student['roles']); ?></p>
+        <p class="profile-detail"><span class="profile-label">Strengths:</span> <?php echo htmlspecialchars($student['strengths']); ?></p>
+        <p class="profile-detail"><span class="profile-label">Weaknesses:</span> <?php echo htmlspecialchars($student['weaknesses']); ?></p>
+        <p class="profile-detail"><span class="profile-label">Extra Skills:</span> <?php echo htmlspecialchars($student['extra_skills']); ?></p>
+    </div>
 </body>
 </html>
+<?php $conn->close(); ?>

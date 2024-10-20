@@ -17,7 +17,7 @@ By doing so it allows a mutual support among each other.
 
 ## Utility
 - database.php
-- header.php
+- header.php (It will switch between buddy and mentor)
 - header_mentor.php
 
 ## Finding Buddies
@@ -31,6 +31,10 @@ By doing so it allows a mutual support among each other.
 - community_edit.php
 - community_comment.php
 - community_comment_edit.php
+
+## Mentor
+- mentor_view.php
+- students_profile.php
 
 ## Feature
 ### Changing Profile Pictures
@@ -49,7 +53,5 @@ By doing so it allows a mutual support among each other.
     - View current friend list
     - Accept pending friend invite
     - View profile of that friend
-- Create a simple mentor 
-    - View all the students in the system, including their profiles
 - Achievement Page
     - Allows the user to add achievements to the other students

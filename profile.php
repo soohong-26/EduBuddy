@@ -120,6 +120,7 @@ $stmt->close();
             border-radius: 50%;
             display: block;
             margin: 15px auto 10px auto;
+            object-fit: cover;
         }
 
         /* Container for the back button to center it */
@@ -170,7 +171,7 @@ $stmt->close();
         <span class="profile-label">Role:</span>
             <?php
             // Role indicator
-            echo $user['roles'] === 'student' ? 'Student' : ($user['roles'] === 'tutor' ? 'Tutor' : 'Unknown Role');
+            echo $user['roles'] === 'student' ? 'Student' : ($user['roles'] === 'mentor' ? 'Mentor' : 'Unknown Role');
             ?>
     </p>
 

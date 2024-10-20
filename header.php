@@ -1,3 +1,9 @@
+<!-- PHP -->
+<?php
+// Assuming the user's role is stored in the session as 'roles'
+$userRole = isset($_SESSION['roles']) ? $_SESSION['roles'] : null;
+?>
+
 <!-- HTML -->
 <!DOCTYPE html>
 <html lang="en">
@@ -99,10 +105,18 @@
         <!-- Navigation Panel -->
         <nav>
             <ul class="nav_links">
-                <li><a class='nav_anc' href="submit_skills.php">Find Buddies</a></li>
-                <li><a class='nav_anc' href="view_buddies.php">View Buddies</a></li>
-                <li><a class='nav_anc' href="#">Achievements</a></li>
-                <li><a class='nav_anc' href="community.php">Community</a></li>
+            <?php if ($userRole === 'student') { ?>
+                    <!-- Links for students -->
+                    <li><a class='nav_anc' href="submit_skills.php">Find Buddies</a></li>
+                    <li><a class='nav_anc' href="friend_list.php">View Buddies</a></li>
+                    <li><a class='nav_anc' href="#">Achievements</a></li>
+                    <li><a class='nav_anc' href="community.php">Community</a></li>
+
+                <?php } elseif ($userRole === 'mentor') { ?>
+                    <!-- Links for mentors -->
+                    <li><a class='nav_anc' href="mentors_view.php">Students</a></li>
+                    <li><a class='nav_anc' href="community.php">Community</a></li>
+                <?php } ?>
             </ul>
         </nav>
 
