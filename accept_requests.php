@@ -17,5 +17,6 @@ $stmt = $conn->prepare($insert);
 $stmt->bind_param("iiii", $user_id, $requester_id, $requester_id, $user_id);
 $stmt->execute();
 
-echo "Friend request accepted!";
+echo "<script> alert('Friend request accepted!'); </script>";
+
 ?>

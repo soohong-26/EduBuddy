@@ -11,5 +11,5 @@ $stmt = $conn->prepare($update);
 $stmt->bind_param("ii", $requester_id, $user_id);
 $stmt->execute();
 
-echo "Friend request declined!";
+echo "<script> alert('Friend request declined!'); </script>";
 ?>

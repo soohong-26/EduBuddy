@@ -1,3 +1,4 @@
+<!-- PHP -->
 <?php
 include 'database.php'; // Include your database connection
 
@@ -16,10 +17,23 @@ echo "<h2>Pending Friend Requests:</h2>";
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         echo "From: " . $row['username'] . " - ";
-        echo "<a href='accept_request.php?requester_id=" . $row['user_id'] . "'>Accept</a> ";
-        echo "<a href='decline_request.php?requester_id=" . $row['user_id'] . "'>Decline</a><br>";
+        echo "<a href='accept_requests.php?requester_id=" . $row['user_id'] . "'>Accept</a> ";
+        echo "<a href='decline_requests.php?requester_id=" . $row['user_id'] . "'>Decline</a><br>";
     }
 } else {
     echo "No pending friend requests.";
 }
 ?>
+
+<!-- HTML -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduBuddy - Pending Friends</title>
+</head>
+<body>
+    
+</body>
+</html>

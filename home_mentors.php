@@ -50,7 +50,7 @@ $username = $_SESSION['username'];
 </head>
 <body>
     <!-- Header -->
-    <?php require 'header_mentor.php';?>
+    <?php require 'header.php';?>
 
     <!-- Welcome Message -->
      <h1 class="title-page">

@@ -108,7 +108,7 @@ $userRole = isset($_SESSION['roles']) ? $_SESSION['roles'] : null;
             <?php if ($userRole === 'student') { ?>
                     <!-- Links for students -->
                     <li><a class='nav_anc' href="submit_skills.php">Find Buddies</a></li>
-                    <li><a class='nav_anc' href="friend_list.php">View Buddies</a></li>
+                    <li><a class='nav_anc' href="friend_list.php">View Friends</a></li>
                     <li><a class='nav_anc' href="#">Achievements</a></li>
                     <li><a class='nav_anc' href="community.php">Community</a></li>
 
