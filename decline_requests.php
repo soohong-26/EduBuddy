@@ -1,7 +1,6 @@
 <?php
 include 'database.php'; // Include your database connection
 
-session_start();
 $user_id = $_SESSION['user_id']; // Assumes user ID is stored in session
 $requester_id = $_GET['requester_id']; // ID of the requester
 

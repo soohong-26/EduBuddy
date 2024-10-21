@@ -1,6 +1,12 @@
 <?php
 include 'database.php'; // Include your database connection
 
+if (!isset($_SESSION['user_id'])) {
+    // If the user is not logged in, redirect to the login page
+    header('Location: login.php');
+    exit;
+}
+
 $user_id = $_SESSION['user_id']; // Assumes user ID is stored in session
 
 $query = "SELECT u.user_id, u.username FROM users u
@@ -20,7 +26,7 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduBuddy - Friend List</title>
     <!-- CSS -->
-     <style>
+    <style>
         body {
             font-family: "Poppins", sans-serif;
             background-color: #212121;
@@ -67,7 +73,30 @@ $result = $stmt->get_result();
         .button-container {
             margin: 0 0 15px 25px;
         }
-     </style>
+
+        /* View Profile Button */
+        .view-profile-button {
+            background-color: rgba(0, 136, 169, 1);
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .view-profile-button:hover {
+            background-color: rgba(0, 136, 169, 0.8);
+        }
+
+        /* Friend List Item */
+        .friend-item {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -80,20 +109,28 @@ $result = $stmt->get_result();
     </div>
     
     <!-- Friend list -->
-     <h2 class="title-page">
-        Friend List
-     </h2>
+    <h2 class="title-page">Friend List</h2>
 
-     <div class="box-container">
+    <div class="box-container">
         <?php
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    echo "Friend: " . $row['username'] . "<br>";
+                    echo '<div class="friend-item">';
+                    echo htmlspecialchars($row['username']);
+                    ?>
+
+                    <!-- View Profile Button -->
+                    <form action="profile_view_only.php" method="GET" style="display:inline; margin-left: 20px;">
+                        <input type="hidden" name="username" value="<?php echo urlencode($row['username']); ?>">
+                        <button type="submit" class="view-profile-button">View Profile</button>
+                    </form>
+                    <?php
+                    echo '</div>';
                 }
             } else {
                 echo "You have no friends yet.";
             }
         ?>
-     </div>
+    </div>
 </body>
 </html>

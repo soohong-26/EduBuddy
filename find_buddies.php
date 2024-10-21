@@ -272,7 +272,7 @@ $conn->close();
                         <!-- Weaknesses -->
                         <span class="buddy-weakness">Weaknesses: <?php echo htmlspecialchars($match['weaknesses']); ?></span><br>
 
-                        <!-- Submit button -->
+                        <!-- View profile -->
                         <form action="profile.php" method="GET">
                             <input type="hidden" name="username" value="<?php echo urlencode($match['username']); ?>">
                             <button type="submit" class="view-profile-button">View Profile</button>

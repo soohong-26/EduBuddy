@@ -1,15 +1,14 @@
 <!-- PHP -->
 <?php
 include 'database.php'; // Include your database connection
-$user_id = $_SESSION['user_id']; // Assumes user ID is stored in session
 
-$query = "SELECT u.user_id, u.username FROM users u
-          INNER JOIN friend_requests fr ON u.user_id = fr.requester_id
-          WHERE fr.requestee_id = ? AND fr.status = 'pending'";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
+if (!isset($_SESSION['user_id'])) {
+    // If the user is not logged in, redirect to the login page
+    header('Location: login.php');
+    exit;
+}
+
+$user_id = $_SESSION['user_id']; // Assumes user ID is stored in session
 ?>
 
 <!-- HTML -->
@@ -68,7 +67,56 @@ $result = $stmt->get_result();
             background-color: rgba(0, 136, 169, 1);
         }
 
-        
+        /* Button */
+        .accept-btn {
+            padding: 9px 25px;
+            background-color: rgba(0, 179, 107, 1);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 10px 0 10px;
+        }
+
+        .accept-btn:hover {
+            background-color: rgba(0, 179, 107, 0.8);
+        }
+
+        .decline-btn {
+            padding: 9px 25px;
+            background-color: rgba(217, 83, 79, 1);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .decline-btn:hover {
+            background-color: rgba(217, 83, 79, 0.8);
+        }
+
+        /* View Profile Button */
+        .view-profile-button {
+            background-color: rgba(0, 136, 169, 1);
+            color: white;
+            padding: 8px 16px;
+            margin: 10px 0 0 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .view-profile-button:hover {
+            background-color: rgba(0, 136, 169, 0.8);
+        }
+
+        /* Friend Request Item */
+        .request-item {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -82,21 +130,43 @@ $result = $stmt->get_result();
     </div>
 
     <!-- Title -->
-     <h2 class="title-page">
+    <h2 class="title-page">
         Pending Friend Requests
-     </h2>
+    </h2>
 
     <div class="box-container">
         <?php
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "From: " . $row['username'] . " - ";
-                    echo "<a href='accept_requests.php?requester_id=" . $row['user_id'] . "'>Accept</a> ";
-                    echo "<a href='decline_requests.php?requester_id=" . $row['user_id'] . "'>Decline</a><br>";
-                }
-            } else {
-                echo "No pending friend requests.";
+        $query = "SELECT u.user_id, u.username FROM users u
+                  INNER JOIN friend_requests fr ON u.user_id = fr.requester_id
+                  WHERE fr.requestee_id = ? AND fr.status = 'pending'";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo '<div class="request-item">';
+                echo htmlspecialchars($row['username']) . " - ";
+                ?>
+                <!-- View Profile Button -->
+                <form action="profile_view_only.php" method="GET" style="display:inline;">
+                    <input type="hidden" name="username" value="<?php echo urlencode($row['username']); ?>">
+                    <button type="submit" class="view-profile-button">View Profile</button>
+                </form>
+
+                <!-- Accept and Decline Buttons -->
+                <a class='accept-btn' href='accept_requests.php?requester_id=<?php echo $row['user_id']; ?>'>Accept</a>
+                <a class='decline-btn' href='decline_requests.php?requester_id=<?php echo $row['user_id']; ?>'>Decline</a>
+                <?php
+                echo '</div>';
             }
+        } else {
+            echo "No pending friend requests.";
+        }
+
+        $stmt->close();
+        $conn->close();
         ?>
     </div>
 </body>

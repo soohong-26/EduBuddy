@@ -242,7 +242,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .stats-container strong {
             font-weight: 600;
         }
-
     </style>
 </head>
 <body>
