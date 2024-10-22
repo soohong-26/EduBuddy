@@ -170,8 +170,8 @@ $stmt->close();
 
     <div class="button-container">
         <!-- Back button -->
-        <button class="back-button" onclick="window.location.href = 'find_buddies.php'">
-            Back To Study Buddy
+        <button class="back-button" onclick="window.location.href = 'home_buddies.php'">
+            Back To Home
         </button>
 
         <!-- Editing Profile Picture -->

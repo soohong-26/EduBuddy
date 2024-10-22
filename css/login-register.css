@@ -61,7 +61,7 @@ body {
 /* Styling for the login box */
 .login-box {
     background-color: rgba(255, 255, 255, 0.1);
-    padding: 90px 20px 20px; /* Add top padding to create space for the logo */
+    padding: 90px 20px 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     width: 350px;

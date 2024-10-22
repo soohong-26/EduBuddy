@@ -20,8 +20,8 @@ By doing so it allows a mutual support among each other.
 
 ## Finding Buddies
 - profile.php
-- submit_skills.php
-- find_buddies.php
+- submit_skills.php (Submitting skills for the system to find buddies)
+- find_buddies.php (Finding matching buddies based on weaknesses)
 
 ## Community Forum
 - community.php
@@ -47,6 +47,27 @@ By doing so it allows a mutual support among each other.
 - accept_requests.php (Manages accepting friend requests)
 - decline_requests.php (Manages declining friend requests)
 - pending_requests.php (Manages pending friend requests)
+
+### Viewing Achievements
+- profile.php (A button that will redirect to feedback_form.php)
+- feedback_form.php (Frontend to send feedback form)
+- submit_feedback.php (Backend to send feedback form)
+- view_feedback.php (Viewing users feedback)
+
+# Database
+## Handling Users
+- users
+
+## Handling Buddies
+- skills
+- friends
+- friend_requests
+
+## Community Forum
+- posts
+- comments
+
+## Achievement Feedback
 
 # To-Do
 - Achievement Page

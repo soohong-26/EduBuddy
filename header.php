@@ -109,7 +109,7 @@ $userRole = isset($_SESSION['roles']) ? $_SESSION['roles'] : null;
                     <!-- Links for students -->
                     <li><a class='nav_anc' href="submit_skills.php">Find Buddies</a></li>
                     <li><a class='nav_anc' href="friend_list.php">View Friends</a></li>
-                    <li><a class='nav_anc' href="#">Achievements</a></li>
+                    <li><a class='nav_anc' href="view_feedback.php">Achievements</a></li>
                     <li><a class='nav_anc' href="community.php">Community</a></li>
 
                 <?php } elseif ($userRole === 'mentor') { ?>

@@ -183,6 +183,9 @@ $stmt->close();
             <input type="hidden" name="buddy_username" value="<?php echo htmlspecialchars($users['username']); ?>">
             <button type="submit" class="back-button" style="margin-left: 10px;">Add as Buddy</button>
         </form>
+
+        <!-- Submiting achievement -->
+        <a href="feedback_form.php?user_id=<?php echo urlencode($users['id']); ?>" class="back-button">Submit Feedback</a>
     </div>
 </div>
 
