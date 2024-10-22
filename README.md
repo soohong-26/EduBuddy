@@ -1,10 +1,10 @@
-# EduBuddy: Connecting Peers, Tutors and Mentors
+# **EduBuddy: Connecting Peers, Tutors and Mentors**
 
 The EduBuddy Website is a website that allows students to work together and study together on assignments or projects, while helping each other out during the process.
 
 By doing so it allows a mutual support among each other.
 
-# File Structure
+# **File Structure**
 ## Login & Register
 - login.php
 - register.php
@@ -55,7 +55,7 @@ By doing so it allows a mutual support among each other.
 - submit_feedback.php (Backend to send feedback form)
 - view_feedback.php (Viewing users feedback)
 
-# Database (tables)
+# **Database (tables)**
 ## Handling Users
 - users
 
@@ -70,7 +70,7 @@ By doing so it allows a mutual support among each other.
 
 ## Achievement Feedback
 
-# To-Do
+# **To-Do**
 - Achievement Page
     - Allows the user to add achievements to the other students
 - In the page allows other students and mentors to come to that students profile and leave comments about their work
