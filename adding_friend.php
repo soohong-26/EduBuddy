@@ -42,17 +42,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['buddy_username'])) {
         $stmt = $conn->prepare($insert);
         $stmt->bind_param("ii", $user_id, $friend_id);
         if ($stmt->execute()) {
-            echo "<script> alert('Friend request sent!'); </script>";
+            echo "<script>alert('Friend request sent!'); window.location.href = 'profile.php?username=" . urlencode($_GET['username']) . "';</script>";
         } else {
-            echo "<script> alert('Failed to send friend request'); </script>";
+            echo "<script>alert('Failed to send friend request.'); window.history.back();</script>";
         }
     } else {
-        echo "<script> alert('Friend request alreadt exists or you are already friends'); </script>";
+        echo "<script>alert('Friend request already exists or you are already friends.'); window.history.back();</script>";
     }
-
-    header("Location: profile.php?username=" . urlencode($_GET['username']));
     exit;
 } else {
-    echo "<script> alert('Invalid request!'); </script>";
+    echo "<script>alert('Invalid request!'); window.history.back();</script>";
 }
 ?>

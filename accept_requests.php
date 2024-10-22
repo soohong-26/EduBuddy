@@ -16,6 +16,7 @@ $stmt = $conn->prepare($insert);
 $stmt->bind_param("iiii", $user_id, $requester_id, $requester_id, $user_id);
 $stmt->execute();
 
-echo "<script> alert('Friend request accepted!'); </script>";
-
+// Show an alert and then redirect to the pending requests page
+echo "<script>alert('Friend request accepted!'); window.location.href='friend_list.php';</script>";
+exit;
 ?>

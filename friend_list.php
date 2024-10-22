@@ -124,6 +124,13 @@ $result = $stmt->get_result();
                         <input type="hidden" name="username" value="<?php echo urlencode($row['username']); ?>">
                         <button type="submit" class="view-profile-button">View Profile</button>
                     </form>
+
+                    <!-- Delete button -->
+                    <form action="delete_friend.php" method="POST" style="display:inline; margin-left: 10px;">
+                        <input type="hidden" name="friend_id" value="<?php echo $row['user_id']; ?>">
+                        <button type="submit" style="background-color: rgba(217, 83, 79, 1);" class="view-profile-button" onclick="return confirm('Are you sure you want to delete this friend?');">Delete Friend</button>
+                    </form>
+
                     <?php
                     echo '</div>';
                 }

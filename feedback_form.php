@@ -10,7 +10,7 @@ if (!isset($_GET['user_id'])) {
 $user_id = $_GET['user_id'];
 
 // Fetch the username for display purposes
-$sql = "SELECT username FROM users WHERE id = ?";
+$sql = "SELECT username FROM users WHERE user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();

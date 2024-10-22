@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Verify password (assuming passwords are hashed)
         if (password_verify($password, $user['password'])) {
+            
             // Set session variables
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];

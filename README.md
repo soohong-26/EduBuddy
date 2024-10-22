@@ -47,6 +47,7 @@ By doing so it allows a mutual support among each other.
 - accept_requests.php (Manages accepting friend requests)
 - decline_requests.php (Manages declining friend requests)
 - pending_requests.php (Manages pending friend requests)
+- delete_friend.php (Handles removing friend)
 
 ### Viewing Achievements
 - profile.php (A button that will redirect to feedback_form.php)
@@ -54,7 +55,7 @@ By doing so it allows a mutual support among each other.
 - submit_feedback.php (Backend to send feedback form)
 - view_feedback.php (Viewing users feedback)
 
-# Database
+# Database (tables)
 ## Handling Users
 - users
 

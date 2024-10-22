@@ -39,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "<script>alert('Email already taken. Please use another email.'); window.history.back();</script>";
                 } else {
                     // Username and email do not exist, proceed with registration
-                    
                     // Hash the password before saving it to the database
                     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
