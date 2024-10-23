@@ -125,13 +125,13 @@ $user_id = $_SESSION['user_id']; // Assumes user ID is stored in session
 
     <!-- Navigation Buttons -->
     <div class="button-container">
-        <a href="friend_list.php" class="toggle-button <?php echo basename(__FILE__) == 'friend_list.php' ? 'active-button' : ''; ?>">Friend List</a>
+        <a href="friend_list.php" class="toggle-button <?php echo basename(__FILE__) == 'friend_list.php' ? 'active-button' : ''; ?>">Buddies List</a>
         <a href="pending_requests.php" class="toggle-button <?php echo basename(__FILE__) == 'pending_requests.php' ? 'active-button' : ''; ?>">Pending Requests</a>
     </div>
 
     <!-- Title -->
     <h2 class="title-page">
-        Pending Friend Requests
+        Pending Buddies Requests
     </h2>
 
     <div class="box-container">

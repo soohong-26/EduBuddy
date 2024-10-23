@@ -104,12 +104,12 @@ $result = $stmt->get_result();
 
     <!-- Navigation Buttons -->
     <div class="button-container">
-        <a href="friend_list.php" class="toggle-button <?php echo basename(__FILE__) == 'friend_list.php' ? 'active-button' : ''; ?>">Friend List</a>
+        <a href="friend_list.php" class="toggle-button <?php echo basename(__FILE__) == 'friend_list.php' ? 'active-button' : ''; ?>">Buddies List</a>
         <a href="pending_requests.php" class="toggle-button <?php echo basename(__FILE__) == 'pending_requests.php' ? 'active-button' : ''; ?>">Pending Requests</a>
     </div>
     
     <!-- Friend list -->
-    <h2 class="title-page">Friend List</h2>
+    <h2 class="title-page">Buddies List</h2>
 
     <div class="box-container">
         <?php
@@ -122,7 +122,7 @@ $result = $stmt->get_result();
                     <!-- View Profile Button -->
                     <form action="profile_view_only.php" method="GET" style="display:inline; margin-left: 20px;">
                         <input type="hidden" name="username" value="<?php echo urlencode($row['username']); ?>">
-                        <button type="submit" class="view-profile-button">View Profile</button>
+                        <button type="submit" class="view-profile-button">View Buddies</button>
                     </form>
 
                     <!-- Delete button -->
