@@ -24,7 +24,7 @@ $result = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduBuddy - Friend List</title>
+    <title>EduBuddy - Buddy List</title>
     <!-- CSS -->
     <style>
         body {
@@ -43,7 +43,7 @@ $result = $stmt->get_result();
             background: white;
             padding: 20px;
             border-radius: 8px;
-            margin: 0 25px 10px 25px;
+            margin: 0 25px 0 25px;
         }
 
         /* General Toggle Button Styling */
@@ -122,20 +122,24 @@ $result = $stmt->get_result();
                     <!-- View Profile Button -->
                     <form action="profile_view_only.php" method="GET" style="display:inline; margin-left: 20px;">
                         <input type="hidden" name="username" value="<?php echo urlencode($row['username']); ?>">
-                        <button type="submit" class="view-profile-button">View Buddies</button>
+                        <button type="submit" class="view-profile-button">View Buddy</button>
                     </form>
+
+                    <!-- Submiting achievement -->
+                        <a href="feedback_form.php?user_id=<?php echo urlencode($row['user_id']); ?>" class="view-profile-button" style="text-decoration:none; margin-left:10px;">Submit Achievement</a>
 
                     <!-- Delete button -->
                     <form action="delete_friend.php" method="POST" style="display:inline; margin-left: 10px;">
                         <input type="hidden" name="friend_id" value="<?php echo $row['user_id']; ?>">
-                        <button type="submit" style="background-color: rgba(217, 83, 79, 1);" class="view-profile-button" onclick="return confirm('Are you sure you want to delete this friend?');">Delete Friend</button>
+                        <button type="submit" style="background-color: rgba(217, 83, 79, 1);" class="view-profile-button" onclick="return confirm('Are you sure you want to delete this buddy?');">Delete Buddy</button>
                     </form>
 
                     <?php
                     echo '</div>';
+
                 }
             } else {
-                echo "You have no friends yet.";
+                echo "You have no buddies yet.";
             }
         ?>
     </div>

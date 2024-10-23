@@ -174,7 +174,7 @@ $stmt->close();
     <div class="button-container">
         <!-- Back button -->
         <button class="back-button" onclick="window.location.href = 'friend_list.php'">
-            Back To Friend List
+            Back
         </button>
     </div>
 </div>

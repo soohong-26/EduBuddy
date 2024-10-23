@@ -6,6 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $rated_by_user_id = $_POST['rated_by_user_id'];
     $rating = $_POST['rating'];
     $comment = $_POST['comment'];
+    $username = $_POST['username'];
 
     $sql = "INSERT INTO feedback (user_id, rated_by_user_id, rating, comment) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
@@ -18,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error submitting feedback: " . $conn->error;
     }
     $stmt->close();
-    header("Location: profile.php?username=" . urlencode($_POST['username']));  // Redirect back to the profile page
+    header("Location: friend_list.php"); 
     exit();
 }
 ?>

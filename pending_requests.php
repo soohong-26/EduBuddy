@@ -17,7 +17,7 @@ $user_id = $_SESSION['user_id']; // Assumes user ID is stored in session
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduBuddy - Pending Friends</title>
+    <title>EduBuddy - Pending Buddies</title>
     <!-- CSS -->
     <style>
         body {
@@ -162,7 +162,7 @@ $user_id = $_SESSION['user_id']; // Assumes user ID is stored in session
                 echo '</div>';
             }
         } else {
-            echo "No pending friend requests.";
+            echo "No pending buddy requests.";
         }
 
         $stmt->close();

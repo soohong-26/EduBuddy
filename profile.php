@@ -18,7 +18,7 @@ $lowerUsername = strtolower($username);
 
 // Fetch the users's details from the database
 $sql = "
-    SELECT u.username, u.email, u.profile_img, u.roles, s.strengths, s.weaknesses, s.extra_skills
+    SELECT u.user_id, u.username, u.email, u.profile_img, u.roles, s.strengths, s.weaknesses, s.extra_skills
     FROM users u
     LEFT JOIN (
         SELECT s1.username, s1.strengths, s1.weaknesses, s1.extra_skills
@@ -172,10 +172,12 @@ $stmt->close();
             ?>
     </p>
 
+    <!-- Show average rating -->
+
     <div class="button-container">
         <!-- Back button -->
         <button class="back-button" onclick="window.location.href = 'find_buddies.php'">
-            Back To Study Buddy
+            Back
         </button>
 
         <!-- Adding friend -->
@@ -183,9 +185,6 @@ $stmt->close();
             <input type="hidden" name="buddy_username" value="<?php echo htmlspecialchars($users['username']); ?>">
             <button type="submit" class="back-button" style="margin-left: 10px;">Add as Buddy</button>
         </form>
-
-        <!-- Submiting achievement -->
-        <a href="feedback_form.php?user_id=<?php echo urlencode($users['id']); ?>" class="back-button">Submit Feedback</a>
     </div>
 </div>
 

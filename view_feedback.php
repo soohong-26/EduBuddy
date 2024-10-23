@@ -1,13 +1,13 @@
 <?php
 include 'database.php';  // Include your database connection file
 
-// Get user_id from URL
-if (!isset($_GET['user_id'])) {
-    echo "No user specified.";
+if (!isset($_SESSION['user_id'])) {
+    // If the user is not logged in, redirect to the login page
+    header('Location: login.php');
     exit;
 }
 
-$user_id = $_GET['user_id'];
+$user_id = $_SESSION['user_id']; // Assumes user ID is stored in session
 
 // Fetch the feedback details from the database
 $sql = "SELECT f.rating, f.comment, f.created_at, u.username as rated_by_username FROM feedback f
@@ -41,16 +41,66 @@ $user = $result_username->fetch_assoc();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback for <?php echo htmlspecialchars($user['username']); ?></title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <!-- CSS -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: #212121;
+            margin: 20px;
+            padding: 20px;
+            color: white;
+        }
+
+        .feedback-container {
+            padding: 20px; 
+            background-color: #3B4E61; 
+            color: white; 
+            width: 600px; 
+            margin: auto; 
+            border-radius: 10px;
+        }
+
+        .feedback-entry {
+            padding: 0 0 0 0;
+        }
+
+        .back-button {
+            font-family: "Poppins", sans-serif;
+            display: inline-block;
+            width: 200px;
+            padding: 10px;
+            margin: 10px 0 19px 0;
+            background-color: rgba(0, 136, 169, 1);
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+    </style>
 </head>
 <body>
 
-<div class="feedback-container" style="padding: 20px; background-color: #3B4E61; color: white; width: 600px; margin: auto; border-radius: 10px;">
+<!-- Back button -->
+<button class="back-button" onclick="window.location.href = 'find_buddies.php'">
+            Back
+        </button>
+
+<div class="feedback-container">
+    <!-- Display username -->
     <h1>Feedback for <?php echo htmlspecialchars($user['username']); ?></h1>
+    
+    <!-- Average rating -->
     <h3>Average Rating: <?php echo round($averageRating, 1); ?>/5 Stars</h3>
+
+    <hr>
+    
     <?php foreach ($feedbacks as $feedback): ?>
         <div class="feedback-entry">
-            <p><strong>Rating:</strong> <?php echo $feedback['rating']; ?>/5 Stars</p>
+            <!-- <p><strong>Rating:</strong> <?php echo $feedback['rating']; ?>/5 Stars</p> -->
             <p><strong>Comment:</strong> <?php echo htmlspecialchars($feedback['comment']); ?></p>
             <p><strong>From:</strong> <?php echo htmlspecialchars($feedback['rated_by_username']); ?></p>
             <p><strong>Date:</strong> <?php echo date("F j, Y, g:i a", strtotime($feedback['created_at'])); ?></p>

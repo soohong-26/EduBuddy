@@ -50,7 +50,7 @@ By doing so it allows a mutual support among each other.
 - delete_friend.php (Handles removing friend)
 
 ### Viewing Achievements
-- profile.php (A button that will redirect to feedback_form.php)
+- friend_list.php ()
 - feedback_form.php (Frontend to send feedback form)
 - submit_feedback.php (Backend to send feedback form)
 - view_feedback.php (Viewing users feedback)
