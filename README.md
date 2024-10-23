@@ -72,5 +72,4 @@ By doing so it allows a mutual support among each other.
 
 # **To-Do**
 - Achievement Page
-    - Allows the user to add achievements to the other students
-- In the page allows other students and mentors to come to that students profile and leave comments about their work
+    - Change the UI of the pages
