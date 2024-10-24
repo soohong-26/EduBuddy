@@ -36,15 +36,83 @@ $user = $result->fetch_assoc();
         body {
             font-family: "Poppins", sans-serif;
             background-color: #212121;
-            margin: 20px;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             color: white;
+        }
+
+        .feedback-form-container {
+            padding: 20px;
+            background-color: #3B4E61;
+            width: 350px; /* Increased width */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center; /* Center align text and form elements */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-size: 16px; 
+        }
+
+        select, button {
+            margin-bottom: 12px; 
+            width: 100%; 
+            padding: 12px; 
+            font-size: 16px; 
+            border-radius: 10px; 
+            border: 1px solid #ccc; 
+        }
+
+        .comment-section {
+            margin-bottom: 12px; 
+            width: 92%; 
+            padding: 12px; 
+            font-size: 16px;
+            border-radius: 10px; 
+            border: 1px solid #ccc; 
+        }
+
+        select {
+            /* -webkit-appearance: none; 
+            -moz-appearance: none;  */
+            appearance: none; 
+            background-color: white; 
+            color: #333;
+        }
+
+        textarea {
+            resize: none; /* Prevent resizing */
+        }
+
+        /* Button */
+        .submit-button {
+            padding: 15px 25px;
+            background-color: rgba(0, 136, 169, 1);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .submit-button:hover {
+            background-color: rgba(0, 136, 169, 0.8);
         }
     </style>
 </head>
 <body>
-
-<div class="feedback-form-container" style="padding: 20px; background-color: #3B4E61; color: white; width: 300px; margin: auto; border-radius: 10px;">
+<div class="feedback-form-container">
     <h1>Feedback for <?php echo htmlspecialchars($user['username']); ?></h1>
     <form action="submit_feedback.php" method="POST">
         <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user_id); ?>">
@@ -52,15 +120,15 @@ $user = $result->fetch_assoc();
         <input type="hidden" name="username" value="<?php echo htmlspecialchars($user['username']); ?>">
         <label for="rating">Rating:</label>
         <select name="rating" id="rating" required>
-            <option value="1">1 Star</option>
-            <option value="2">2 Stars</option>
-            <option value="3">3 Stars</option>
-            <option value="4">4 Stars</option>
-            <option value="5">5 Stars</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
         </select>
-        <label for="comment">Comment:</label>
-        <textarea name="comment" id="comment" rows="4" placeholder="Leave a comment..."></textarea>
-        <button type="submit" class="submit-button">Submit Feedback</button>
+        <label for="comment">Achievement:</label>
+        <textarea class="comment-section" name="comment" id="comment" rows="4" placeholder="Achievement title here" required></textarea>
+        <button type="submit" class="submit-button">Submit Achievement</button>
     </form>
 </div>
 

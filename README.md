@@ -50,7 +50,7 @@ By doing so it allows a mutual support among each other.
 - delete_friend.php (Handles removing friend)
 
 ### Viewing Achievements
-- friend_list.php ()
+- friend_list.php
 - feedback_form.php (Frontend to send feedback form)
 - submit_feedback.php (Backend to send feedback form)
 - view_feedback.php (Viewing users feedback)
@@ -71,5 +71,5 @@ By doing so it allows a mutual support among each other.
 ## Achievement Feedback
 
 # **To-Do**
-- Achievement Page
-    - Change the UI of the pages
+- Add one more feature for the obj 1
+- Minor adjustments on the mentor page

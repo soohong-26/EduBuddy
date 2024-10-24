@@ -14,7 +14,8 @@ $lowerUsername = strtolower($username);
 
 // Fetch the user's details from the database
 $sql = "
-    SELECT u.username, u.email, u.profile_img, u.roles, s.strengths, s.weaknesses, s.extra_skills
+    SELECT u.user_id, u.username, u.email, u.profile_img, u.roles, s.strengths, s.weaknesses, s.extra_skills,
+           f.rating
     FROM users u
     LEFT JOIN (
         SELECT s1.username, s1.strengths, s1.weaknesses, s1.extra_skills
@@ -25,6 +26,7 @@ $sql = "
             GROUP BY username
         ) s2 ON s1.username = s2.username AND s1.id = s2.max_id
     ) s ON LOWER(u.username) = LOWER(s.username)
+    LEFT JOIN feedback f ON u.user_id = f.user_id
     WHERE LOWER(u.username) = ?";
 
 // Prepare and execute the statement
@@ -33,14 +35,36 @@ $stmt->bind_param('s', $lowerUsername);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Check if the user exists
-if ($result->num_rows === 0) {
-    echo "User not found.";
-    exit;
+$totalRating = 0;
+$countRatings = 0;
+$user = [];
+
+// Process all rows to calculate average rating
+while ($row = $result->fetch_assoc()) {
+    if (empty($user)) { // Fetch user details once
+        $user = [
+            'username' => $row['username'],
+            'email' => $row['email'],
+            'profile_img' => $row['profile_img'],
+            'roles' => $row['roles'],
+            'strengths' => $row['strengths'],
+            'weaknesses' => $row['weaknesses'],
+            'extra_skills' => $row['extra_skills']
+        ];
+    }
+    if ($row['rating'] !== null) { // Ensure the rating is not null
+        $totalRating += $row['rating'];
+        $countRatings++;
+    }
 }
 
-// Fetch the user's details
-$user = $result->fetch_assoc();
+// Calculate the average rating if there are any ratings
+if ($countRatings > 0) {
+    $averageRating = $totalRating / $countRatings;
+} else {
+    $averageRating = "No ratings"; // Fallback message when there are no ratings
+}
+
 $stmt->close();
 ?>
 
@@ -167,6 +191,13 @@ $stmt->close();
             echo !empty($user['extra_skills']) ? htmlspecialchars($user['extra_skills']) : "None";
             ?>
     </p>
+
+    <!-- Show average rating -->
+    <p class="profile-detail">
+        <span class="profile-label">Average Rating:</span>
+        <?php echo is_numeric($averageRating) ? round($averageRating, 1) . '/5' : $averageRating; ?>
+    </p>
+
 
     <div class="button-container">
         <!-- Back button -->

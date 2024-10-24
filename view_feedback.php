@@ -80,34 +80,44 @@ $user = $result_username->fetch_assoc();
             font-size: 16px;
             transition: background-color 0.3s ease;
         }
+
+        .no-feedback{
+            text-align: center;
+            margin-top: 30px;
+            font-weight: 400;
+        }
     </style>
 </head>
 <body>
 
-<!-- Back button -->
-<button class="back-button" onclick="window.location.href = 'find_buddies.php'">
+        <!-- Back button -->
+        <button class="back-button" onclick="window.location.href = 'find_buddies.php'">
             Back
         </button>
 
-<div class="feedback-container">
-    <!-- Display username -->
+        <div class="feedback-container">
     <h1>Feedback for <?php echo htmlspecialchars($user['username']); ?></h1>
-    
-    <!-- Average rating -->
-    <h3>Average Rating: <?php echo round($averageRating, 1); ?>/5 Stars</h3>
 
-    <hr>
-    
-    <?php foreach ($feedbacks as $feedback): ?>
-        <div class="feedback-entry">
-            <!-- <p><strong>Rating:</strong> <?php echo $feedback['rating']; ?>/5 Stars</p> -->
-            <p><strong>Comment:</strong> <?php echo htmlspecialchars($feedback['comment']); ?></p>
-            <p><strong>From:</strong> <?php echo htmlspecialchars($feedback['rated_by_username']); ?></p>
-            <p><strong>Date:</strong> <?php echo date("F j, Y, g:i a", strtotime($feedback['created_at'])); ?></p>
-            <hr>
+    <?php if (count($feedbacks) > 0): ?>
+        <!-- Average rating -->
+        <h3>Average Rating: <?php echo round($averageRating, 1); ?>/5</h3>
+        <hr>
+        
+        <?php foreach ($feedbacks as $feedback): ?>
+            <div class="feedback-entry">
+                <p><h2>Comment:</h2> <?php echo htmlspecialchars($feedback['comment']); ?></p>
+                <p><h2>From:</h2> <?php echo htmlspecialchars($feedback['rated_by_username']); ?></p>
+                <p><h2>Date:</h2> <?php echo date("F j, Y, g:i a", strtotime($feedback['created_at'])); ?></p>
+                <hr>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <hr>
+        <!-- No feedback available -->
+        <div class="no-feedback">
+            No Achievements Yet
         </div>
-    <?php endforeach; ?>
-    <button onclick="window.history.back();" style="padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px;">Go Back</button>
+    <?php endif; ?>
 </div>
 
 </body>

@@ -174,6 +174,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            font-family: "Poppins", sans-serif;
+            background-color: rgba(0, 136, 169, 1);
         }
 
         .view-profile-button {
