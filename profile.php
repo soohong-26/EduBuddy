@@ -195,7 +195,7 @@ $stmt->close();
 
     <div class="button-container">
         <!-- Back button -->
-        <button class="back-button" onclick="window.location.href = 'find_buddies.php'">
+        <button class="back-button" onclick="window.history.back();">
             Back
         </button>
 
