@@ -92,7 +92,7 @@ $username = $_SESSION['username'];
 
       <br>
 
-    <!-- Feature Cards -->
+    <!-- Feature cards -->
     <div class="card-container">
         <div class="feature-card">
             <h2 class="card-title">Find Study Buddies</h2>

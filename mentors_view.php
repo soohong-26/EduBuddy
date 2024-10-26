@@ -7,11 +7,17 @@ if (!isset($_SESSION['user_id']) || $_SESSION['roles'] !== 'mentor') {
     exit;
 }
 
-// Fetch all students from the database
-$sql = "SELECT user_id, username, email FROM users WHERE roles = 'student'";
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$result = $stmt->get_result();
+// Handle role change
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['new_role'], $_POST['user_id'])) {
+    $new_role = $_POST['new_role'];
+    $user_id = $_POST['user_id'];
+    $update_sql = "UPDATE users SET roles = ? WHERE user_id = ?";
+    $update_stmt = $conn->prepare($update_sql);
+    $update_stmt->bind_param("si", $new_role, $user_id);
+    if ($update_stmt->execute()) {
+        echo "<script>alert('Role has been successfully changed to " . htmlspecialchars($new_role) . ".');</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,35 +34,27 @@ $result = $stmt->get_result();
             margin: 20px;
             padding: 20px;
         }
-
-        /* Lists */
         .user-list {
             padding: auto;
             margin: auto;
             list-style: none;
         }
-
         .user-item {
             padding: 10px;
-            margin: 5px;
+            margin: 20px 40px 20px 0;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: white;
         }
-
-        /* Texts */
         .username, .email {
-            font-weight: bold; /* Example to make text bold */
+            font-weight: bold;
         }
-
         .username {
-            color: #3498db; /* Blue color for username */
+            color: #3498db;
         }
-
         .email {
-            color: #e74c3c; /* Red color for email */
+            color: #e74c3c;
         }
-
-        /* Title */
         .title-page {
             color: #7AA3CC;
             font-family: "Poppins", sans-serif;
@@ -66,15 +64,21 @@ $result = $stmt->get_result();
             font-weight: 800;
             font-size: 50px;
         }
-
-        .profile-btn {
+        .profile-btn, .role-btn {
             padding: 9px 25px;
             background-color: rgba(0, 136, 169, 1);
             border: none;
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-left: 50px;
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+
+        .role-selector {
+            font-family: "Poppins", sans-serif;
+            padding: 5px 10px;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -84,15 +88,46 @@ $result = $stmt->get_result();
     
     <!-- Display the users -->
     <?php
+    $sql = "SELECT user_id, username, email, roles FROM users WHERE roles IN ('student', 'tutor')";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
     if ($result->num_rows > 0) {
         echo "<ul class='user-list'>";
         while ($row = $result->fetch_assoc()) {
-            echo "<li class='user-item'><span class='username'>" . htmlspecialchars($row['username']) . "</span> - <span class='email'>" . htmlspecialchars($row['email']) . 
-                 "</span> <button class='profile-btn' onclick=\"location.href='students_profile.php?username=" . $row['username'] . "'\">View Profile</button></li>";
+            echo "
+            <li class='user-item'>
+                <span class='username'>" . 
+                    htmlspecialchars($row['username']) . 
+                "</span> - <span class='email'>" . 
+                    htmlspecialchars($row['email']) . 
+                 "</span>
+                 
+                <form method='post' action='' onsubmit='return confirm(\"Are you sure you want to change the role?\");'>
+                    <input type='hidden' name='user_id' value='" . $row['user_id'] . "'>
+                        <select name='new_role' class='role-selector'>
+                            <option value='student' " . ($row['roles'] === 'student' ? 'selected' : '') . ">
+                                Student
+                            </option>
+                            <option value='tutor' " . ($row['roles'] === 'tutor' ? 'selected' : '') . ">
+                                Tutor
+                            </option>
+                        </select>
+
+                        <button type='submit' class='role-btn'>
+                            Change Role
+                        </button>
+
+                        <button class='profile-btn' onclick=\"location.href='user_profile.php?user_id=" . $row['user_id'] . "'\">
+                            View Profile
+                        </button>
+                    </form> 
+                    
+                    </li>";
         }
         echo "</ul>";
     } else {
-        echo "No students found.";
+        echo "No users found.";
     }
     ?>
 </body>
