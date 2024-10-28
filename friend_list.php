@@ -9,14 +9,21 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id']; // Assumes user ID is stored in session
 
-$query = "SELECT u.user_id, u.username FROM users u
+// Query to fetch buddies and count of unread messages
+$query = "SELECT u.user_id, u.username, 
+                 COALESCE(SUM(CASE WHEN m.is_read = FALSE AND m.receiver_id = ? THEN 1 ELSE 0 END), 0) AS unread_count
+          FROM users u
           INNER JOIN friends f ON u.user_id = f.friend_id
-          WHERE f.user_id = ?";
+          LEFT JOIN messages m ON m.sender_id = f.friend_id AND m.receiver_id = f.user_id
+          WHERE f.user_id = ?
+          GROUP BY u.user_id, u.username";
+
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $user_id);
+$stmt->bind_param("ii", $user_id, $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
+
 
 <!-- HTML -->
 <!DOCTYPE html>
@@ -105,41 +112,42 @@ $result = $stmt->get_result();
     
     <!-- Friend list -->
     <h2 class="title-page">Buddies List</h2>
-
     <div class="box-container">
         <?php
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo '<div class="friend-item">';
-                    echo htmlspecialchars($row['username']);
-                    ?>
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo '<div class="friend-item">';
+                echo htmlspecialchars($row['username']);
+                ?>
 
-                    <!-- View Profile Button -->
-                    <form action="profile_view_only.php" method="GET" style="display:inline; margin-left: 20px;">
-                        <input type="hidden" name="username" value="<?php echo urlencode($row['username']); ?>">
-                        <button type="submit" class="view-profile-button">View Buddy</button>
-                    </form>
+                <!-- View Profile Button -->
+                <form action="profile_view_only.php" method="GET" style="display:inline; margin-left: 20px;">
+                    <input type="hidden" name="username" value="<?php echo urlencode($row['username']); ?>">
+                    <button type="submit" class="view-profile-button">View Buddy</button>
+                </form>
 
-                    <!-- Chat Button -->
-                    <a href="chat.php?user_id=<?php echo urlencode($row['user_id']); ?>" class="view-profile-button" style="text-decoration:none; margin-left:10px;">Chat with Buddy</a>
+                <!-- Chat Button with unread message count -->
+                <a href="chat.php?user_id=<?php echo urlencode($row['user_id']); ?>" class="view-profile-button" style="text-decoration:none; margin-left:10px;">
+                    Chat with Buddy (<?php echo $row['unread_count']; ?>)
+                </a>
 
-                    <!-- Submitting achievement -->
-                    <a href="feedback_form.php?user_id=<?php echo urlencode($row['user_id']); ?>" class="view-profile-button" style="text-decoration:none; margin-left:10px;">Submit Achievement</a>
+                <!-- Submitting achievement -->
+                <a href="feedback_form.php?user_id=<?php echo urlencode($row['user_id']); ?>" class="view-profile-button" style="text-decoration:none; margin-left:10px;">Submit Achievement</a>
 
-                    <!-- Delete button -->
-                    <form action="delete_friend.php" method="POST" style="display:inline; margin-left: 10px;">
-                        <input type="hidden" name="friend_id" value="<?php echo $row['user_id']; ?>">
-                        <button type="submit" style="background-color: rgba(217, 83, 79, 1);" class="view-profile-button" onclick="return confirm('Are you sure you want to delete this buddy?');">Delete Buddy</button>
-                    </form>
+                <!-- Delete button -->
+                <form action="delete_friend.php" method="POST" style="display:inline; margin-left: 10px;">
+                    <input type="hidden" name="friend_id" value="<?php echo $row['user_id']; ?>">
+                    <button type="submit" style="background-color: rgba(217, 83, 79, 1);" class="view-profile-button" onclick="return confirm('Are you sure you want to delete this buddy?');">Delete Buddy</button>
+                </form>
 
-                    <?php
-                    echo '</div>';
-
-                }
-            } else {
-                echo "You have no buddies yet.";
+                <?php
+                echo '</div>';
             }
+        } else {
+            echo "You have no buddies yet.";
+        }
         ?>
     </div>
+
 </body>
 </html>

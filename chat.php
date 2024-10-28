@@ -1,6 +1,7 @@
 <!-- PHP -->
 <?php
 include 'database.php'; // Include your database connection
+session_start(); // Ensure sessions are started
 
 if (!isset($_SESSION['user_id']) || !isset($_GET['user_id'])) {
     // Redirect to login page if not logged in or no user_id passed
@@ -10,6 +11,13 @@ if (!isset($_SESSION['user_id']) || !isset($_GET['user_id'])) {
 
 $my_id = $_SESSION['user_id'];
 $friend_id = $_GET['user_id'];
+
+// Update unread messages to read upon opening the chat
+$update_query = "UPDATE messages SET is_read = TRUE WHERE sender_id = ? AND receiver_id = ? AND is_read = FALSE";
+$update_stmt = $conn->prepare($update_query);
+$update_stmt->bind_param("ii", $friend_id, $my_id);
+$update_stmt->execute();
+$update_stmt->close();
 
 // Fetch username for the friend
 $stmt = $conn->prepare("SELECT username FROM users WHERE user_id = ?");
@@ -110,6 +118,16 @@ if ($result->num_rows > 0) {
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
+        .sender {
+            color: #7AA3CC; /* Light blue color for usernames and timestamps */
+            font-weight: bold;
+        }
+
+        .timestamp {
+            color: #7AA3CC; /* Same color for timestamp */
+        }
+
     </style>
     </style>
 </head>
@@ -149,7 +167,9 @@ if ($result->num_rows > 0) {
                 success: function(messages) {
                     $('#messages').empty();
                     messages.forEach(function(message) {
-                        $('#messages').append('<div>' + message.message_text + '</div>');
+                        var sender = message.sender === '<?php echo htmlspecialchars($friend_username); ?>' ? 'You' : message.sender;
+                        var timestamp = new Date(message.timestamp).toLocaleString(); // Converts date to local string
+                        $('#messages').append('<div><strong class="sender">' + sender + '</strong> <span class="timestamp">(' + timestamp + ')</span>: ' + message.message_text + '</div>');
                     });
                     $('#messages').scrollTop($('#messages')[0].scrollHeight);
                 }
