@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['new_role'], $_POST['us
             cursor: pointer;
             transition: all 0.3s ease;
             margin-left: 20px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .role-selector {
