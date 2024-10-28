@@ -1,7 +1,6 @@
 <!-- PHP -->
 <?php
 include 'database.php'; // Include your database connection
-session_start(); // Ensure sessions are started
 
 if (!isset($_SESSION['user_id']) || !isset($_GET['user_id'])) {
     // Redirect to login page if not logged in or no user_id passed
@@ -19,7 +18,7 @@ $update_stmt->bind_param("ii", $friend_id, $my_id);
 $update_stmt->execute();
 $update_stmt->close();
 
-// Fetch username for the friend
+// Fetch username for the friend and the logged-in user
 $stmt = $conn->prepare("SELECT username FROM users WHERE user_id = ?");
 $stmt->bind_param("i", $friend_id);
 $stmt->execute();
@@ -31,6 +30,19 @@ if ($result->num_rows > 0) {
     echo "No user found.";
     exit;
 }
+
+$my_username_stmt = $conn->prepare("SELECT username FROM users WHERE user_id = ?");
+$my_username_stmt->bind_param("i", $my_id);
+$my_username_stmt->execute();
+$my_username_result = $my_username_stmt->get_result();
+if ($my_username_result->num_rows > 0) {
+    $my_user = $my_username_result->fetch_assoc();
+    $my_username = $my_user['username'];
+} else {
+    echo "User not found.";
+    exit;
+}
+$my_username_stmt->close();
 ?>
 
 <!-- HTML -->
@@ -42,93 +54,80 @@ if ($result->num_rows > 0) {
     <title>Chat with <?php echo htmlspecialchars($friend_username); ?></title>
     <!-- CSS -->
     <style>
-        body {
-            font-family: "Poppins", sans-serif;
-            background-color: #212121;
+        body { 
+            font-family: "Poppins", sans-serif; 
+            background-color: #212121; 
         }
 
-        /* Title Header */
-        .title-page {
-            color: #7AA3CC;
-            font-family: "Poppins", sans-serif;
-            margin: 0 0 20px 25px;
+        .title-page { 
+            color: #7AA3CC; 
+            font-family: "Poppins", sans-serif; 
+            margin: 0 0 20px 25px; 
         }
 
-        .box-container {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 0 25px 0 25px;
+        .box-container { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin: 0 25px 0 25px; 
         }
 
-        /* For chats */
         .chat-box {
-            padding: 10px;
-            margin: 5px 30px;
-            color: white;
+            padding: 10px; 
+            margin: 5px 30px; 
+            color: white; 
         }
 
-        .chat-messages {
+        .chat-messages { 
             height: 300px; 
             overflow-y: auto; 
-            border: 1px solid #ccc; 
+            border: 1px solid #ccc;
             margin-bottom: 10px; 
-            padding: 5px;
-            border-radius: 10px;
+            padding: 5px; 
+            border-radius: 10px; 
         }
 
-        .message-input {
-            font-family: "Poppins", sans-serif;
+        .message-input { 
             width: 100%; 
-            height: 50px;
-            border-radius: 20px;
-            padding: 10px;
-            margin-bottom: 5px;
+            height: 50px; 
+            border-radius: 20px; 
+            padding: 10px; 
+            margin-bottom: 5px; 
         }
 
-        /* Button */
-        .send-button {
-            width: 150px;
-            padding: 7px;
-            margin: 4px 0 10px 0;
-            border-radius: 5px;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-family: "Poppins", sans-serif;
-            background-color: rgba(0, 136, 169, 1);
+        .send-button { 
+            width: 150px; 
+            padding: 7px; 
+            margin: 4px 0 10px 0; 
+            border-radius: 5px; 
+            color: white; 
+            font-size: 16px; 
+            cursor: pointer; 
+            transition: background-color 0.3s ease; 
+            background-color: rgba(0, 136, 169, 1); 
         }
 
-        .send-button:hover {
-            background-color: rgba(0, 136, 169, 0.8);
+        .send-button:hover { 
+            background-color: rgba(0, 136, 169, 0.8); 
+        }
+        .back-button { 
+            padding: 10px; 
+            margin: 0 0 10px 25px; 
+            background-color: rgba(0, 136, 169, 1); 
+            color: white; 
+            text-align: center; 
+            border: none; 
+            border-radius: 5px; 
+            font-size: 16px; 
+            width: 200px; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
         }
 
-        .back-button {
-            font-family: "Poppins", sans-serif;
-            padding: 10px;
-            margin: 0 0 10px 25px;
-            background-color: rgba(0, 136, 169, 1);
-            color: white;
-            text-align: center;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            width: 200px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+        .sender, .timestamp { 
+            color: #7AA3CC; 
+            font-weight: bold; 
         }
-
-        .sender {
-            color: #7AA3CC; /* Light blue color for usernames and timestamps */
-            font-weight: bold;
-        }
-
-        .timestamp {
-            color: #7AA3CC; /* Same color for timestamp */
-        }
-
-    </style>
     </style>
 </head>
 <body>
@@ -139,25 +138,22 @@ if ($result->num_rows > 0) {
     <h2 class="title-page">Chat with <?php echo htmlspecialchars($friend_username); ?></h2>
 
     <!-- Back button -->
-    <button class="back-button" onclick="window.location.href='friend_list.php'">
-        Back
-    </button>
-    
+    <button class="back-button" onclick="window.location.href='friend_list.php'">Back</button>
+
     <!-- Chat -->
     <div id="chat-box" class="chat-box">
-        <div id="messages" class="chat-messages">
-            <!-- Messages will be loaded here by JavaScript -->
-        </div>
-
+        <div id="messages" class="chat-messages"></div>
         <textarea id="message-input" class="message-input"></textarea>
-
         <button onclick="sendMessage()" class="send-button">Send</button>
     </div>
-
+    
     <!-- JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <script>
+
+        var myUsername = '<?php echo htmlspecialchars($my_username); ?>'; // Safe output with htmlspecialchars
+
         function fetchMessages() {
             $.ajax({
                 url: 'fetch_messages.php',
@@ -167,8 +163,8 @@ if ($result->num_rows > 0) {
                 success: function(messages) {
                     $('#messages').empty();
                     messages.forEach(function(message) {
-                        var sender = message.sender === '<?php echo htmlspecialchars($friend_username); ?>' ? 'You' : message.sender;
-                        var timestamp = new Date(message.timestamp).toLocaleString(); // Converts date to local string
+                        var sender = message.sender === myUsername ? myUsername : message.sender; // Display actual username instead of "You"
+                        var timestamp = new Date(message.timestamp).toLocaleString();
                         $('#messages').append('<div><strong class="sender">' + sender + '</strong> <span class="timestamp">(' + timestamp + ')</span>: ' + message.message_text + '</div>');
                     });
                     $('#messages').scrollTop($('#messages')[0].scrollHeight);
@@ -188,7 +184,6 @@ if ($result->num_rows > 0) {
                 });
             }
         }
-
         $(document).ready(function() {
             fetchMessages(); // Initial load
             setInterval(fetchMessages, 5000); // Poll for new messages every 5 seconds
