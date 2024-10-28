@@ -95,6 +95,22 @@ if ($result->num_rows > 0) {
         .send-button:hover {
             background-color: rgba(0, 136, 169, 0.8);
         }
+
+        .back-button {
+            font-family: "Poppins", sans-serif;
+            padding: 10px;
+            margin: 0 0 10px 25px;
+            background-color: rgba(0, 136, 169, 1);
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 200px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+    </style>
     </style>
 </head>
 <body>
@@ -104,6 +120,11 @@ if ($result->num_rows > 0) {
     <!-- Title page -->
     <h2 class="title-page">Chat with <?php echo htmlspecialchars($friend_username); ?></h2>
 
+    <!-- Back button -->
+    <button class="back-button" onclick="window.location.href='friend_list.php'">
+        Back
+    </button>
+    
     <!-- Chat -->
     <div id="chat-box" class="chat-box">
         <div id="messages" class="chat-messages">
