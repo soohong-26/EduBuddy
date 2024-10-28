@@ -1,7 +1,6 @@
 <?php
 require 'database.php'; // Include the database connection
 
-// Check if the user is logged in and is a mentor
 if (!isset($_SESSION['user_id']) || $_SESSION['roles'] !== 'mentor') {
     echo "Access Denied. You must be logged in as a mentor to view this page.";
     exit;
@@ -19,8 +18,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['new_role'], $_POST['us
     }
     $update_stmt->close();
 }
-?>
 
+// Fetch users along with their unread message count
+$sql = "SELECT u.user_id, u.username, u.email, u.roles, 
+               COALESCE(SUM(CASE WHEN m.is_read = FALSE AND m.receiver_id = ? AND m.sender_id = u.user_id THEN 1 ELSE 0 END), 0) AS unread_count
+        FROM users u
+        LEFT JOIN messages m ON m.sender_id = u.user_id
+        WHERE u.roles IN ('student', 'tutor')
+        GROUP BY u.user_id, u.username, u.email, u.roles";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $_SESSION['user_id']); // Pass the current user's ID
+$stmt->execute();
+$result = $stmt->get_result();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -96,35 +107,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['new_role'], $_POST['us
     <?php include 'header.php'; ?>
     
     <!-- Display the users -->
-    <?php
-    $sql = "SELECT user_id, username, email, roles FROM users WHERE roles IN ('student', 'tutor')";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        echo "<ul class='user-list'>";
-        while ($row = $result->fetch_assoc()) {
-            echo "
+    <ul class='user-list'>
+    <?php if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) { ?>
             <li class='user-item'>
-                <span class='username'>" . htmlspecialchars($row['username']) . "</span> - <span class='email'>" . htmlspecialchars($row['email']) . "</span>
-                 
-                <form method='post' action='' onsubmit='return confirm(\"Are you sure you want to change the role?\");'>
-                    <input type='hidden' name='user_id' value='" . $row['user_id'] . "'>
+                <span class='username'><?php echo htmlspecialchars($row['username']); ?></span> - 
+                <span class='email'><?php echo htmlspecialchars($row['email']); ?></span>
+                <form method='post' action='' onsubmit='return confirm("Are you sure you want to change the role?");'>
+                    <input type='hidden' name='user_id' value='<?php echo $row['user_id']; ?>'>
                     <select name='new_role' class='role-selector'>
-                        <option value='student' " . ($row['roles'] === 'student' ? 'selected' : '') . ">Student</option>
-                        <option value='tutor' " . ($row['roles'] === 'tutor' ? 'selected' : '') . ">Tutor</option>
+                        <option value='student' <?php echo ($row['roles'] === 'student' ? 'selected' : ''); ?>>Student</option>
+                        <option value='tutor' <?php echo ($row['roles'] === 'tutor' ? 'selected' : ''); ?>>Tutor</option>
                     </select>
                     <button type='submit' class='role-btn'>Change Role</button>
-                </form> 
-
-                <button class='profile-btn' onclick=\"location.href='chat.php?user_id=" . $row['user_id'] . "'\">Chat with " . htmlspecialchars($row['username']) . "</button>
-                <button class='profile-btn' onclick=\"location.href='user_profile.php?user_id=" . $row['user_id'] . "'\">View Profile</button>
-            </li>";
-        }
-        echo "</ul>";
+                </form>
+                <button class='profile-btn' onclick="location.href='chat.php?user_id=<?php echo $row['user_id']; ?>'">Chat with <?php echo htmlspecialchars($row['username']); ?> (<?php echo $row['unread_count']; ?>)</button>
+                <button class='profile-btn' onclick="location.href='user_profile.php?user_id=<?php echo $row['user_id']; ?>'">View Profile</button>
+            </li>
+        <?php } 
     } else {
         echo "No users found.";
-    }
-    ?>
+    } ?>
+    </ul>
 </body>
 </html>

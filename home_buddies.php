@@ -107,7 +107,7 @@ $username = $_SESSION['username'];
             </p>
         </div>
         <div class="feature-card">
-            <h2 class="card-title">Achievements Chart</h2>
+            <h2 class="card-title">Achievements List</h2>
             <p class="card-content">
                 View your rating and comments or feedback given by your buddy, as you progress together and supporting each other.
             </p>
