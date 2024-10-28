@@ -138,7 +138,9 @@ $my_username_stmt->close();
     <h2 class="title-page">Chat with <?php echo htmlspecialchars($friend_username); ?></h2>
 
     <!-- Back button -->
-    <button class="back-button" onclick="window.location.href='friend_list.php'">Back</button>
+    <button class="back-button" onclick="window.history.back();">
+            Back
+    </button>
 
     <!-- Chat -->
     <div id="chat-box" class="chat-box">

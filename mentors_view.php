@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['new_role'], $_POST['us
     if ($update_stmt->execute()) {
         echo "<script>alert('Role has been successfully changed to " . htmlspecialchars($new_role) . ".');</script>";
     }
+    $update_stmt->close();
 }
 ?>
 
@@ -40,14 +41,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['new_role'], $_POST['us
             list-style: none;
         }
         .user-item {
-            padding: 10px;
-            margin: 20px 40px 20px 0;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            margin: 20px 0;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             background-color: white;
         }
         .username, .email {
             font-weight: bold;
+            margin-right: 10px;
+            white-space: nowrap;
         }
         .username {
             color: #3498db;
@@ -65,20 +70,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['new_role'], $_POST['us
             font-size: 50px;
         }
         .profile-btn, .role-btn {
-            padding: 9px 25px;
+            padding: 6px 12px;
             background-color: rgba(0, 136, 169, 1);
             border: none;
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-left: 20px;
-            margin-top: 10px;
+            margin-left: 10px;
         }
-
+        form {
+            display: flex;
+            align-items: center;
+            margin: 0 10px;
+        }
         .role-selector {
             font-family: "Poppins", sans-serif;
             padding: 5px 10px;
             border-radius: 5px;
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -97,33 +106,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['new_role'], $_POST['us
         while ($row = $result->fetch_assoc()) {
             echo "
             <li class='user-item'>
-                <span class='username'>" . 
-                    htmlspecialchars($row['username']) . 
-                "</span> - <span class='email'>" . 
-                    htmlspecialchars($row['email']) . 
-                 "</span>
+                <span class='username'>" . htmlspecialchars($row['username']) . "</span> - <span class='email'>" . htmlspecialchars($row['email']) . "</span>
                  
                 <form method='post' action='' onsubmit='return confirm(\"Are you sure you want to change the role?\");'>
                     <input type='hidden' name='user_id' value='" . $row['user_id'] . "'>
-                        <select name='new_role' class='role-selector'>
-                            <option value='student' " . ($row['roles'] === 'student' ? 'selected' : '') . ">
-                                Student
-                            </option>
-                            <option value='tutor' " . ($row['roles'] === 'tutor' ? 'selected' : '') . ">
-                                Tutor
-                            </option>
-                        </select>
+                    <select name='new_role' class='role-selector'>
+                        <option value='student' " . ($row['roles'] === 'student' ? 'selected' : '') . ">Student</option>
+                        <option value='tutor' " . ($row['roles'] === 'tutor' ? 'selected' : '') . ">Tutor</option>
+                    </select>
+                    <button type='submit' class='role-btn'>Change Role</button>
+                </form> 
 
-                        <button type='submit' class='role-btn'>
-                            Change Role
-                        </button>
-
-                        <button class='profile-btn' onclick=\"location.href='user_profile.php?user_id=" . $row['user_id'] . "'\">
-                            View Profile
-                        </button>
-                    </form> 
-                    
-                    </li>";
+                <button class='profile-btn' onclick=\"location.href='chat.php?user_id=" . $row['user_id'] . "'\">Chat with " . htmlspecialchars($row['username']) . "</button>
+                <button class='profile-btn' onclick=\"location.href='user_profile.php?user_id=" . $row['user_id'] . "'\">View Profile</button>
+            </li>";
         }
         echo "</ul>";
     } else {
