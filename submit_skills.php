@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         button {
             padding: 10px 20px;
-            background-color: #007BFF;
+            background-color: rgba(0, 136, 169, 1);
             color: white;
             border: none;
             border-radius: 5px;
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: rgba(0, 136, 169, 0.8);
         }
 
         .sub-title {

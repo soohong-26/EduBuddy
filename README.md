@@ -55,6 +55,10 @@ By doing so it allows a mutual support among each other.
 - submit_feedback.php (Backend to send feedback form)
 - view_feedback.php (Viewing users feedback)
 
+### Chats
+- send_message.php
+- fetch_messages.php
+
 # **Database (tables)**
 ## Handling Users
 - users
@@ -69,6 +73,11 @@ By doing so it allows a mutual support among each other.
 - comments
 
 ## Achievement Feedback
+- feedback
+
+## Chats
+- messages
+- chats
 
 # **To-Do**
 - Add one more feature for the obj 1

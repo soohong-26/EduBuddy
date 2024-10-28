@@ -105,7 +105,7 @@ $userRole = isset($_SESSION['roles']) ? $_SESSION['roles'] : null;
         <!-- Navigation Panel -->
         <nav>
             <ul class="nav_links">
-            <?php if ($userRole === 'student') { ?>
+            <?php if ($userRole === 'student' || $userRole === 'tutor') { ?>
                     <!-- Links for students -->
                     <li><a class='nav_anc' href="submit_skills.php">Find Buddies</a></li>
                     <li><a class='nav_anc' href="friend_list.php">View Buddies</a></li>

@@ -18,7 +18,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 ?>
 
-<!-- HTML --> 
+<!-- HTML -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +32,6 @@ $result = $stmt->get_result();
             background-color: #212121;
         }
 
-        /* Title Header */
         .title-page {
             color: #7AA3CC;
             font-family: "Poppins", sans-serif;
@@ -46,7 +45,6 @@ $result = $stmt->get_result();
             margin: 0 25px 0 25px;
         }
 
-        /* General Toggle Button Styling */
         .toggle-button {
             display: inline-block;
             width: 200px;
@@ -69,12 +67,10 @@ $result = $stmt->get_result();
             background-color: rgba(0, 136, 169, 1);
         }
 
-        /* Button Container */
         .button-container {
             margin: 0 0 15px 25px;
         }
 
-        /* View Profile Button */
         .view-profile-button {
             background-color: rgba(0, 136, 169, 1);
             color: white;
@@ -90,7 +86,6 @@ $result = $stmt->get_result();
             background-color: rgba(0, 136, 169, 0.8);
         }
 
-        /* Friend List Item */
         .friend-item {
             margin-bottom: 15px;
             font-size: 18px;
@@ -100,7 +95,7 @@ $result = $stmt->get_result();
 </head>
 <body>
     <!-- Header -->
-    <?php require 'header.php';?>
+    <?php require 'header.php'; ?>
 
     <!-- Navigation Buttons -->
     <div class="button-container">
@@ -125,8 +120,11 @@ $result = $stmt->get_result();
                         <button type="submit" class="view-profile-button">View Buddy</button>
                     </form>
 
-                    <!-- Submiting achievement -->
-                        <a href="feedback_form.php?user_id=<?php echo urlencode($row['user_id']); ?>" class="view-profile-button" style="text-decoration:none; margin-left:10px;">Submit Achievement</a>
+                    <!-- Chat Button -->
+                    <a href="chat.php?user_id=<?php echo urlencode($row['user_id']); ?>" class="view-profile-button" style="text-decoration:none; margin-left:10px;">Chat with Buddy</a>
+
+                    <!-- Submitting achievement -->
+                    <a href="feedback_form.php?user_id=<?php echo urlencode($row['user_id']); ?>" class="view-profile-button" style="text-decoration:none; margin-left:10px;">Submit Achievement</a>
 
                     <!-- Delete button -->
                     <form action="delete_friend.php" method="POST" style="display:inline; margin-left: 10px;">
