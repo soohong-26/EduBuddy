@@ -49,10 +49,10 @@ body {
 /* EduBuddy logo styling */
 .logo {
     position: absolute;
-    top: -50px; /* Move the logo higher above the login box */
+    top: -50px;
     left: 50%;
     transform: translateX(-50%);
-    width: 200px; /* Adjust the width of the logo */
+    width: 200px;
     height: auto;
     z-index: 10;
     transition: transform 0.3s ease;

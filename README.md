@@ -50,14 +50,15 @@ By doing so it allows a mutual support among each other.
 - delete_friend.php (Handles removing friend)
 
 ### Viewing Achievements
-- friend_list.php
 - feedback_form.php (Frontend to send feedback form)
 - submit_feedback.php (Backend to send feedback form)
 - view_feedback.php (Viewing users feedback)
 
 ### Chats
-- send_message.php
+- chat.php
 - fetch_messages.php
+- send_message.php
+- view_mentors.php (Chatting with the mentors directly)
 
 # **Database (tables)**
 ## Handling Users
@@ -77,7 +78,6 @@ By doing so it allows a mutual support among each other.
 
 ## Chats
 - messages
-- chats
 
 # **To-Do**
 - Add one more feature for the obj 1
