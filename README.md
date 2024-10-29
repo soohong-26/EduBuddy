@@ -78,6 +78,3 @@ By doing so it allows a mutual support among each other.
 
 ## Chats
 - messages
-
-# **To-Do**
-- Add one more feature for the obj 1
