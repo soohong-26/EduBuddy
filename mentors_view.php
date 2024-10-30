@@ -122,7 +122,7 @@ $result = $stmt->get_result();
                     <button type='submit' class='role-btn'>Change Role</button>
                 </form>
                 <button class='profile-btn' onclick="location.href='chat.php?user_id=<?php echo $row['user_id']; ?>'">Chat with <?php echo htmlspecialchars($row['username']); ?> (<?php echo $row['unread_count']; ?>)</button>
-                <button class='profile-btn' onclick="location.href='user_profile.php?user_id=<?php echo $row['user_id']; ?>'">View Profile</button>
+                <button class='profile-btn' onclick="location.href='profile_view_only.php?username=<?php echo $row['username']; ?>'">View Profile</button>
             </li>
         <?php } 
     } else {

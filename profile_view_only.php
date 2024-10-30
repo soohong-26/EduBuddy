@@ -181,8 +181,8 @@ $stmt_feedback->close();
 
 
     <div class="button-container">
-        <button class="back-button" onclick="window.location.href='friend_list.php'">
-            Back
+        <button class="back-button" onclick="window.history.back();">
+                Back
         </button>
     </div>
 </div>
@@ -194,6 +194,7 @@ $stmt_feedback->close();
         <?php foreach ($feedbacks as $feedback): ?>
             <div class="feedback-entry">
                 <p><strong>Achievement:</strong> <?php echo htmlspecialchars($feedback['comment']); ?></p>
+                <p><strong>Rating:</strong> <?php echo $feedback['rating']; ?>/5</p>
                 <p><strong>From:</strong> <?php echo htmlspecialchars($feedback['rated_by']); ?></p>
                 <p><strong>Date:</strong> <?php echo date("F j, Y, g:i a", strtotime($feedback['created_at'])); ?></p>
             </div>
