@@ -6,6 +6,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['roles'] !== 'mentor') {
     exit;
 }
 
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
+
 // Handle role change
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['new_role'], $_POST['user_id'])) {
     $new_role = $_POST['new_role'];
@@ -19,19 +21,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['new_role'], $_POST['us
     $update_stmt->close();
 }
 
-// Fetch users along with their unread message count
+// Fetch users along with their unread message count with search functionality
 $sql = "SELECT u.user_id, u.username, u.email, u.roles, 
                COALESCE(SUM(CASE WHEN m.is_read = FALSE AND m.receiver_id = ? AND m.sender_id = u.user_id THEN 1 ELSE 0 END), 0) AS unread_count
         FROM users u
         LEFT JOIN messages m ON m.sender_id = u.user_id
         WHERE u.roles IN ('student', 'tutor')
+        AND (u.username LIKE ? OR u.email LIKE ?)
         GROUP BY u.user_id, u.username, u.email, u.roles";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $_SESSION['user_id']); // Pass the current user's ID
+$likeTerm = '%' . $searchTerm . '%';
+$stmt->bind_param("iss", $_SESSION['user_id'], $likeTerm, $likeTerm); // Pass the current user's ID and search terms
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,8 +110,12 @@ $result = $stmt->get_result();
 <body>
     <!-- Navigation Bar -->
     <?php include 'header.php'; ?>
-    
-    <!-- Display the users -->
+    <div style="margin: 20px;">
+        <form action="" method="GET">
+            <input type="text" name="search" placeholder="Search students..." value="<?php echo htmlspecialchars($searchTerm); ?>" style="padding: 8px;">
+            <button type="submit" class="role-btn" style="padding: 8px 16px;">Search</button>
+        </form>
+    </div>
     <ul class='user-list'>
     <?php if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) { ?>
