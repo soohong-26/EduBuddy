@@ -157,19 +157,22 @@ $stmt->close();
         <?php echo htmlspecialchars($users['email']); ?>
     </p>
 
-    <!-- Roles (student/tutor) -->
+    <!-- Roles (student/tutor/mentor) -->
     <p class="profile-detail">
         <span class="profile-label">Role:</span>
-            <?php
-            // Role indicator
-            echo $user['roles'] === 'student' ? 'Student' : ($user['roles'] === 'mentor' ? 'Mentor' : 'Tutor');
-            ?>
+        <?php
+        // Corrected Role indicator to include "Tutor"
+        echo $users['roles'] === 'student' ? 'Student' :
+            ($users['roles'] === 'mentor' ? 'Mentor' :
+            ($users['roles'] === 'tutor' ? '<strong>Tutor</strong>' : 'Unknown Role'));
+        ?>
     </p>
+
 
     <!-- Strengths -->
     <p class="profile-detail">
         <span class="profile-label">Strengths:</span> 
-        <?php echo htmlspecialchars($users['strengths']); ?>
+        <?php echo htmlspecialchars($users['strengths']); ?> 
     </p>
 
     <!-- Weakness -->

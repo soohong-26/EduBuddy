@@ -162,14 +162,17 @@ $stmt->close();
         <?php echo htmlspecialchars($user['email']); ?>
     </p>
 
-    <!-- Roles (student/tutor) -->
+    <!-- Roles (student/tutor/mentor) -->
     <p class="profile-detail">
         <span class="profile-label">Role:</span>
-            <?php
-            // Role indicator
-            echo $user['roles'] === 'student' ? 'Student' : ($user['roles'] === 'mentor' ? 'Mentor' : 'Tutor');
-            ?>
+        <?php
+        // Corrected Role indicator to include "Tutor" in bold
+        echo $user['roles'] === 'student' ? 'Student' :
+            ($user['roles'] === 'mentor' ? 'Mentor' :
+            ($user['roles'] === 'tutor' ? '<strong>Tutor</strong>' : 'Unknown Role'));
+        ?>
     </p>
+
 
     <!-- Strengths -->
     <p class="profile-detail">
