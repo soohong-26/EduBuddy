@@ -78,8 +78,3 @@ By doing so it allows a mutual support among each other.
 
 ## Chats
 - messages
-
-# To Do
-- Make mentor page more features
-    - Add a search bar
-    - Add a generative summary report

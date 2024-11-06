@@ -22,13 +22,16 @@ $weaknesses = $user_data ? $user_data['weaknesses'] : '';
 
 // Search for matches based on weaknesses
 if (!empty($weaknesses)) {
-    $weaknessArray = explode(',', $weaknesses); // Split weaknesses into an array
+    // Split weaknesses into an array
+    $weaknessArray = explode(',', $weaknesses);
+
     $sql = "SELECT u.username, s.strengths, s.weaknesses FROM users u
             JOIN skills s ON u.username = s.username
             WHERE u.username != ?";
     foreach ($weaknessArray as $weakness) {
         $sql .= " AND FIND_IN_SET('" . $conn->real_escape_string(trim($weakness)) . "', s.strengths) > 0";
     }
+
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
     if ($stmt->execute()) {

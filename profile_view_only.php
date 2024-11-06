@@ -189,7 +189,7 @@ $stmt_feedback->close();
 
 <!-- Feedback Container -->
 <div class="feedback-container">
-    <h2 class="profile-header">Feedback</h2>
+    <h2 class="profile-header">Achievements</h2>
     <?php if (!empty($feedbacks)): ?>
         <?php foreach ($feedbacks as $feedback): ?>
             <div class="feedback-entry">

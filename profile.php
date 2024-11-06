@@ -162,7 +162,7 @@ $stmt->close();
         <span class="profile-label">Role:</span>
             <?php
             // Role indicator
-            echo $users['roles'] === 'student' ? 'Student' : ($users['roles'] === 'mentor' ? 'Mentor' : 'Unknown Role');
+            echo $user['roles'] === 'student' ? 'Student' : ($user['roles'] === 'mentor' ? 'Mentor' : 'Tutor');
             ?>
     </p>
 

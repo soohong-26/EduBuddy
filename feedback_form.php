@@ -113,7 +113,7 @@ $user = $result->fetch_assoc();
 </head>
 <body>
 <div class="feedback-form-container">
-    <h1>Feedback for <?php echo htmlspecialchars($user['username']); ?></h1>
+    <h1>Achievement for <?php echo htmlspecialchars($user['username']); ?></h1>
     <form action="submit_feedback.php" method="POST">
         <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user_id); ?>">
         <input type="hidden" name="rated_by_user_id" value="<?php echo htmlspecialchars($_SESSION['user_id']); ?>">

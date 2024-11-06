@@ -106,6 +106,7 @@ $user = $result_username->fetch_assoc();
         <?php foreach ($feedbacks as $feedback): ?>
             <div class="feedback-entry">
                 <p><h2>Achievement:</h2> <?php echo htmlspecialchars($feedback['comment']); ?></p>
+                <p><h2>Rating:</h2> <?php echo $feedback['rating']; ?>/5</p>
                 <p><h2>From:</h2> <?php echo htmlspecialchars($feedback['rated_by_username']); ?></p>
                 <p><h2>Date:</h2> <?php echo date("F j, Y, g:i a", strtotime($feedback['created_at'])); ?></p>
                 <hr>

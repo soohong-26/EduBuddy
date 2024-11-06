@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-size: 18px;
         }
 
-        input[type="checkbox"], input[type="text"] {
+        input[type="radio"], input[type="text"] {
             margin-right: 10px;
         }
 
@@ -276,14 +276,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <!-- Art and Design -->
                     <div>
                         <h3 class="sub-title">Art and Design</h3>
-                            <input type="checkbox" name="strengths[]" value="Art and Design History">Art and Design History<br>
-                            <input type="checkbox" name="strengths[]" value="3D Design">3D Design<br>
-                            <input type="checkbox" name="strengths[]" value="Design Elements">Design Elements<br>
-                            <input type="checkbox" name="strengths[]" value="Design Principles">Design Principles<br>
-                            <input type="checkbox" name="strengths[]" value="Drawing">Drawing<br>
-                            <input type="checkbox" name="strengths[]" value="Digital Graphics">Digital Graphics<br>
-                            <input type="checkbox" name="strengths[]" value="Photography">Photography<br>
-                            <input type="checkbox" name="strengths[]" value="Painting and Printing Techniques">Painting and Printing Techniques<br>
+                            <input type="radio" name="strengths[]" value="Art and Design History">Art and Design History<br>
+                            <input type="radio" name="strengths[]" value="3D Design">3D Design<br>
+                            <input type="radio" name="strengths[]" value="Design Elements">Design Elements<br>
+                            <input type="radio" name="strengths[]" value="Design Principles">Design Principles<br>
+                            <input type="radio" name="strengths[]" value="Drawing">Drawing<br>
+                            <input type="radio" name="strengths[]" value="Digital Graphics">Digital Graphics<br>
+                            <input type="radio" name="strengths[]" value="Photography">Photography<br>
+                            <input type="radio" name="strengths[]" value="Painting and Printing Techniques">Painting and Printing Techniques<br>
                     </div>
                 </div>
 
@@ -291,12 +291,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <!-- Biotechnology and Life Science -->
                     <div>
                         <h3 class="sub-title">Biotechnology and Life Science</h3>
-                            <input type="checkbox" name="strengths[]" value="Biology">Biology<br>
-                            <input type="checkbox" name="strengths[]" value="Chemistry">Chemistry<br>
-                            <input type="checkbox" name="strengths[]" value="Biotechnology">Biotechnology<br>
-                            <input type="checkbox" name="strengths[]" value="Mathematics and Statistics">Mathematics and Statistics<br>
-                            <input type="checkbox" name="strengths[]" value="Biochemistry">Biochemistry<br>
-                            <input type="checkbox" name="strengths[]" value="Argrobiotechnology">Argrobiotechnology<br>
+                            <input type="radio" name="strengths[]" value="Biology">Biology<br>
+                            <input type="radio" name="strengths[]" value="Chemistry">Chemistry<br>
+                            <input type="radio" name="strengths[]" value="Biotechnology">Biotechnology<br>
+                            <input type="radio" name="strengths[]" value="Mathematics and Statistics">Mathematics and Statistics<br>
+                            <input type="radio" name="strengths[]" value="Biochemistry">Biochemistry<br>
+                            <input type="radio" name="strengths[]" value="Argrobiotechnology">Argrobiotechnology<br>
                     </div>
                 </div>
 
@@ -304,17 +304,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <!-- Business -->
                     <div>
                         <h3 class="sub-title">Business</h3>
-                            <input type="checkbox" name="strengths[]" value="Accounting">Accounting<br>
-                            <input type="checkbox" name="strengths[]" value="Ethics">Ethics<br>
-                            <input type="checkbox" name="strengths[]" value="Entrepreneurship">Entrepreneurship<br>
-                            <input type="checkbox" name="strengths[]" value="Financial Management">Financial Management<br>
-                            <input type="checkbox" name="strengths[]" value="Human Resources">Human Resources<br>
-                            <input type="checkbox" name="strengths[]" value="Information Management">Information Management<br>
-                            <input type="checkbox" name="strengths[]" value="Marketing Principles">Marketing Principles<br>
-                            <input type="checkbox" name="strengths[]" value="Operation Management">Operation Management<br>
-                            <input type="checkbox" name="strengths[]" value="Leadership in Organisation">Leadership in Organisation<br>
-                            <input type="checkbox" name="strengths[]" value="Business Mathematics">Business Mathematics<br>
-                            <input type="checkbox" name="strengths[]" value="Marketing">Marketing<br>
+                            <input type="radio" name="strengths[]" value="Accounting">Accounting<br>
+                            <input type="radio" name="strengths[]" value="Ethics">Ethics<br>
+                            <input type="radio" name="strengths[]" value="Entrepreneurship">Entrepreneurship<br>
+                            <input type="radio" name="strengths[]" value="Financial Management">Financial Management<br>
+                            <input type="radio" name="strengths[]" value="Human Resources">Human Resources<br>
+                            <input type="radio" name="strengths[]" value="Information Management">Information Management<br>
+                            <input type="radio" name="strengths[]" value="Marketing Principles">Marketing Principles<br>
+                            <input type="radio" name="strengths[]" value="Operation Management">Operation Management<br>
+                            <input type="radio" name="strengths[]" value="Leadership in Organisation">Leadership in Organisation<br>
+                            <input type="radio" name="strengths[]" value="Business Mathematics">Business Mathematics<br>
+                            <input type="radio" name="strengths[]" value="Marketing">Marketing<br>
                     </div>
                 </div>
 
@@ -322,17 +322,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <!-- Computing and IT -->
                     <div>
                         <h3 class="sub-title">Computing and IT</h3>
-                            <input type="checkbox" name="strengths[]" value="Programming">Programming<br>
-                            <input type="checkbox" name="strengths[]" value="Discrete Mathematics">Discrete Mathematics<br>
-                            <input type="checkbox" name="strengths[]" value="Internet Technology and Application">Internet Technology and Application<br>
-                            <input type="checkbox" name="strengths[]" value="Database Management">Database Management<br>
-                            <input type="checkbox" name="strengths[]" value="Networking">Networking<br>
-                            <input type="checkbox" name="strengths[]" value="System Analysis and Design">System Analysis and Design<br>
-                            <input type="checkbox" name="strengths[]" value="Rapid Application Development">Rapid Application Development<br>
-                            <input type="checkbox" name="strengths[]" value="Computer Architecture">Computer Architecture<br>
-                            <input type="checkbox" name="strengths[]" value="Data Structures">Data Structures<br>
-                            <input type="checkbox" name="strengths[]" value="Software Engineering">Software Engineering<br>
-                            <input type="checkbox" name="strengths[]" value="IT Project Management">IT Project Management<br>
+                            <input type="radio" name="strengths[]" value="Programming">Programming<br>
+                            <input type="radio" name="strengths[]" value="Discrete Mathematics">Discrete Mathematics<br>
+                            <input type="radio" name="strengths[]" value="Internet Technology and Application">Internet Technology and Application<br>
+                            <input type="radio" name="strengths[]" value="Database Management">Database Management<br>
+                            <input type="radio" name="strengths[]" value="Networking">Networking<br>
+                            <input type="radio" name="strengths[]" value="System Analysis and Design">System Analysis and Design<br>
+                            <input type="radio" name="strengths[]" value="Rapid Application Development">Rapid Application Development<br>
+                            <input type="radio" name="strengths[]" value="Computer Architecture">Computer Architecture<br>
+                            <input type="radio" name="strengths[]" value="Data Structures">Data Structures<br>
+                            <input type="radio" name="strengths[]" value="Software Engineering">Software Engineering<br>
+                            <input type="radio" name="strengths[]" value="IT Project Management">IT Project Management<br>
                     </div>
                 </div>
                 
@@ -340,16 +340,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <!-- Engineering -->
                     <div>
                         <h3 class="sub-title">Engineering</h3>
-                            <input type="checkbox" name="strengths[]" value="Electrical Circuits">Electrical Circuits<br>
-                            <input type="checkbox" name="strengths[]" value="Engineering Mathematics">Engineering Mathematics<br>
-                            <input type="checkbox" name="strengths[]" value="Fluid Mechanics">Fluid Mechanics<br>
-                            <input type="checkbox" name="strengths[]" value="Thermodynamics">Thermodynamics<br>
-                            <input type="checkbox" name="strengths[]" value="Design of Machine Elements">Design of Machine Elements<br>
-                            <input type="checkbox" name="strengths[]" value="Engineering Geology">Engineering Geology<br>
-                            <input type="checkbox" name="strengths[]" value="Structural Analysis">Structural Analysis<br>
-                            <input type="checkbox" name="strengths[]" value="Civil Engineering Materials">Civil Engineering Materials<br>
-                            <input type="checkbox" name="strengths[]" value="Digital Electronics">Digital Electronics<br>
-                            <input type="checkbox" name="strengths[]" value="Control Systems">Control Systems<br>
+                            <input type="radio" name="strengths[]" value="Electrical Circuits">Electrical Circuits<br>
+                            <input type="radio" name="strengths[]" value="Engineering Mathematics">Engineering Mathematics<br>
+                            <input type="radio" name="strengths[]" value="Fluid Mechanics">Fluid Mechanics<br>
+                            <input type="radio" name="strengths[]" value="Thermodynamics">Thermodynamics<br>
+                            <input type="radio" name="strengths[]" value="Design of Machine Elements">Design of Machine Elements<br>
+                            <input type="radio" name="strengths[]" value="Engineering Geology">Engineering Geology<br>
+                            <input type="radio" name="strengths[]" value="Structural Analysis">Structural Analysis<br>
+                            <input type="radio" name="strengths[]" value="Civil Engineering Materials">Civil Engineering Materials<br>
+                            <input type="radio" name="strengths[]" value="Digital Electronics">Digital Electronics<br>
+                            <input type="radio" name="strengths[]" value="Control Systems">Control Systems<br>
                     </div>
                 </div>
             </div>
@@ -363,14 +363,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <!-- Art and Design -->
                     <div>
                         <h3 class="sub-title">Art and Design</h3>
-                            <input type="checkbox" name="weaknesses[]" value="Art and Design History">Art and Design History<br>
-                            <input type="checkbox" name="weaknesses[]" value="3D Design">3D Design<br>
-                            <input type="checkbox" name="weaknesses[]" value="Design Elements">Design Elements<br>
-                            <input type="checkbox" name="weaknesses[]" value="Design Principles">Design Principles<br>
-                            <input type="checkbox" name="weaknesses[]" value="Drawing">Drawing<br>
-                            <input type="checkbox" name="weaknesses[]" value="Digital Graphics">Digital Graphics<br>
-                            <input type="checkbox" name="weaknesses[]" value="Photography">Photography<br>
-                            <input type="checkbox" name="weaknesses[]" value="Painting and Printing Techniques">Painting and Printing Techniques<br>
+                            <input type="radio" name="weaknesses[]" value="Art and Design History">Art and Design History<br>
+                            <input type="radio" name="weaknesses[]" value="3D Design">3D Design<br>
+                            <input type="radio" name="weaknesses[]" value="Design Elements">Design Elements<br>
+                            <input type="radio" name="weaknesses[]" value="Design Principles">Design Principles<br>
+                            <input type="radio" name="weaknesses[]" value="Drawing">Drawing<br>
+                            <input type="radio" name="weaknesses[]" value="Digital Graphics">Digital Graphics<br>
+                            <input type="radio" name="weaknesses[]" value="Photography">Photography<br>
+                            <input type="radio" name="weaknesses[]" value="Painting and Printing Techniques">Painting and Printing Techniques<br>
                     </div>
                 </div>
 
@@ -378,12 +378,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <!-- Biotechnology and Life Science -->
                 <div>
                     <h3 class="sub-title">Biotechnology and Life Science</h3>
-                        <input type="checkbox" name="weaknesses[]" value="Biology">Biology<br>
-                        <input type="checkbox" name="weaknesses[]" value="Chemistry">Chemistry<br>
-                        <input type="checkbox" name="weaknesses[]" value="Biotechnology">Biotechnology<br>
-                        <input type="checkbox" name="weaknesses[]" value="Mathematics and Statistics">Mathematics and Statistics<br>
-                        <input type="checkbox" name="weaknesses[]" value="Biochemistry">Biochemistry<br>
-                        <input type="checkbox" name="weaknesses[]" value="Argrobiotechnology">Argrobiotechnology<br>
+                        <input type="radio" name="weaknesses[]" value="Biology">Biology<br>
+                        <input type="radio" name="weaknesses[]" value="Chemistry">Chemistry<br>
+                        <input type="radio" name="weaknesses[]" value="Biotechnology">Biotechnology<br>
+                        <input type="radio" name="weaknesses[]" value="Mathematics and Statistics">Mathematics and Statistics<br>
+                        <input type="radio" name="weaknesses[]" value="Biochemistry">Biochemistry<br>
+                        <input type="radio" name="weaknesses[]" value="Argrobiotechnology">Argrobiotechnology<br>
                 </div>
             </div>
 
@@ -391,17 +391,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <!-- Business -->
                 <div>
                     <h3 class="sub-title">Business</h3>
-                        <input type="checkbox" name="weaknesses[]" value="Accounting">Accounting<br>
-                        <input type="checkbox" name="weaknesses[]" value="Ethics">Ethics<br>
-                        <input type="checkbox" name="weaknesses[]" value="Entrepreneurship">Entrepreneurship<br>
-                        <input type="checkbox" name="weaknesses[]" value="Financial Management">Financial Management<br>
-                        <input type="checkbox" name="weaknesses[]" value="Human Resources">Human Resources<br>
-                        <input type="checkbox" name="weaknesses[]" value="Information Management">Information Management<br>
-                        <input type="checkbox" name="weaknesses[]" value="Marketing Principles">Marketing Principles<br>
-                        <input type="checkbox" name="weaknesses[]" value="Operation Management">Operation Management<br>
-                        <input type="checkbox" name="weaknesses[]" value="Leadership in Organisation">Leadership in Organisation<br>
-                        <input type="checkbox" name="weaknesses[]" value="Business Mathematics">Business Mathematics<br>
-                        <input type="checkbox" name="weaknesses[]" value="Marketing">Marketing<br>
+                        <input type="radio" name="weaknesses[]" value="Accounting">Accounting<br>
+                        <input type="radio" name="weaknesses[]" value="Ethics">Ethics<br>
+                        <input type="radio" name="weaknesses[]" value="Entrepreneurship">Entrepreneurship<br>
+                        <input type="radio" name="weaknesses[]" value="Financial Management">Financial Management<br>
+                        <input type="radio" name="weaknesses[]" value="Human Resources">Human Resources<br>
+                        <input type="radio" name="weaknesses[]" value="Information Management">Information Management<br>
+                        <input type="radio" name="weaknesses[]" value="Marketing Principles">Marketing Principles<br>
+                        <input type="radio" name="weaknesses[]" value="Operation Management">Operation Management<br>
+                        <input type="radio" name="weaknesses[]" value="Leadership in Organisation">Leadership in Organisation<br>
+                        <input type="radio" name="weaknesses[]" value="Business Mathematics">Business Mathematics<br>
+                        <input type="radio" name="weaknesses[]" value="Marketing">Marketing<br>
                 </div>
             </div>
 
@@ -409,17 +409,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <!-- Computing and IT -->
                 <div>
                     <h3 class="sub-title">Computing and IT</h3>
-                        <input type="checkbox" name="weaknesses[]" value="Programming">Programming<br>
-                        <input type="checkbox" name="weaknesses[]" value="Discrete Mathematics">Discrete Mathematics<br>
-                        <input type="checkbox" name="weaknesses[]" value="Internet Technology and Application">Internet Technology and Application<br>
-                        <input type="checkbox" name="weaknesses[]" value="Database Management">Database Management<br>
-                        <input type="checkbox" name="weaknesses[]" value="Networking">Networking<br>
-                        <input type="checkbox" name="weaknesses[]" value="System Analysis and Design">System Analysis and Design<br>
-                        <input type="checkbox" name="weaknesses[]" value="Rapid Application Development">Rapid Application Development<br>
-                        <input type="checkbox" name="weaknesses[]" value="Computer Architecture">Computer Architecture<br>
-                        <input type="checkbox" name="weaknesses[]" value="Data Structures">Data Structures<br>
-                        <input type="checkbox" name="weaknesses[]" value="Software Engineering">Software Engineering<br>
-                        <input type="checkbox" name="weaknesses[]" value="IT Project Management">IT Project Management<br>
+                        <input type="radio" name="weaknesses[]" value="Programming">Programming<br>
+                        <input type="radio" name="weaknesses[]" value="Discrete Mathematics">Discrete Mathematics<br>
+                        <input type="radio" name="weaknesses[]" value="Internet Technology and Application">Internet Technology and Application<br>
+                        <input type="radio" name="weaknesses[]" value="Database Management">Database Management<br>
+                        <input type="radio" name="weaknesses[]" value="Networking">Networking<br>
+                        <input type="radio" name="weaknesses[]" value="System Analysis and Design">System Analysis and Design<br>
+                        <input type="radio" name="weaknesses[]" value="Rapid Application Development">Rapid Application Development<br>
+                        <input type="radio" name="weaknesses[]" value="Computer Architecture">Computer Architecture<br>
+                        <input type="radio" name="weaknesses[]" value="Data Structures">Data Structures<br>
+                        <input type="radio" name="weaknesses[]" value="Software Engineering">Software Engineering<br>
+                        <input type="radio" name="weaknesses[]" value="IT Project Management">IT Project Management<br>
                 </div>
             </div>
             
@@ -427,16 +427,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <!-- Engineering -->
                 <div>
                     <h3 class="sub-title">Engineering</h3>
-                        <input type="checkbox" name="weaknesses[]" value="Electrical Circuits">Electrical Circuits<br>
-                        <input type="checkbox" name="weaknesses[]" value="Engineering Mathematics">Engineering Mathematics<br>
-                        <input type="checkbox" name="weaknesses[]" value="Fluid Mechanics">Fluid Mechanics<br>
-                        <input type="checkbox" name="weaknesses[]" value="Thermodynamics">Thermodynamics<br>
-                        <input type="checkbox" name="weaknesses[]" value="Design of Machine Elements">Design of Machine Elements<br>
-                        <input type="checkbox" name="weaknesses[]" value="Engineering Geology">Engineering Geology<br>
-                        <input type="checkbox" name="weaknesses[]" value="Structural Analysis">Structural Analysis<br>
-                        <input type="checkbox" name="weaknesses[]" value="Civil Engineering Materials">Civil Engineering Materials<br>
-                        <input type="checkbox" name="weaknesses[]" value="Digital Electronics">Digital Electronics<br>
-                        <input type="checkbox" name="weaknesses[]" value="Control Systems">Control Systems<br>
+                        <input type="radio" name="weaknesses[]" value="Electrical Circuits">Electrical Circuits<br>
+                        <input type="radio" name="weaknesses[]" value="Engineering Mathematics">Engineering Mathematics<br>
+                        <input type="radio" name="weaknesses[]" value="Fluid Mechanics">Fluid Mechanics<br>
+                        <input type="radio" name="weaknesses[]" value="Thermodynamics">Thermodynamics<br>
+                        <input type="radio" name="weaknesses[]" value="Design of Machine Elements">Design of Machine Elements<br>
+                        <input type="radio" name="weaknesses[]" value="Engineering Geology">Engineering Geology<br>
+                        <input type="radio" name="weaknesses[]" value="Structural Analysis">Structural Analysis<br>
+                        <input type="radio" name="weaknesses[]" value="Civil Engineering Materials">Civil Engineering Materials<br>
+                        <input type="radio" name="weaknesses[]" value="Digital Electronics">Digital Electronics<br>
+                        <input type="radio" name="weaknesses[]" value="Control Systems">Control Systems<br>
                 </div>
             </div>
         </div>
