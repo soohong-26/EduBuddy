@@ -302,7 +302,7 @@ $result = mysqli_query($conn, $sql);
 
      <!-- Navigation Buttons -->
     <div class="button-container">
-        <a href="community_add.php" class="toggle-button">Add New</a>
+        <a href="community_add.php" class="toggle-button">Add Post</a>
     </div>
 
     <!-- Search Form -->
