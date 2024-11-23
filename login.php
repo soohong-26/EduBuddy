@@ -42,16 +42,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             }
         } else {
+            // Invalid password
             echo "<script>
                     alert('Invalid Password!');
                   </script>";
         }
     } else {
+        // When the email doesn't exist in the database
         echo "<script>
                     alert('Email does not exist in the database!');
                   </script>";
     }
-
     // Close statement
     $stmt->close();
 }
@@ -151,4 +152,3 @@ $conn->close();
     </script>
 </body>
 </html>
-

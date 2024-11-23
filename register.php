@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Email already exists, prompt user
                     echo "<script>alert('Email already taken. Please use another email.'); window.history.back();</script>";
                 } else {
-                    // Username and email do not exist, proceed with registration
+                    // if username and email do not exist, proceed with registration
                     // Hash the password before saving it to the database
                     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
@@ -57,24 +57,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         // Execute the prepared statement
                         if ($stmt->execute()) {
-                            // Registration successful, show success message
+                            // Registration successful
                             echo "<script>alert('Registration successful!'); window.location.href = 'login.php';</script>";
                         } else {
-                            // If the SQL execution fails, show error message
+                            // If the SQL execution fails
                             echo "<script>alert('Something went wrong. Please try again later.');</script>";
                         }
                     } else {
-                        // If the statement couldn't be prepared, show an error message
+                        // If the statement couldn't be prepared
                         echo "<script>alert('Something went wrong. Please try again later.');</script>";
                     }
                 }
             } else {
-                // If the statement couldn't be prepared, show an error message
+                // If the statement couldn't be prepared
                 echo "<script>alert('Something went wrong. Please try again later.');</script>";
             }
         }
     } else {
-        // If the statement couldn't be prepared, show an error message
+        // If the statement couldn't be prepared
         echo "<script>alert('Something went wrong. Please try again later.');</script>";
     }
     // Closing the statement
