@@ -1,6 +1,6 @@
 <!-- PHP -->
 <?php
-// Assuming the user's role is stored in the session as 'roles'
+// Getting the status from roles in the database
 $userRole = isset($_SESSION['roles']) ? $_SESSION['roles'] : null;
 ?>
 
@@ -131,7 +131,7 @@ $userRole = isset($_SESSION['roles']) ? $_SESSION['roles'] : null;
         <div class="welcome-message">
             <?php
             if (isset($_SESSION['username'])) {
-                // Make username a clickable link to profile.php with their username as a query parameter
+                // Make username a clickable link to profile.php with their username
                 echo "<a href='edit_profile.php?username=" . urlencode($_SESSION['username']) . "'><p class='username-text'>Welcome, " . htmlspecialchars($_SESSION['username']) . "!</p></a>";
             } else {
                 echo "<p class='username-text'>Welcome, Guest!</p>";
