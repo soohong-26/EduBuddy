@@ -64,6 +64,25 @@ while ($row = $result_feedback->fetch_assoc()) {
     $feedbacks[] = $row;
 }
 $stmt_feedback->close();
+
+// Function to display star ratings
+function display_stars($rating) {
+    $fullStars = floor($rating); // Number of full stars
+    $output = '<div class="star-rating">';
+
+    // Add full stars
+    for ($i = 0; $i < $fullStars; $i++) {
+        $output .= '<span class="star">&#9733;</span>'; // Full star
+    }
+
+    // Add empty stars
+    for ($i = $fullStars; $i < 5; $i++) {
+        $output .= '<span class="star gray">&#9733;</span>'; // Empty star
+    }
+
+    $output .= '</div>';
+    return $output;
+}
 ?>
 
 <!DOCTYPE html>
@@ -128,6 +147,20 @@ $stmt_feedback->close();
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
+        /* Stars Rating */
+        .star-rating {
+            color: #ffd700; /* gold color */
+            font-size: 20px;
+        }
+
+        .star-rating .star {
+            display: inline-block;
+        }
+
+        .star-rating .gray {
+            color: #ccc; /* light gray color for empty stars */
+        }  
     </style>
 </head>
 <body>
@@ -175,8 +208,8 @@ $stmt_feedback->close();
     <p class="profile-detail">
         <span class="profile-label">
             Average Rating:
-        </span>
-        <?php echo isset($averageRating) ? round($averageRating, 1) : 'No ratings yet'; ?>/5
+        </span> 
+        <?php echo is_numeric($averageRating) ? display_stars($averageRating) : "No ratings"; ?>
     </p>
 
 

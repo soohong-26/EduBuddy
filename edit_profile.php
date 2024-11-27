@@ -65,6 +65,25 @@ if ($countRatings > 0) {
     $averageRating = "No ratings"; // Fallback message when there are no ratings
 }
 
+// Function to display star ratings
+function display_stars($rating) {
+    $fullStars = floor($rating); // Number of full stars
+    $output = '<div class="star-rating">';
+
+    // Add full stars
+    for ($i = 0; $i < $fullStars; $i++) {
+        $output .= '<span class="star">&#9733;</span>'; // Full star
+    }
+
+    // Add empty stars
+    for ($i = $fullStars; $i < 5; $i++) {
+        $output .= '<span class="star gray">&#9733;</span>'; // Empty star
+    }
+
+    $output .= '</div>';
+    return $output;
+}
+
 $stmt->close();
 ?>
 
@@ -140,6 +159,20 @@ $stmt->close();
             font-size: 16px;
             transition: background-color 0.3s ease;
         }
+
+        /* Stars Rating */
+        .star-rating {
+            color: #ffd700; /* gold color */
+            font-size: 20px;
+        }
+
+        .star-rating .star {
+            display: inline-block;
+        }
+
+        .star-rating .gray {
+            color: #ccc; /* light gray color for empty stars */
+        }           
     </style>
 </head>
 <body>
@@ -197,8 +230,8 @@ $stmt->close();
 
     <!-- Show average rating -->
     <p class="profile-detail">
-        <span class="profile-label">Average Rating:</span>
-        <?php echo is_numeric($averageRating) ? round($averageRating, 1) . '/5' : $averageRating; ?>
+        <span class="profile-label">Average Rating:</span> 
+        <?php echo is_numeric($averageRating) ? display_stars($averageRating) : "No ratings"; ?>
     </p>
 
 
