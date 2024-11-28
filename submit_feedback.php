@@ -14,12 +14,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {
-        echo "Feedback submitted successfully!";
+        // Success
+        echo "<script>alert('Feedback submitted successfully!'); window.location.href='friend_list.php';</script>";
     } else {
-        echo "Error submitting feedback: " . $conn->error;
+        // Failure
+        echo "<script>alert('Something went wrong. Please try again later.'); window.location.href='friend_list.php';</script>";
     }
     $stmt->close();
-    header("Location: friend_list.php"); 
     exit();
 }
 ?>

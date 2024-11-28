@@ -83,8 +83,6 @@ $user = $result->fetch_assoc();
         }
 
         select {
-            /* -webkit-appearance: none; 
-            -moz-appearance: none;  */
             appearance: none; 
             background-color: white; 
             color: #333;
@@ -131,6 +129,5 @@ $user = $result->fetch_assoc();
         <button type="submit" class="submit-button">Submit Achievement</button>
     </form>
 </div>
-
 </body>
 </html>
