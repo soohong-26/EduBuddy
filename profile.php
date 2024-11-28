@@ -179,9 +179,8 @@ $stmt->close();
 
     <!-- Profile picture -->
     <?php 
-    // Check if the profile image is not empty and exists
-    $profileImagePath = !empty($users['profile_img']) ? $users['profile_img'] : "images/profile.png";
-    ?>
+    // If profile picture does not exist it will display default, if there is it will display user's profile picture
+    $profileImagePath = !empty($users['profile_img']) ? $users['profile_img'] : "images/profile.png";?>
     <img src="<?php echo htmlspecialchars($profileImagePath); ?>" alt="Profile Image" class="profile-img">
 
     <!-- Email -->

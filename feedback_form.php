@@ -111,11 +111,23 @@ $user = $result->fetch_assoc();
 </head>
 <body>
 <div class="feedback-form-container">
+
+    <!-- Title -->
     <h1>Achievement for <?php echo htmlspecialchars($user['username']); ?></h1>
+
+    <!-- The Achievemnt Form -->
     <form action="submit_feedback.php" method="POST">
+
+        <!-- User ID (Receiver) auto input -->
         <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user_id); ?>">
+
+        <!-- User ID (Giver) auto input -->
         <input type="hidden" name="rated_by_user_id" value="<?php echo htmlspecialchars($_SESSION['user_id']); ?>">
+
+        <!-- Username auto input -->
         <input type="hidden" name="username" value="<?php echo htmlspecialchars($user['username']); ?>">
+
+        <!-- Rating for the Achievement -->
         <label for="rating">Rating:</label>
         <select name="rating" id="rating" required>
             <option value="1">1</option>
@@ -124,8 +136,12 @@ $user = $result->fetch_assoc();
             <option value="4">4</option>
             <option value="5">5</option>
         </select>
+
+        <!-- Achievement title for that student -->
         <label for="comment">Achievement:</label>
         <textarea class="comment-section" name="comment" id="comment" rows="4" placeholder="Achievement title here" required></textarea>
+
+        <!-- Submit Button -->
         <button type="submit" class="submit-button">Submit Achievement</button>
     </form>
 </div>
