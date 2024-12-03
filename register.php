@@ -1,4 +1,3 @@
-<!-- PHP -->
 <?php
 // Include database connection file
 require 'database.php';
@@ -38,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Email already exists, prompt user
                     echo "<script>alert('Email already taken. Please use another email.'); window.history.back();</script>";
                 } else {
-                    // if username and email do not exist, proceed with registration
+                    // If username and email do not exist, proceed with registration
                     // Hash the password before saving it to the database
                     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
@@ -84,8 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $conn->close();
 ?>
 
-<!-- HTML -->
-<!DOCTYPE html> 
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -98,7 +97,6 @@ $conn->close();
     <div class="login-container">
         <!-- Floating box -->
         <div class="login-box">
-
             <!-- Logo -->
             <img src="images/red_logo_cropped.png" alt="EduBuddy Logo" class="logo">
 
@@ -107,7 +105,6 @@ $conn->close();
 
             <!-- Input form -->
             <form id="registerForm" action="register.php" method="post">
-
                 <!-- Email -->
                 <div class="input-group">
                     <input type="email" id="registerEmail" placeholder="Email" name="email" required>
@@ -156,82 +153,80 @@ $conn->close();
         // Registration Validation
         // Add an event listener for form submission
         document.getElementById('registerForm').addEventListener('submit', function(event) {
+            // Get form inputs
+            const username = document.getElementById('registerUsername').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
 
-        // Get form inputs
-        const username =document.getElementById('regusterUsername').value;
-        const email = document.getElementById('registerEmail').value;
-        const password = document.getElementById('registerPassword').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        
-        // Email validation pattern
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            // Email validation pattern
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        // Username no white spaces validation
-        const usernamePattern = /^\S*$/; // No spaces allowed
+            // Username no white spaces validation
+            const usernamePattern = /^\S*$/; // No spaces allowed
 
-        // Validation checks
-        if (!usernamePattern.test(username)) {
+            // Validation checks
+            if (!usernamePattern.test(username)) {
                 alert("Username must not contain spaces.");
                 event.preventDefault();
                 return;
             }
 
-        if (!emailPattern.test(email)) {
-            alert("Please enter a valid email address.");
-            event.preventDefault(); // Stop form submission
-            return;
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                event.preventDefault(); // Stop form submission
+                return;
+            }
+
+            if (password.length < 8) {
+                alert("Password must be at least 8 characters long.");
+                event.preventDefault();
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                event.preventDefault();
+                return;
+            }
+
+            // Confirmation dialog for accurate information
+            const confirmMessage = "Please ensure all information is accurate. Once the account is created, changes cannot be made. Do you wish to proceed?";
+            if (!confirm(confirmMessage)) {
+                event.preventDefault(); // Stop form submission if the user cancels
+            }
+        });
+
+        // Toggle Password Visibility Function 
+        function togglePasswordVisibility(passwordFieldId, iconId) {
+            const passwordField = document.getElementById(passwordFieldId);
+            const icon = document.getElementById(iconId);
+
+            // Check current type of the password field
+            if (passwordField.type === "password") {
+                passwordField.type = "text"; // Show the password
+                icon.src = "icons/unlock.png"; // Change to unlock icon
+            } else {
+                passwordField.type = "password"; // Hide the password
+                icon.src = "icons/lock2.png"; // Change to lock icon
+            }
         }
 
-        if (password.length < 8) {
-            alert("Password must be at least 8 characters long.");
-            event.preventDefault();
-            return;
+        // Add event listeners for each password field's icon
+        const registerPasswordIcon = document.getElementById('registerPasswordIcon');
+        const confirmPasswordIcon = document.getElementById('confirmPasswordIcon');
+
+        if (registerPasswordIcon) {
+            registerPasswordIcon.addEventListener('click', function() {
+                togglePasswordVisibility('registerPassword', 'registerPasswordIcon');
+            });
         }
 
-        if (password !== confirmPassword) {
-            alert("Passwords do not match.");
-            event.preventDefault();
-            return;
+        if (confirmPasswordIcon) {
+            confirmPasswordIcon.addEventListener('click', function() {
+                togglePasswordVisibility('confirmPassword', 'confirmPasswordIcon');
+            });
         }
-    });
-
-    // Toggle Password Visibility Function 
-    function togglePasswordVisibility(passwordFieldId, iconId) {
-    const passwordField = document.getElementById(passwordFieldId);
-    const icon = document.getElementById(iconId);
-    
-    // Check current type of the password field
-    if (passwordField.type === "password") {
-        passwordField.type = "text"; // Show the password
-        icon.src = "icons/unlock.png"; // Change to unlock icon
-    } else {
-        passwordField.type = "password"; // Hide the password
-        icon.src = "icons/lock2.png"; // Change to lock icon
-    }
-}
-
-    // Add event listeners for each password field's icon
-    const registerPasswordIcon = document.getElementById('registerPasswordIcon');
-    const confirmPasswordIcon = document.getElementById('confirmPasswordIcon');
-    const loginPasswordIcon = document.getElementById('loginPasswordIcon');
-
-    if (registerPasswordIcon) {
-        registerPasswordIcon.addEventListener('click', function() {
-            togglePasswordVisibility('registerPassword', 'registerPasswordIcon');
-        });
-    }
-
-    if (confirmPasswordIcon) {
-        confirmPasswordIcon.addEventListener('click', function() {
-            togglePasswordVisibility('confirmPassword', 'confirmPasswordIcon');
-        });
-    }
-
-    if (loginPasswordIcon) {
-        loginPasswordIcon.addEventListener('click', function() {
-            togglePasswordVisibility('loginPassword', 'loginPasswordIcon');
-        });
-    }
     </script>
 </body>
 </html>

@@ -233,7 +233,7 @@ $stmt->close();
         <button class="back-button" onclick="window.history.back();">
             Back
         </button>
-
+ 
         <!-- Adding friend -->
         <form method="POST" action="adding_friend.php?username=<?php echo urlencode($users['username']); ?>">
             <input type="hidden" name="buddy_username" value="<?php echo htmlspecialchars($users['username']); ?>">
