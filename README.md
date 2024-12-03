@@ -8,7 +8,7 @@ By doing so it allows a mutual support among each other.
 ## Login & Register
 - login.php
 - register.php
-- login-register.php
+- login-register.css (Minor adjustment with the designs)
 
 ## Home Page
 - home_buddies.php

@@ -13,15 +13,19 @@ if (!isset($_SESSION['username'])) {
 // Fetch the logged-in user's username
 $username = $_SESSION['username']; 
 
+// Strengths & Weaknesses Part
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Convert array to string
     $strengths = isset($_POST['strengths']) ? implode(',', $_POST['strengths']) : ''; 
     // Convert array to string
     $weaknesses = isset($_POST['weaknesses']) ? implode(',', $_POST['weaknesses']) : ''; 
+    // Sanitising the inputs (Prevents Cross-Site Scripting)
     $extra_skills = htmlspecialchars($_POST['extra_skills']);
 
+    // Updating the database
     $sql = "INSERT INTO skills (username, strengths, weaknesses, extra_skills) VALUES (?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE strengths = VALUES(strengths), weaknesses = VALUES(weaknesses), extra_skills = VALUES(extra_skills)";
+
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssss", $username, $strengths, $weaknesses, $extra_skills);
     if ($stmt->execute()) {
@@ -32,17 +36,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Display SQL errors if any
         echo "SQL Error: " . $stmt->error; 
     }
+
     $stmt->close();
 }
 
-    // Fetch existing strengths and weaknesses for the user
+    // Fetch existing strengths and weaknesses of their current user
     $strengths_display = 'None';
     $weaknesses_display = 'None';
 
     $query = "SELECT strengths, weaknesses FROM skills WHERE username = ? ORDER BY id DESC LIMIT 1";
+
+    // Preparing and executing the statement
     if ($stmt = $conn->prepare($query)) {
         $stmt->bind_param("s", $username);
         $stmt->execute();
+
+        // Getting the results
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
             $data = $result->fetch_assoc();
