@@ -1,5 +1,4 @@
 <!-- PHP -->
-<!-- PHP -->
 <?php
 // Include the database connection
 require 'database.php'; 
@@ -14,7 +13,7 @@ if (!isset($_SESSION['username'])) {
 $username = $_SESSION['username']; 
 $userid = $_SESSION['user_id']; 
 
-// Handle post deletion
+// Post deletion function
 if(isset($_POST['delete'])){
     $id = $_POST['pid'];
 
@@ -39,7 +38,7 @@ if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
     $search_keyword = mysqli_real_escape_string($conn, $_GET['keyword']);
     $sql = "SELECT * FROM posts WHERE post_title LIKE '%$search_keyword%'"; // Modify query to search posts
 } else {
-    $sql = "SELECT * FROM posts"; // Default query to display all posts
+    $sql = "SELECT * FROM posts"; // Default query to display all posts (When there is no search inside)
 }
 
 $result = mysqli_query($conn, $sql);
@@ -227,12 +226,12 @@ $result = mysqli_query($conn, $sql);
         /* Adding flexbox to the strength container */
         .strengths-container {
             display: flex;
-            justify-content: space-between; /* Ensures spacing between columns */
+            justify-content: space-between; 
         }
          
         .strength-column {
-            flex: 1; /* Each column takes equal space */
-            padding: 10px; /* Adds padding around the content of each column */
+            flex: 1;
+            padding: 10px; 
         }
 
         .bubble-num{
@@ -322,6 +321,8 @@ $result = mysqli_query($conn, $sql);
         while($rows = mysqli_fetch_assoc($result)){
             $post_id = $rows['post_id'];
             $uid = $rows['user_id'];
+
+            // Getting the comments for each posts
             $sqlP = "SELECT count(*) as total FROM comments WHERE post_id = '$post_id'";
             $resultP = mysqli_query($conn, $sqlP);
             $rowsP = mysqli_fetch_assoc($resultP);
@@ -329,8 +330,10 @@ $result = mysqli_query($conn, $sql);
             <div class="skills-form" onclick="toDetail(<?php echo $post_id; ?>)">
                 <div class="left-box">
                     <div>
+                        <!-- Posts title -->
                         <label class="title"><?php echo htmlspecialchars($rows['post_title'], ENT_QUOTES, 'UTF-8'); ?></label>
                     </div>
+                    <!-- Timestamp of the post -->
                     <div class="time-row">
                         <img src="icons/clock.png" />
                         <label class="time"> 
@@ -340,20 +343,27 @@ $result = mysqli_query($conn, $sql);
                             ?>
                         </label>
                     </div>
+                    <!-- Short description -->
                     <div>
                         <label class="shortdesc"><?php echo htmlspecialchars($rows['short_desc'], ENT_QUOTES, 'UTF-8'); ?></label>
                     </div>
                 </div>
+
                 <div class="right-box">
                     <div class="inner">
+                        <!-- Displaying the number of comments inside the post -->
                         <div class="bubble-num">
                             <img src="icons/speech-bubble.png" />
                             <span><?php echo $rowsP['total']; ?></span>
                         </div>
+
+                        <!-- If the post matches the user's id it will allow them to edit their own post -->
                         <?php if($uid == $userid){ ?>
                         <a href="community_edit.php?id=<?php echo $post_id;  ?>">
                             <img src="icons/edit.png" />
                         </a>
+
+                        <!-- Only if the post is created by the user they are then only allow to delete the post -->
                         <form method="POST" action="community.php" onsubmit="return confirm('Confirm to delete post?')">
                             <input value="<?php echo  $post_id; ?>" name="pid" type="hidden" />
                             <button type="submit" name="delete" class="btn-delete"><img src="icons/delete.png" /></button>
@@ -376,6 +386,7 @@ $result = mysqli_query($conn, $sql);
 
     <script type="text/javascript">
         
+        // Navigating to the post
         function toDetail(id){
             var url = `community_comment.php?id=${id}`;
             window.location.href = url;

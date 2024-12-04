@@ -13,8 +13,9 @@ if (!isset($_SESSION['username'])) {
 $username = $_SESSION['username']; 
 $uid = $_SESSION['user_id'];
 
-
+// Deleting comment function
 if(isset($_POST['delete'])){
+    // Post and comment id
     $pid = $_POST['pid'];
     $cid = $_POST['cid'];
 
@@ -34,6 +35,7 @@ if(isset($_POST['delete'])){
 
 }
 
+// Adding a comment
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $post_id = mysqli_real_escape_string($conn, $_POST['pid']);
     $userid = mysqli_real_escape_string($conn, $_POST['uid']);
@@ -45,12 +47,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("iiss", $post_id, $userid, $comment, $current);
    
-
+    // Once if the comment has been posted successfully it will prompt a message
     if ($stmt->execute()) {
-        // Redirect to community page on success
-        // header("Location: community.php"); 
         echo "<script>
-                    alert('Successfully add new message!');
+                    alert('Successfully add new comment!');
                     window.location.href = 'community_comment.php?id=".$post_id."';
                 </script>";
         exit;
@@ -61,15 +61,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->close();
 }
 
-if(isset($_GET['id'])){
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM posts WHERE post_id = '$id'";
-    $result = mysqli_query($conn, $sql);
-    $rows = mysqli_fetch_assoc($result);
-} else {
-    header('Location: community.php'); 
-    exit;
-}
+    // Getting the posts
+    if(isset($_GET['id'])){
+        $id = $_GET['id'];
+        $sql = "SELECT * FROM posts WHERE post_id = '$id'";
+        $result = mysqli_query($conn, $sql);
+        $rows = mysqli_fetch_assoc($result);
+    } else {
+        header('Location: community.php'); 
+        exit;
+    }
 
 
 ?>
@@ -237,12 +238,12 @@ if(isset($_GET['id'])){
         /* Adding flexbox to the strength container */
         .strengths-container {
             display: flex;
-            justify-content: space-between; /* Ensures spacing between columns */
+            justify-content: space-between;
         }
          
         .strength-column {
-            flex: 1; /* Each column takes equal space */
-            padding: 10px; /* Adds padding around the content of each column */
+            flex: 1;
+            padding: 10px; 
         }
 
         .title{
@@ -270,6 +271,7 @@ if(isset($_GET['id'])){
             width: 40px;
             height: 40px;
             border-radius: 100%;
+            object-fit: cover;
         }
 
         .user-info .information{
@@ -335,8 +337,11 @@ if(isset($_GET['id'])){
     <div class="button-container">
         <a href="community.php" class="toggle-button">Back</a>
     </div>
+
     <div class="skills-form">
+        <!-- Post title -->
         <h1 class="title"><?php echo htmlspecialchars(stripslashes($rows['post_title']), ENT_QUOTES, 'UTF-8'); ?></h1>
+        <!-- Post short description -->
         <p><?php echo htmlspecialchars(stripslashes($rows['description']), ENT_QUOTES, 'UTF-8'); ?></p>
     </div>
 
@@ -356,9 +361,16 @@ if(isset($_GET['id'])){
 
                         <div class="user-info">
                             <div class="user-inner">
-                                <img src="icons/profile.png" class="profileimg" />
+                            <?php 
+                                // Check if the profile image exists in the database; use a default if empty
+                                $profileImagePath = !empty($rows['profile_img']) ? $rows['profile_img'] : "images/profile.png";
+                            ?>
+                                <img src="<?php echo htmlspecialchars($profileImagePath, ENT_QUOTES, 'UTF-8'); ?>" alt="Profile Image" class="profileimg">
+
                                 <div class="information">
+                                    <!-- Author's username -->
                                     <p class="username"><?php echo $rows['username']; ?></p>
+                                    <!-- Metadata of the post -->
                                     <label class="time"> <?php
                                         $created_at = new DateTime($rows['created_at']);
                                         echo $created_at->format('F j, Y, g:i a'); // Example format: "March 10, 2024, 5:16 pm"
@@ -369,9 +381,11 @@ if(isset($_GET['id'])){
                             <?php if($uid == $usid){ ?>
 
                             <div class="action-info">
+                                <!-- Edit comment part -->
                                 <a href="community_comment_edit.php?pid=<?php echo $id;?>&cid=<?php echo $comment_id; ?>">
                                     <img src="icons/edit.png" />
                                 </a>
+                                <!-- Delete comment part -->
                                 <form method="POST" action="community_comment.php" onsubmit="javascript:return confirm('Confirm to delete comment?')">
                                  <input value="<?php echo $id; ?>" name="pid" type="hidden" />
                                  <input value="<?php echo $comment_id; ?>" name="cid" type="hidden" />
@@ -400,15 +414,17 @@ if(isset($_GET['id'])){
         ?>
     </div>
 
+    <!-- Title -->
     <h2 class="title-page">Leave Your Comment.</h2>
     <form action="" method="POST" class="skills-form">
         <input type="hidden" value="<?php echo $uid; ?>" name="uid" />
         <input type="hidden" value="<?php echo $id; ?>" name="pid" />
+        <!-- Comment part -->
         <div>
             <label>Comment:</label>
-            <textarea rows="8" type="text" name="comment" placeholder="Type your comment" class="extra-skills-placeholder"></textarea>
+            <textarea rows="8" type="text" name="comment" placeholder="Type your comment" class="extra-skills-placeholder" required></textarea>
         </div>
-       
+       <!-- Submit button -->
         <button type="submit" class="extra-skills-button">Submit</button>
     </form>
 </body>

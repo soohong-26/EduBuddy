@@ -214,12 +214,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         /* Adding flexbox to the strength container */
         .strengths-container {
             display: flex;
-            justify-content: space-between; /* Ensures spacing between columns */
+            justify-content: space-between;
         }
          
         .strength-column {
-            flex: 1; /* Each column takes equal space */
-            padding: 10px; /* Adds padding around the content of each column */
+            flex: 1; 
+            padding: 10px;
         }
 
     </style>
@@ -232,15 +232,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="button-container">
         <a href="community_comment.php?id=<?php echo $pid; ?>" class="toggle-button">Back</a>
     </div>
-
+    
+    <!-- Title -->
     <h2 class="title-page">Edit Comment.</h2>
     <form action="" method="POST" class="skills-form">
         <input type="hidden" value="<?php echo $rows['comment_id'] ?>" name="id" />
         <div>
+            <!-- Editing comment section -->
             <label>Comment:</label>
-            <textarea rows="8" type="text" name="comment" placeholder="Type your comment" class="extra-skills-placeholder"><?php echo htmlspecialchars(stripslashes($rows['message']), ENT_QUOTES, 'UTF-8'); ?></textarea>
+            <textarea rows="8" type="text" name="comment" placeholder="Type your comment" class="extra-skills-placeholder" required><?php echo htmlspecialchars(stripslashes($rows['message']), ENT_QUOTES, 'UTF-8'); ?></textarea>
         </div>
        
+        <!-- Save button -->
         <button type="submit" class="extra-skills-button">Save</button>
     </form>
 </body>

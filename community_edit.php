@@ -12,6 +12,7 @@ if (!isset($_SESSION['username'])) {
 // Fetch the logged-in user's username
 $username = $_SESSION['username']; 
 
+// Fetching the specific post
 if(isset($_GET['id'])){
     $id = $_GET['id'];
     $sql = "SELECT * FROM posts WHERE post_id = '$id'";
@@ -22,6 +23,7 @@ if(isset($_GET['id'])){
     exit;
 }
 
+// The logic to update the post
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $post_id = mysqli_real_escape_string($conn, $_POST['id']);
     $title = mysqli_real_escape_string($conn, $_POST['topic']);
@@ -219,12 +221,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         /* Adding flexbox to the strength container */
         .strengths-container {
             display: flex;
-            justify-content: space-between; /* Ensures spacing between columns */
+            justify-content: space-between; 
         }
          
         .strength-column {
-            flex: 1; /* Each column takes equal space */
-            padding: 10px; /* Adds padding around the content of each column */
+            flex: 1; 
+            padding: 10px; 
         }
 
     </style>
@@ -238,22 +240,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <a href="community.php" class="toggle-button">Back</a>
     </div>
 
+    <!-- Title -->
     <h2 class="title-page">Edit Post Information.</h2>
     <form action="" method="POST" class="skills-form">
         <input type="hidden" value="<?php echo $rows['post_id'] ?>" name="id" />
         <div>
+            <!-- Editing title -->
             <label>Title:</label>
             <input type="text" name="topic" placeholder="Type your topic" class="extra-skills-placeholder" value="<?php echo htmlspecialchars(stripslashes($rows['post_title']), ENT_QUOTES, 'UTF-8'); ?>">
         </div>
+        <!-- Editing short description -->
         <div>
             <label>Short Description:</label>
             <textarea rows="8" type="text" name="short_desc" placeholder="Type your short description" class="extra-skills-placeholder"><?php echo htmlspecialchars(stripslashes($rows['short_desc']), ENT_QUOTES, 'UTF-8'); ?></textarea>
         </div>
+        <!-- Editing main content of the post -->
         <div>
             <label>Description:</label>
             <textarea rows="8" type="text" name="desc" placeholder="Type your description" class="extra-skills-placeholder"><?php echo htmlspecialchars(stripslashes($rows['description']), ENT_QUOTES, 'UTF-8'); ?></textarea>
         </div>
        
+        <!-- Save button -->
         <button type="submit" class="extra-skills-button">Save</button>
     </form>
 </body>

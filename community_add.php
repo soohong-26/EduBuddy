@@ -15,17 +15,22 @@ $username = $_SESSION['username'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+    // Sanitise user inputs to prevent SQL injection
     $title = mysqli_real_escape_string($conn, $_POST['title']);
     $short_desc = mysqli_real_escape_string($conn, $_POST['short_desc']);
     $desc = mysqli_real_escape_string($conn, $_POST['desc']);
-    $status = '1';
+
+    // Setting the metadata
+    $status = '1'; // To indicate that it is active
     date_default_timezone_set("Asia/Kuala_Lumpur");
     $current = date('Y-m-d H:i:s'); 
     $userid =  $_SESSION['user_id'];
 
+    // Inserting the data into the database
     $sql = "INSERT INTO posts (post_title, user_id, short_desc, description, created_at) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sisss", $title, $userid, $short_desc, $desc, $current);
+
     if ($stmt->execute()) {
         // Redirect to find buddies page on successful insertion
         header("Location: community.php"); 
@@ -221,20 +226,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <a href="community.php" class="toggle-button">Back</a>
     </div>
 
+    <!-- Title -->
     <h2 class="title-page">Create New Post. Fill in the following.</h2>
     <form action="" method="POST" class="skills-form">
+        <!-- Add title for the post -->
         <div>
             <label>Title:</label>
-            <input type="text" name="title" placeholder="Type your topic" class="extra-skills-placeholder">
+            <input type="text" name="title" placeholder="Type your topic" class="extra-skills-placeholder" required>
         </div>
+        <!-- Add short description about the post -->
         <div>
             <label>Short Description:</label>
-            <textarea rows="8" type="text" name="short_desc" placeholder="Type your short description" class="extra-skills-placeholder"></textarea>
+            <textarea rows="8" type="text" name="short_desc" placeholder="Type your short description" class="extra-skills-placeholder" required></textarea>
         </div>
+        <!-- Adding the main content for the post -->
         <div>
             <label>Description:</label>
-            <textarea rows="8" type="text" name="desc" placeholder="Type your description" class="extra-skills-placeholder"></textarea>
+            <textarea rows="8" type="text" name="desc" placeholder="Type your description" class="extra-skills-placeholder" required></textarea>
         </div>
+        <!-- Submit post button -->
         <button type="submit" class="extra-skills-button">Submit</button>
     </form>
 </body>
