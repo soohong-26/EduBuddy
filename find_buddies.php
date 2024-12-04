@@ -28,8 +28,11 @@ if (!empty($weaknesses)) {
     $sql = "SELECT u.username, s.strengths, s.weaknesses FROM users u
             JOIN skills s ON u.username = s.username
             WHERE u.username != ?";
+
+    // Dynamically adding the weakness-based conditions
     foreach ($weaknessArray as $weakness) {
-        $sql .= " AND FIND_IN_SET('" . $conn->real_escape_string(trim($weakness)) . "', s.strengths) > 0";
+        // checks if the current weakness exists in the strengths column of another user
+        $sql .= " AND FIND_IN_SET('" . $conn->real_escape_string(trim($weakness)) . "', s.strengths) > 0"; 
     }
 
     $stmt = $conn->prepare($sql);
