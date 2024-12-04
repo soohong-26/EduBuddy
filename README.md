@@ -32,6 +32,7 @@ By doing so it allows a mutual support among each other.
 
 ## Mentor
 - mentor_view.php
+    - fetch_students.php (To perform search function)
 - students_profile.php
 
 ## Feature

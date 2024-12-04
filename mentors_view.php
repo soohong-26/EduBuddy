@@ -6,6 +6,29 @@ if (!isset($_SESSION['user_id']) || $_SESSION['roles'] !== 'mentor') {
     exit;
 }
 
+// Handle role change form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'], $_POST['new_role'])) {
+    $user_id = intval($_POST['user_id']);
+    $new_role = $_POST['new_role'];
+
+    // Validate the new role
+    if (in_array($new_role, ['student', 'tutor'])) {
+        $update_sql = "UPDATE users SET roles = ? WHERE user_id = ?";
+        $update_stmt = $conn->prepare($update_sql);
+        $update_stmt->bind_param('si', $new_role, $user_id);
+
+        if ($update_stmt->execute()) {
+            echo "<script>alert('Role updated successfully.');</script>";
+        } else {
+            echo "<script>alert('Failed to update role. Please try again.');</script>";
+        }
+
+        $update_stmt->close();
+    } else {
+        echo "<script>alert('Invalid role selected.');</script>";
+    }
+}
+
 // Fetch users along with their unread message count
 $sql = "SELECT u.user_id, u.username, u.email, u.roles, 
                COALESCE(SUM(CASE WHEN m.is_read = FALSE AND m.receiver_id = ? AND m.sender_id = u.user_id THEN 1 ELSE 0 END), 0) AS unread_count

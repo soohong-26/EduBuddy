@@ -187,22 +187,23 @@ function display_stars($rating) {
         <span class="profile-label">
             Strengths:
         </span>
-        <?php echo htmlspecialchars($userDetails['strengths']); ?>
+        <?php echo htmlspecialchars($userDetails['strengths'] ?? 'None'); ?>
     </p>
     
     <p class="profile-detail">
         <span class="profile-label">
             Weaknesses:
         </span> 
-        <?php echo htmlspecialchars($userDetails['weaknesses']); ?>
+        <?php echo htmlspecialchars($userDetails['weaknesses'] ?? 'None'); ?>
     </p>
     
     <p class="profile-detail">
-        <span class="profile-label">
-            Extra Skills:
-        </span> 
-        <?php echo empty(trim($userDetails['extra_skills'])) ? "None" : htmlspecialchars($userDetails['extra_skills']); ?>
-    </p>
+    <span class="profile-label">
+        Extra Skills:
+    </span> 
+    <?php echo empty(trim($userDetails['extra_skills'] ?? '')) ? 'None' : htmlspecialchars($userDetails['extra_skills']); ?>
+</p>
+
 
     <!-- Show average rating -->
     <p class="profile-detail">
@@ -212,7 +213,7 @@ function display_stars($rating) {
         <?php echo is_numeric($averageRating) ? display_stars($averageRating) : "No ratings"; ?>
     </p>
 
-
+    <!-- Back button -->
     <div class="button-container">
         <button class="back-button" onclick="window.history.back();">
                 Back
@@ -222,6 +223,7 @@ function display_stars($rating) {
 
 <!-- Feedback Container -->
 <div class="feedback-container">
+    <!-- Title -->
     <h2 class="profile-header">Achievements</h2>
     <?php if (!empty($feedbacks)): ?>
         <?php foreach ($feedbacks as $feedback): ?>
