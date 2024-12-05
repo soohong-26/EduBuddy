@@ -145,7 +145,9 @@ $my_username_stmt->close();
     <!-- Chat -->
     <div id="chat-box" class="chat-box">
         <div id="messages" class="chat-messages"></div>
+        <!-- Text field -->
         <textarea id="message-input" class="message-input"></textarea>
+        <!-- Send button -->
         <button onclick="sendMessage()" class="send-button">Send</button>
     </div>
     
@@ -156,6 +158,7 @@ $my_username_stmt->close();
 
         var myUsername = '<?php echo htmlspecialchars($my_username); ?>'; // Safe output with htmlspecialchars
 
+        // Fetching the messages
         function fetchMessages() {
             $.ajax({
                 url: 'fetch_messages.php',
@@ -174,6 +177,7 @@ $my_username_stmt->close();
             });
         }
 
+        // Sending the messages
         function sendMessage() {
             var messageText = $('#message-input').val();
             if (messageText !== '') {
@@ -186,6 +190,7 @@ $my_username_stmt->close();
                 });
             }
         }
+        // Auto refreshes the messages
         $(document).ready(function() {
             fetchMessages(); // Initial load
             setInterval(fetchMessages, 5000); // Poll for new messages every 5 seconds
